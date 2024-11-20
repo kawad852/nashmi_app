@@ -92,9 +92,9 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
-  font_awesome_flutter:
-    git:
-      url: https://github.com/kawad852/font_awesome_flutter.git
+  # font_awesome_flutter:
+  #   git:
+  #     url: https://github.com/kawad852/font_awesome_flutter.git
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -135,6 +135,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/flags/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
