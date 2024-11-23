@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nashmi_app/controllers/phone_controller.dart';
+import 'package:nashmi_app/screens/registration/create_account_screen.dart';
+import 'package:nashmi_app/screens/registration/forgot_password_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/widgets/app_container.dart';
@@ -101,7 +103,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Align(
                       alignment: AlignmentDirectional.centerEnd,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(const ForgotPasswordScreen());
+                        },
                         child: CustomText(
                           context.appLocalization.forgotYourPassword,
                           color: context.colorPalette.redB31,
@@ -135,7 +139,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             WidgetSpan(
                               alignment: PlaceholderAlignment.middle,
                               child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.push(const CreateAccountScreen());
+                                },
                                 child: CustomText(
                                   context.appLocalization.createAccount,
                                   fontSize: 16,
@@ -147,7 +153,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              sliver: SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
                     Center(
                       child: CustomText(
                         context.appLocalization.orPleaseLogThrough,
@@ -171,6 +187,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

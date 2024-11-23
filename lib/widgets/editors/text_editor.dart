@@ -14,6 +14,7 @@ class TextEditor extends StatefulWidget {
   final bool? filled;
   final Color? fillColor;
   final InputBorder? enabledBorder;
+  final TextAlign? textAlign;
 
   const TextEditor({
     super.key,
@@ -28,6 +29,7 @@ class TextEditor extends StatefulWidget {
     this.enabledBorder,
     this.fillColor,
     this.filled,
+    this.textAlign,
   });
 
   @override
@@ -41,6 +43,7 @@ class _TextEditorState extends State<TextEditor> with AutomaticKeepAliveClientMi
     return BaseEditor(
       initialValue: widget.initialValue,
       required: widget.required,
+      textAlign: widget.textAlign,
       enabledBorder: widget.enabledBorder,
       suffixIcon: widget.suffixIcon,
       prefixIcon: widget.prefixIcon,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/screens/categories/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/my_slider.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
+import 'package:nashmi_app/widgets/category_bubble.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
@@ -120,7 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          context.push(const CategoriesScreen());
+                        },
                         child: Row(
                           children: [
                             CustomText(
@@ -151,28 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
             delegate: SliverChildBuilderDelegate(
               childCount: 8,
               (context, index) {
-                return Column(
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 70,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: context.colorPalette.greyF2F,
-                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                      ),
-                      child: const CustomNetworkImage(
-                        kFakeImage,
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
-                    const CustomText(
-                      "Category",
-                      overFlow: TextOverflow.ellipsis,
-                    )
-                  ],
-                );
+                return const CategoryBubble();
               },
             ),
           ),

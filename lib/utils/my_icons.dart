@@ -17,5 +17,6 @@ class MyIcons {
   static const String profileSelect = '${_path}profile_select.svg';
   static const String arrowDown = '${_path}arrow_down.svg';
   static const String search = '${_path}search.svg';
-
+  static const String female = '${_path}female.svg';
+  static const String male = '${_path}male.svg';
 }

@@ -36,6 +36,7 @@ class BaseEditor extends StatelessWidget {
   final TextStyle? style;
   final String? obscuringCharacter;
   final InputBorder? enabledBorder;
+  final TextAlign? textAlign;
 
   const BaseEditor({
     super.key,
@@ -72,6 +73,7 @@ class BaseEditor extends StatelessWidget {
     this.style,
     this.obscuringCharacter,
     this.enabledBorder,
+    this.textAlign,
   });
 
   @override
@@ -80,6 +82,7 @@ class BaseEditor extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: TextFormField(
         controller: controller,
+        textAlign: textAlign ?? TextAlign.start,
         onChanged: onChanged,
         style: style,
         obscuringCharacter: obscuringCharacter ?? '•',
