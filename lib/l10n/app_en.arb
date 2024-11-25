@@ -56,5 +56,16 @@
   "dontCare":"Don't care ",
   "yaNashmi":"dear",
   "enterYourPhoneNumber":"Please enter your phone number in the following field to identify you. We will send you a code to your phone",
-  "sendTheCode":"Send the code"
+  "sendTheCode":"Send the code",
+  "like":"Like",
+  "addYourRating":"Add your rating",
+  "viewRatings":"View ratings",
+  "images":"Images",
+  "addressAndLocation":"Address and location",
+  "callDirectly":"Call directly",
+  "mostRated":"Most rated",
+  "mostLikes":"Most likes",
+  "nearestDistance":"Nearest distance",
+  "favoritesList":"Favorites list",
+  "notifications":"Notifications"
 }

@@ -10,6 +10,8 @@ class CustomText extends StatelessWidget {
   final int? maxLines;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
+  final TextDecoration? decoration;
+  final double? decorationThickness;
   const CustomText(
     this.data, {
     super.key,
@@ -20,6 +22,8 @@ class CustomText extends StatelessWidget {
     this.maxLines,
     this.textAlign,
     this.textDirection,
+    this.decoration,
+    this.decorationThickness,
   });
 
   @override
@@ -32,6 +36,8 @@ class CustomText extends StatelessWidget {
       textDirection: textDirection,
       style: TextStyle(
         color: color ?? context.colorPalette.black,
+        decoration: decoration,
+        decorationThickness: decorationThickness,
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),

@@ -12,7 +12,7 @@ class CustomBack extends StatelessWidget {
         context.pop();
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
             const Icon(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:nashmi_app/screens/providers/providers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -66,7 +67,9 @@ class _SingleCategoryScreenState extends State<SingleCategoryScreen> {
                         itemCount: 10,
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              context.push(const ProvidersScreen());
+                            },
                             child: Container(
                               width: double.infinity,
                               height: 48,

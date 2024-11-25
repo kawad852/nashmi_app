@@ -56,5 +56,16 @@
   "dontCare":"ولا يهمك ",
   "yaNashmi":"يالنشمي/ ـة",
   "enterYourPhoneNumber":"بس اكتبلنا هان رقم تلفونك ، عشان نتعرف عليك رح نبعثلك كود على تلفونك",
-  "sendTheCode":"ابعث الكود"
+  "sendTheCode":"ابعث الكود",
+  "like":"كفو",
+  "addYourRating":"اضف تقييمك",
+  "viewRatings":"عرض التقييمات",
+  "images":"صور",
+  "addressAndLocation":"العنوان والموقع",
+  "callDirectly":"اتصـال مباشرة",
+  "mostRated":"الأكثر تقييماً",
+  "mostLikes":"الأكثر كفو",
+  "nearestDistance":"الأقرب مسافة",
+  "favoritesList":"قائمة المفضلة",
+  "notifications":"اخر علومنا"
 }
