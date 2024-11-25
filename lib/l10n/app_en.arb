@@ -67,5 +67,19 @@
   "mostLikes":"Most likes",
   "nearestDistance":"Nearest distance",
   "favoritesList":"Favorites list",
-  "notifications":"Notifications"
+  "notifications":"Notifications",
+  "getKnowUs":"Get to know us",
+  "list":"List",
+  "termsAndConditions":"Terms and Conditions",
+  "privacyPolicy":"Privacy Policy",
+  "talkToNashmi":"Talk to Nashmi",
+  "advertiseWithUs":"Advertise with us",
+  "complaintsAndSuggestions":"Complaints and suggestions",
+  "participateNashmiMarket":"Participate in Nashmi Market",
+  "editAccount":"Edit account",
+  "yourCurrentPassword":"Your current password",
+  "yourNewPassword":"Your new password",
+  "confirmNewPassword":"Confirm new password",
+  "saveModifications":"Save modifications",
+  "editImage":"Edit image"
 }

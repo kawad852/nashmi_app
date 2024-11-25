@@ -67,5 +67,19 @@
   "mostLikes":"الأكثر كفو",
   "nearestDistance":"الأقرب مسافة",
   "favoritesList":"قائمة المفضلة",
-  "notifications":"اخر علومنا"
+  "notifications":"اخر علومنا",
+  "getKnowUs":"تعرف علينا",
+  "list":"القائمة",
+  "termsAndConditions":"شروطنا واحكامنا",
+  "privacyPolicy":"سياسة الخصوصية", 
+  "talkToNashmi":"احكي مع نشمي",
+  "advertiseWithUs":"اعلن عنا",
+  "complaintsAndSuggestions":"الشكاوي والإقتراحات",
+  "participateNashmiMarket":"شارك بسوق نشمي",
+  "editAccount":"تعديل الحساب",
+  "yourCurrentPassword":"باسووردك اللي هسا",
+  "yourNewPassword":"باسووردك الجديد",
+  "confirmNewPassword":"باسووردك الجديد مره ثانية",
+  "saveModifications":"حفظ التعديلات",
+  "editImage":"تغيير الصورة"
 }
