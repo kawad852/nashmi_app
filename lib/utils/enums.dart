@@ -10,6 +10,10 @@ class ThemeEnum {
 
 enum BookingType { hotel, flight }
 
+enum PolicyType { knowUs, termsAndConditions , privacyPolicy}
+
+enum ContactType { ads, complaints}
+
 class SearchType {
   static const String cities = 'cities';
   static const String hotels = 'hotels';

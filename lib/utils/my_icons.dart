@@ -37,4 +37,9 @@ class MyIcons {
   static const String chat = '${_path}chat.svg';
   static const String sms = '${_path}sms.svg';
   static const String danger = '${_path}danger.svg';
+  static const String attach = '${_path}attach.svg';
+  static const String menu = '${_path}menu.svg';
+  static const String locationOffer = '${_path}location_offer.svg';
+  static const String scan = '${_path}scan.svg';
+  static const String share = '${_path}share.svg';
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/screens/contact/contact_screen.dart';
+import 'package:nashmi_app/screens/policy/policy_screen.dart';
 import 'package:nashmi_app/screens/profile/widgets/profile_bubble.dart';
 import 'package:nashmi_app/screens/profile/widgets/user_info.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
+import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 
@@ -38,17 +41,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ProfileBubble(
                   icon: MyIcons.offersSelect,
                   title: context.appLocalization.getKnowUs,
-                  onTap: () {},
+                  onTap: () {
+                    context.push(const PolicyScreen(policyType: PolicyType.knowUs));
+                  },
                 ),
                 ProfileBubble(
                   icon: MyIcons.terms,
                   title: context.appLocalization.termsAndConditions,
-                  onTap: () {},
+                  onTap: () {
+                    context.push(const PolicyScreen(policyType: PolicyType.termsAndConditions));
+                  },
                 ),
                 ProfileBubble(
                   icon: MyIcons.policy,
                   title: context.appLocalization.privacyPolicy,
-                  onTap: () {},
+                  onTap: () {
+                    context.push(const PolicyScreen(policyType: PolicyType.privacyPolicy));
+                  },
                 ),
                 ProfileBubble(
                   icon: MyIcons.chat,
@@ -58,12 +67,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ProfileBubble(
                   icon: MyIcons.sms,
                   title: context.appLocalization.advertiseWithUs,
-                  onTap: () {},
+                  onTap: () {
+                    context.push(const ContactScreen(contactType: ContactType.ads));
+                  },
                 ),
                 ProfileBubble(
                   icon: MyIcons.danger,
                   title: context.appLocalization.complaintsAndSuggestions,
-                  onTap: () {},
+                  onTap: () {
+                    context.push(const ContactScreen(contactType: ContactType.complaints));
+                  },
                 ),
                 ProfileBubble(
                   icon: MyIcons.sms,

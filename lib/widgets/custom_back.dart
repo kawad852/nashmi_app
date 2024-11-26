@@ -3,7 +3,8 @@ import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 
 class CustomBack extends StatelessWidget {
-  const CustomBack({super.key});
+  final Color? color;
+  const CustomBack({super.key, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +16,14 @@ class CustomBack extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
-            const Icon(
+             Icon(
               Icons.arrow_back_ios,
               size: 20,
+              color: color,
             ),
             CustomText(
               context.appLocalization.back,
+              color: color,
               fontWeight: FontWeight.bold,
             ),
           ],
