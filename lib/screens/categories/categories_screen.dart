@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -68,7 +69,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       delegate: SliverChildBuilderDelegate(
                         childCount: 20,
                         (context, index) {
-                          return const CategoryBubble();
+                          return CategoryBubble(
+                            category: CategoryModel(),
+                          );
                         },
                       ),
                     ),

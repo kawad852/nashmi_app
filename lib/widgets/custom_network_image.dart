@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:flutter/material.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String url;
@@ -40,7 +40,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.backgroundColor,
     this.scale = 1,
     this.ignorePlaceHolder = false,
-    this.clipBehavior=Clip.none,
+    this.clipBehavior = Clip.none,
   });
 
   Widget _buildContainer({
@@ -72,7 +72,7 @@ class CustomNetworkImage extends StatelessWidget {
     );
   }
 
-  ImageProvider get _imagePlaceHolder => const AssetImage('assets/launcher.png');
+  ImageProvider get _imagePlaceHolder => const AssetImage('assets/splash.png');
 
   @override
   Widget build(BuildContext context) {

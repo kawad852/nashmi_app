@@ -1,173 +1,121 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:nashmi_app/alerts/errors/app_error_feedback.dart';
-import 'package:nashmi_app/alerts/loading/app_over_loader.dart';
-import 'package:nashmi_app/network/api_url.dart';
-import 'package:nashmi_app/utils/shared_pref.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
-enum ApiType { get, post }
+import '../alerts/errors/app_error_feedback.dart';
+import '../alerts/loading/app_over_loader.dart';
 
-class ApiService<T> {
-  static const String formatException = 'format-exception';
-  static const String httpException = 'http-exception';
+class ApiService {
+  static const String firebaseException = 'firebase-exception';
+  static const String authException = 'auth-exception';
+  static const String functionsException = 'functions-exception';
   static const String socketException = 'socket-exception';
   static const String timeoutException = 'timeout-exception';
   static const String generalException = 'general-exception';
 
-  Future<T> uploadFiles({
-    required String url,
-    required Function(Map<String, dynamic> value) builder,
-    Function(T model)? onSuccess,
-    required Function(http.MultipartRequest value) onRequest,
-  }) async {
-    final futureCallback = await _handleCall(() async {
-      final uri = Uri.parse('${ApiUrl.mainUrl}$url');
-
-      var request = http.MultipartRequest('POST', uri);
-
-      onRequest(request);
-
-      var response = await request.send();
-
-      var responseBody = await http.Response.fromStream(response).then((response) => response.body);
-      log("ApiRequest::URL:: $url\nSTATUSCODE:: ${response.statusCode}\nBODY:: $responseBody");
-
-      Map<String, dynamic> json = jsonDecode(responseBody);
-      if (onSuccess != null) {
-        final model = builder(json) as T;
-        onSuccess(model);
-      }
-      return builder(json);
-    });
-    return futureCallback;
-  }
+  static const String offlineMsg = 'FirebaseError: [code=unavailable]: Failed to get document because the client is offline.';
 
   static Future<T> build<T>({
-    required String url,
-    Map<String, String>? additionalHeaders,
-    Map<String, dynamic>? queryParams,
-    Function(T model)? onEnd,
-    required ApiType apiType,
-    required T Function(Map<String, dynamic> value) builder,
-    String? link,
+    required Future<T> Function() callBack,
+    bool throwErrorForTesting = false,
   }) async {
-    final T futureCallback = await _handleCall(() async {
-      late http.Response response;
-      final uri = Uri.parse(link ?? '${ApiUrl.mainUrl}$url');
-      Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        'Accept-Language': MySharedPreferences.language,
-      };
-      if (MySharedPreferences.accessToken.isNotEmpty) {
-        headers["Authorization"] = MySharedPreferences.accessToken;
-      }
-      if (additionalHeaders != null) {
-        headers.addAll(additionalHeaders);
-        log("ApiHeaders:: $headers");
-      }
-      if (apiType == ApiType.get) {
-        response = await http.get(
-          uri,
-          headers: headers,
-        );
-      }
-      if (apiType == ApiType.post) {
-        var body = queryParams != null ? jsonEncode(queryParams) : null;
-        response = await http.post(
-          uri,
-          headers: headers,
-          body: body,
-        );
-      }
-      // log("ApiRequest::\nURL:: ${link ?? url}\nQueryParameters:: $queryParams\nSTATUSCODE:: ${response.statusCode}\nBODY:: ${response.body}");
-      if (onEnd != null) {
-        Map<String, dynamic> json = jsonDecode(response.body);
-        await onEnd(builder(json));
-      }
-      Map<String, dynamic> json = jsonDecode(response.body);
-      return builder(json);
-    }).timeout(
-      const Duration(seconds: 20),
-      onTimeout: () => throw TimeoutException(timeoutException),
-    );
-
-    return futureCallback;
-  }
-
-  static _handleCall<T>(Future<T> Function() call) async {
     try {
-      // throw HttpException('');
-      // throw FormatException('');
-      // throw TimeoutException('');
-      // throw SocketException('');
-      // throw Exception();
+      if (throwErrorForTesting) {
+        // throw FirebaseException(plugin: '');
+        // throw SocketException('');
+        // throw TimeoutException('');
+        // throw Exception();
+      }
 
-      return await call();
-    } on HttpException catch (e) {
-      log("Exception::\nType:: HttpException\nmsg:: ${e.message}");
-      throw Failure(type: httpException, code: e.message);
-    } on FormatException catch (e) {
-      log("Exception::\nType:: FormatException\nmsg:: $e");
-      throw Failure(type: formatException, code: e.message);
+      final futureCallback = await callBack().timeout(
+        const Duration(seconds: 30),
+        onTimeout: () => throw TimeoutException(timeoutException),
+      );
+      return futureCallback;
+    } on FirebaseException catch (e) {
+      debugPrint("Exception::\nType:: FirebaseException\nmsg:: ${e.message}\nCode:: ${e.code}");
+      throw Failure(type: firebaseException, code: e.code);
     } on SocketException catch (e) {
-      log("Exception::\nType:: SocketException\nmsg:: $e");
+      debugPrint("Exception::\nType:: SocketException\nmsg:: $e");
       throw Failure(type: socketException, code: e.message);
     } on TimeoutException catch (e) {
-      log("Exception::\nType:: TimeoutException\nmsg:: $e");
+      debugPrint("Exception::\nType:: TimeoutException\nmsg:: $e");
       throw Failure(type: timeoutException, code: e.message ?? '');
     } catch (e) {
-      log("Exception::\nType:: GeneralException\nmsg:: $e");
-      throw Failure(type: generalException, code: e.toString());
+      debugPrint("Exception::\nType:: GeneralException\nmsg:: $e");
+      if (e.toString() == offlineMsg) {
+        throw Failure(type: socketException, code: e.toString());
+      } else {
+        throw Failure(type: generalException, code: e.toString());
+      }
     }
   }
-}
 
-class ApiFutureBuilder {
-  static Future fetch<T>(
+  static Future<void> fetch(
     BuildContext context, {
+    required Future Function() callBack,
     Function(Failure failure)? onError,
-    required Future<T> Function() future,
-    Function(T snapshot)? onComplete,
+    bool showErrorFeedback = true,
     bool withOverlayLoader = true,
     Widget? indicator,
   }) async {
-    if (withOverlayLoader) {
-      AppOverlayLoader.show(indicator: indicator);
-    }
+    Failure? failure;
 
-    await future().whenComplete(() {
-      if (withOverlayLoader) {
+    try {
+      if (withOverlayLoader && !AppOverlayLoader.isShown) {
+        AppOverlayLoader.show(indicator: indicator);
+      }
+
+      /// Errors Test
+      // await Future.delayed(Duration.zero, () {
+      // throw FirebaseAuthException(code: '');
+      //   // throw FirebaseException(plugin: '');
+      // throw TimeoutException('');
+      //   // throw SocketException('');
+      // throw Exception();
+      // });
+
+      ///
+      final futureCallback = await callBack()
+          .timeout(
+        const Duration(seconds: 30),
+        onTimeout: () => throw TimeoutException(timeoutException),
+      )
+          .whenComplete(() {
+        if (withOverlayLoader) {
+          AppOverlayLoader.hide();
+        }
+      });
+      return futureCallback;
+    } on FirebaseAuthException catch (e) {
+      debugPrint("Exception::\nType:: FirebaseAuthException\nmsg:: ${e.message}\nCode:: ${e.code}");
+      failure = Failure(type: authException, code: e.code);
+    } on FirebaseException catch (e) {
+      debugPrint("Exception::\nType:: FirebaseException\nmsg:: ${e.message}\nCode:: ${e.code}");
+      failure = Failure(type: firebaseException, code: e.code);
+    } on SocketException catch (e) {
+      debugPrint("Exception::\nType:: SocketException\nmsg:: $e");
+      failure = Failure(type: socketException, code: e.message);
+    } on TimeoutException catch (e) {
+      debugPrint("Exception::\nType:: TimeoutException\nmsg:: $e");
+      failure = Failure(type: timeoutException, code: e.message ?? '');
+    } catch (e) {
+      debugPrint("Exception::\nType:: GeneralException\nmsg:: $e");
+      if (e.toString() == offlineMsg) {
+        failure = Failure(type: socketException, code: e.toString());
+      } else {
+        failure = Failure(type: generalException, code: e.toString());
+      }
+    } finally {
+      if (withOverlayLoader && AppOverlayLoader.isShown) {
         AppOverlayLoader.hide();
       }
-    }).then((value) {
-      if (onComplete != null) {
-        onComplete(value);
+      if (context.mounted && showErrorFeedback && failure != null) {
+        onError == null ? AppErrorFeedback.show(context, failure) : onError(failure);
       }
-    }, onError: (error) {
-      if (error is Failure) {
-        if (onError != null) {
-          onError(error);
-        } else {
-          if (context.mounted) {
-            AppErrorFeedback.show(context, error);
-          }
-        }
-      }
-    });
-  }
-}
-
-class BearFetcher<T> extends ApiFutureBuilder {
-  void execute(
-    BuildContext context, {
-    required Future Function() futures,
-  }) async {
-    await futures();
+    }
   }
 }
 

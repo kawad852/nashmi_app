@@ -1,25 +1,27 @@
-import 'package:nashmi_app/utils/base_extensions.dart';
-import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nashmi_app/main.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 extension AppFeedbacks on BuildContext {
-  void showToast(String msg) {
-    Fluttertoast.showToast(msg: msg);
-  }
-
   void showSnackBar(
     String msg, {
-    bool floating = true,
     int duration = 4,
+    SnackBarAction? action,
   }) {
-    ScaffoldMessenger.of(this).showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        behavior: floating ? SnackBarBehavior.floating : SnackBarBehavior.fixed,
-        duration: Duration(seconds: duration),
-      ),
-    );
+    ScaffoldMessenger.of(this)
+        .showSnackBar(
+          SnackBar(
+            content: Text(msg),
+            showCloseIcon: true,
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: duration),
+            action: action,
+          ),
+        )
+        .closed
+        .then((value) {
+      ScaffoldMessenger.of(navigatorKey.currentContext!).removeCurrentSnackBar();
+    });
   }
 
   Future<T?> showDialog<T>({
@@ -33,54 +35,45 @@ extension AppFeedbacks on BuildContext {
     Color? confirmButtonBackgroundColor,
     Color? cancelButtonForegroundColor,
     bool warning = false,
+    EdgeInsetsGeometry? actionsPadding,
+    bool barrierDismissible = true,
   }) async {
     return showGeneralDialog<T?>(
-      barrierDismissible: true,
+      barrierDismissible: barrierDismissible,
       barrierLabel: '',
       context: this,
       transitionBuilder: (context, a1, a2, widget) {
         return Opacity(
           opacity: a1.value,
           child: AlertDialog(
-            titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            title: titleWidget ??
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 25,
-                      height: 25,
-                      child: IconButton.outlined(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        padding: EdgeInsets.zero,
-                        icon: const Center(child: Icon(Icons.close)),
-                      ),
-                    ),
-                    Text(titleText ?? ""),
-                    const SizedBox(width: 25),
-                  ],
-                ),
-            content: bodyWidget ?? Text(bodyText!, textAlign: TextAlign.center),
+            title: titleWidget ?? Text(titleText!),
+            actionsPadding: actionsPadding,
+            content: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: maxWidth ?? 400),
+              child: bodyWidget ?? Text(bodyText!),
+            ),
             actions: actions ??
                 [
-                  // TextButton(
-                  //   onPressed: () {
-                  //     context.pop();
-                  //   },
-                  //   style: TextButton.styleFrom(
-                  //     foregroundColor: cancelButtonForegroundColor ?? (warning ? context.colorScheme.onSurface : null),
-                  //   ),
-                  //   child: Text(context.appLocalization.cancel),
-                  // ),
-                  StretchedButton(
-                    // backgroundColor: confirmButtonBackgroundColor ??
-                    //     (warning ? context.colorScheme.error : context.colorPalette.temp),
+                  TextButton(
                     onPressed: () {
-                      Navigator.pop(context, true);
+                      Navigator.pop(context);
                     },
-                    child: Text(context.appLocalization.confirm),
+                    style: TextButton.styleFrom(
+                      foregroundColor: cancelButtonForegroundColor ?? (warning ? context.colorScheme.onSurface : null),
+                    ),
+                    child: Text(context.appLocalization.cancel),
+                  ),
+                  Theme(
+                    data: ThemeData(),
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: confirmButtonBackgroundColor ?? (warning ? context.colorScheme.error : null),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                      child: Text(context.appLocalization.confirm),
+                    ),
                   ),
                 ],
           ),
@@ -104,7 +97,6 @@ extension AppFeedbacks on BuildContext {
       enableDrag: true,
       showDragHandle: true,
       useSafeArea: true,
-      useRootNavigator: true,
       constraints: maxHeight == null ? null : BoxConstraints(maxHeight: maxHeight),
       builder: builder,
     ).then((value) => value);

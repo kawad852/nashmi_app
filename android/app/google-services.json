@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188928498573",
+    "project_id": "suqnashmi",
+    "storage_bucket": "suqnashmi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188928498573:android:0daca204066749dbb73bc4",
+        "android_client_info": {
+          "package_name": "com.souqnashmi.wecan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOjLQT3HTCbMWIFnQ9hGVyH1MgSEJNqbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

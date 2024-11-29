@@ -1,14 +1,16 @@
-import 'package:nashmi_app/alerts/errors/error_widgets/general_error_widget.dart';
-import 'package:nashmi_app/alerts/errors/error_widgets/internet_error_widget.dart';
-import 'package:nashmi_app/alerts/errors/error_widgets/server_error_widget.dart';
-import 'package:nashmi_app/network/api_service.dart';
-import 'package:nashmi_app/widgets/material_cover.dart';
 import 'package:flutter/material.dart';
+
+import '../../network/api_service.dart';
+import '../../widgets/material_cover.dart';
+import 'error_widgets/general_error_widget.dart';
+import 'error_widgets/internet_error_widget.dart';
+import 'error_widgets/server_error_widget.dart';
 
 class AppErrorWidget extends StatefulWidget {
   final Object? error;
   final Widget? onServerError, onInternetError, onGeneralError;
   final VoidCallback onRetry;
+  final bool withBackgroundColor;
 
   const AppErrorWidget({
     super.key,
@@ -17,6 +19,7 @@ class AppErrorWidget extends StatefulWidget {
     required this.error,
     required this.onRetry,
     this.onGeneralError,
+    this.withBackgroundColor = false,
   });
 
   @override
@@ -27,9 +30,9 @@ class _AppErrorWidgetState extends State<AppErrorWidget> {
   Failure? _failure;
 
   Widget _buildErrorWidget() {
-    switch (_failure!.type) {
-      case ApiService.httpException:
-      case ApiService.formatException:
+    switch (_failure?.type) {
+      case ApiService.firebaseException:
+      case ApiService.authException:
         return widget.onServerError ?? const ServerErrorWidget();
       case ApiService.timeoutException:
       case ApiService.socketException:
@@ -45,14 +48,13 @@ class _AppErrorWidgetState extends State<AppErrorWidget> {
     if (widget.error is Failure) {
       _failure = widget.error as Failure;
     }
-    debugPrint("SnapshotError:: ${_failure?.type}");
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialCover(
-      withBackgroundColor: true,
-      child: _failure != null ? _buildErrorWidget() : const GeneralErrorWidget(),
+      withBackgroundColor: widget.withBackgroundColor,
+      child: _buildErrorWidget(),
     );
   }
 }

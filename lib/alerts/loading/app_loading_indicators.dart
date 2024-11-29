@@ -11,7 +11,7 @@ class AppLoadingIndicator {
   Widget circular({
     Color? color,
     bool isSmall = false,
-    AlignmentGeometry alignment = AlignmentDirectional.center,
+    AlignmentGeometry alignment = Alignment.center,
   }) {
     return Align(
       alignment: alignment,
@@ -22,6 +22,15 @@ class AppLoadingIndicator {
           strokeWidth: isSmall == true ? 1.8 : 4.0,
           color: color,
         ),
+      ),
+    );
+  }
+
+  Widget topLinear() {
+    return const SafeArea(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: LinearProgressIndicator(),
       ),
     );
   }

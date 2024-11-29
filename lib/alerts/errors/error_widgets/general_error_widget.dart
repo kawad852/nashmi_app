@@ -1,5 +1,6 @@
-import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 class GeneralErrorWidget extends StatelessWidget {
   const GeneralErrorWidget({super.key});
@@ -12,7 +13,7 @@ class GeneralErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error),
+            const FaIcon(FontAwesomeIcons.solidCircleExclamation),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 10),
               child: Text(
