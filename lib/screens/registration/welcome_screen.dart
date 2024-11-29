@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             const SliverAppBar(

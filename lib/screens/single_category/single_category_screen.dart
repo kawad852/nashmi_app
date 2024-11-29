@@ -4,10 +4,10 @@ import 'package:nashmi_app/screens/providers/providers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class SingleCategoryScreen extends StatefulWidget {
   const SingleCategoryScreen({super.key});
@@ -20,7 +20,7 @@ class _SingleCategoryScreenState extends State<SingleCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(

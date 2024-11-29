@@ -4,11 +4,11 @@ import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/text_editor.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/titled_textfield.dart';
@@ -58,7 +58,7 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -67,9 +67,7 @@ class _ContactScreenState extends State<ContactScreen> {
               leadingWidth: kBarLeadingWith,
               leading: const CustomBack(),
               title: CustomText(
-                _contactType == ContactType.ads
-                    ? context.appLocalization.advertiseWithUs
-                    : context.appLocalization.complaintsAndSuggestions,
+                _contactType == ContactType.ads ? context.appLocalization.advertiseWithUs : context.appLocalization.complaintsAndSuggestions,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -111,9 +109,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       title: context.appLocalization.title,
                       child: TextEditor(
                         initialValue: null,
-                        hintText: _contactType == ContactType.ads
-                            ? context.appLocalization.messageTitle
-                            : context.appLocalization.yourComplaintOrSuggestion,
+                        hintText: _contactType == ContactType.ads ? context.appLocalization.messageTitle : context.appLocalization.yourComplaintOrSuggestion,
                         onChanged: (value) {},
                       ),
                     ),

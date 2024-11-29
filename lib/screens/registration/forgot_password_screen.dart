@@ -3,9 +3,9 @@ import 'package:nashmi_app/controllers/phone_controller.dart';
 import 'package:nashmi_app/screens/registration/verify_code_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/titled_textfield.dart';
@@ -35,7 +35,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             const SliverAppBar(

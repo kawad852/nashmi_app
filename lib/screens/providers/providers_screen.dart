@@ -5,11 +5,11 @@ import 'package:nashmi_app/screens/providers/widgets/provider_card.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/base_editor.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class ProvidersScreen extends StatefulWidget {
   const ProvidersScreen({super.key});
@@ -22,7 +22,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(

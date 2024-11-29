@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/utils/my_images.dart';
 
-class AppContainer extends StatelessWidget {
+class NashmiScaffold extends StatelessWidget {
   final Widget child;
-  const AppContainer({super.key, required this.child});
+  final PreferredSizeWidget? appBar;
+
+  const NashmiScaffold({
+    super.key,
+    required this.child,
+    this.appBar,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
+    return DecoratedBox(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage(MyImages.appBackground),
           fit: BoxFit.cover,
         ),
       ),
-      child: child,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: appBar,
+        body: child,
+      ),
     );
   }
 }

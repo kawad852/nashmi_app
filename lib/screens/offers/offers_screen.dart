@@ -5,9 +5,9 @@ import 'package:nashmi_app/screens/offers/widgets/offers_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offers_nav_bar.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class OffersScreen extends StatefulWidget {
   const OffersScreen({super.key});
@@ -21,7 +21,7 @@ class _OffersScreenState extends State<OffersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const OffersNavBar(),
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(

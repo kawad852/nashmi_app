@@ -1,5 +1,5 @@
-import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 class CustomText extends StatelessWidget {
   final String data;
@@ -12,6 +12,7 @@ class CustomText extends StatelessWidget {
   final TextDirection? textDirection;
   final TextDecoration? decoration;
   final double? decorationThickness;
+
   const CustomText(
     this.data, {
     super.key,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class PolicyScreen extends StatefulWidget {
   final PolicyType policyType;
@@ -31,7 +31,7 @@ class _PolicyScreenState extends State<PolicyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             SliverAppBar(

@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_images.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_smoth_indicator.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -59,7 +59,7 @@ class _IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: PageView.builder(
           controller: _pageController,
           itemCount: 3,

@@ -127,7 +127,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              context.push(const CategoriesScreen());
+                              context.push(CategoriesScreen(
+                                initialData: categories,
+                              ));
                             },
                             child: Row(
                               children: [

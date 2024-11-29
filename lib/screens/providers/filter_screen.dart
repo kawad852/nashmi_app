@@ -3,8 +3,8 @@ import 'package:nashmi_app/screens/providers/widgets/filter_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -17,7 +17,7 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             const SliverAppBar(

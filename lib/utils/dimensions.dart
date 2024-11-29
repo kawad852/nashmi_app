@@ -1,1 +1,1 @@
-const kScreenMargin = 24.0;
+const kScreenMargin = 15.0;

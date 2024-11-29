@@ -7,7 +7,7 @@ import 'package:nashmi_app/screens/offers/offers_screen.dart';
 import 'package:nashmi_app/screens/profile/profile_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class AppNavBar extends StatefulWidget {
   const AppNavBar({
@@ -68,7 +68,7 @@ class _AppNavBarState extends State<AppNavBar> {
   @override
   Widget build(BuildContext context) {
     bool withNotch = MediaQuery.of(context).viewPadding.bottom > 0.0;
-    return AppContainer(
+    return NashmiScaffold(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -93,9 +93,7 @@ class _AppNavBarState extends State<AppNavBar> {
                   _onSelect(index);
                 },
                 isSelected: _currentIndex == index,
-                icon: _currentIndex == index
-                    ? itemsSelected[index]
-                    : items[index],
+                icon: _currentIndex == index ? itemsSelected[index] : items[index],
               );
             }).toList(),
           ),

@@ -6,11 +6,11 @@ import 'package:nashmi_app/screens/registration/widgets/gender_card.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/app_container.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/password_editor.dart';
 import 'package:nashmi_app/widgets/editors/text_editor.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/titled_textfield.dart';
@@ -42,7 +42,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AppContainer(
+      body: NashmiScaffold(
         child: CustomScrollView(
           slivers: [
             const SliverAppBar(
@@ -57,7 +57,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     Row(
                       children: [
                         CustomText(
