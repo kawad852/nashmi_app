@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
-import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -51,10 +50,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Widget _toggleRoute(BuildContext context) {
     return const IntroScreen();
-   }
+  }
 
   @override
   void initState() {
