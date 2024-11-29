@@ -11,6 +11,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
+import 'package:nashmi_app/providers/fire_provider.dart';
+import 'package:nashmi_app/providers/user_provider.dart';
 import 'package:nashmi_app/screens/home/home_screen.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -46,6 +48,8 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppProvider()),
+        ChangeNotifierProvider(create: (context) => FireProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: const MyApp(),
     ),

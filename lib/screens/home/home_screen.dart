@@ -2,14 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
-import 'package:nashmi_app/network/fire_queries.dart';
-import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/categories/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/my_slider.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
+import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
 import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
@@ -32,13 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<List<dynamic>> _fetchFutures() {
     return ApiService.build(
       callBack: () async {
-        final categoriesFuture = FirebaseFirestore.instance.categories
-            .where(MyFields.published, isEqualTo: true)
-            .where(MyFields.mainCategory, isEqualTo: true)
-            .orderBy(MyFields.order, descending: false)
-            .orderBy(MyFields.createdAt, descending: true)
-            .limit(8)
-            .get();
+        final categoriesFuture = context.fireProvider.mainCategoriesQuery.limit(8).get();
         return Future.wait([categoriesFuture]);
       },
     );
