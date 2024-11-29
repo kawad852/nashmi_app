@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../network/api_service.dart';
-import '../../widgets/material_cover.dart';
 import 'error_widgets/general_error_widget.dart';
 import 'error_widgets/internet_error_widget.dart';
 import 'error_widgets/server_error_widget.dart';
@@ -29,19 +28,6 @@ class AppErrorWidget extends StatefulWidget {
 class _AppErrorWidgetState extends State<AppErrorWidget> {
   Failure? _failure;
 
-  Widget _buildErrorWidget() {
-    switch (_failure?.type) {
-      case ApiService.firebaseException:
-      case ApiService.authException:
-        return widget.onServerError ?? const ServerErrorWidget();
-      case ApiService.timeoutException:
-      case ApiService.socketException:
-        return widget.onInternetError ?? InternetErrorWidget(onRetry: widget.onRetry);
-      default:
-        return widget.onGeneralError ?? const GeneralErrorWidget();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -52,9 +38,15 @@ class _AppErrorWidgetState extends State<AppErrorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialCover(
-      withBackgroundColor: widget.withBackgroundColor,
-      child: _buildErrorWidget(),
-    );
+    switch (_failure?.type) {
+      case ApiService.firebaseException:
+      case ApiService.authException:
+        return widget.onServerError ?? const ServerErrorWidget();
+      case ApiService.timeoutException:
+      case ApiService.socketException:
+        return widget.onInternetError ?? InternetErrorWidget(onRetry: widget.onRetry);
+      default:
+        return widget.onGeneralError ?? const GeneralErrorWidget();
+    }
   }
 }

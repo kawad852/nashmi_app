@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:nashmi_app/widgets/custom_loading_indicator.dart';
 import 'package:nashmi_app/widgets/material_cover.dart';
-import 'package:flutter/material.dart';
 
 class CustomFutureBuilder<T> extends StatelessWidget {
   final Future<T> future;
@@ -43,6 +43,9 @@ class CustomFutureBuilder<T> extends StatelessWidget {
       builder: (context, AsyncSnapshot<T?> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
+            if (snapshot.hasData) {
+              return onComplete(context, snapshot);
+            }
             return isSliver ? SliverToBoxAdapter(child: _buildLoading()) : _buildLoading();
           case ConnectionState.done:
           default:

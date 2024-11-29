@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/screens/categories/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/my_slider.dart';
@@ -10,49 +8,32 @@ import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
-import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/base_editor.dart';
+import 'package:nashmi_app/widgets/fire_builder.dart';
 
-import '../../network/api_service.dart';
-
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<dynamic>> _futures;
-
-  Future<List<dynamic>> _fetchFutures() {
-    return ApiService.build(
-      callBack: () async {
-        final categoriesFuture = context.fireProvider.mainCategoriesQuery.limit(8).get();
-        return Future.wait([categoriesFuture]);
-      },
-    );
-  }
-
-  void _initialize() {
-    _futures = _fetchFutures();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initialize();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return CustomFutureBuilder(
-      future: _futures,
+    return FireBuilder(
+      initialData: [
+        [
+          CategoryModel(
+            nameEn: "Khaled",
+            nameAr: "Khaled",
+            thumbnail: kFakeImage,
+          ),
+        ],
+      ],
+      futures: [
+        context.fireProvider.mainCategoriesQuery.limit(8).get().then((value) => value.docs.map((e) => e.data()).toList()),
+      ],
       onComplete: (context, snapshot) {
-        final categoriesQuerySnapshot = (snapshot.data![0] as QuerySnapshot<CategoryModel>).docs;
+        final categories = snapshot.data![0] as List<CategoryModel>;
         return CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -184,9 +165,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisCount: 4,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  childCount: categoriesQuerySnapshot.length,
+                  childCount: categories.length,
                   (context, index) {
-                    final category = categoriesQuerySnapshot[index].data();
+                    final category = categories[index];
                     return CategoryBubble(
                       category: category,
                     );
@@ -228,14 +209,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
-        );
-      },
-      onError: (error) {
-        return AppErrorWidget(
-          error: error,
-          onRetry: () {
-            setState(() {});
-          },
         );
       },
     );
