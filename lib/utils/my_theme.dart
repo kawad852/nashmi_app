@@ -1,6 +1,6 @@
-import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 const kEditorBottomPadding = 16.0;
 const kProductBubbleHeight = 70.0;
@@ -56,13 +56,31 @@ class MyTheme {
       useMaterial3: true,
       fontFamily: fontFamily,
       colorScheme: colorScheme,
-      appBarTheme: AppBarTheme(
-        color: colorScheme.surface,
-      ),
       listTileTheme: ListTileThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusPrimary),
         ),
+      ),
+      actionIconTheme: ActionIconThemeData(
+        backButtonIconBuilder: (BuildContext context) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: colorScheme.onSurface,
+              ),
+              Text(
+                context.appLocalization.back,
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          );
+        },
       ),
       cardTheme: CardTheme(
         shape: RoundedRectangleBorder(
