@@ -15,13 +15,13 @@ class CategoryBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            context.push(const SingleCategoryScreen());
-          },
-          child: Container(
+    return GestureDetector(
+      onTap: () {
+        context.push(const SingleCategoryScreen());
+      },
+      child: Column(
+        children: [
+          Container(
             width: 70,
             height: 70,
             alignment: Alignment.center,
@@ -35,15 +35,15 @@ class CategoryBubble extends StatelessWidget {
               height: 50,
             ),
           ),
-        ),
-        Text(
-          context.translate(
-            textEN: category.nameEn!,
-            textAR: category.nameAr!,
-          ),
-          overflow: TextOverflow.ellipsis,
-        )
-      ],
+          Text(
+            context.translate(
+              textEN: category.nameEn!,
+              textAR: category.nameAr!,
+            ),
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
+      ),
     );
   }
 }
