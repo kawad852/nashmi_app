@@ -20,15 +20,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FireBuilder(
-      initialData: [
-        [
-          CategoryModel(
-            nameEn: "Khaled",
-            nameAr: "Khaled",
-            thumbnail: kFakeImage,
-          ),
-        ],
-      ],
       futures: [
         context.fireProvider.mainCategoriesQuery.limit(8).get().then((value) => value.docs.map((e) => e.data()).toList()),
       ],
