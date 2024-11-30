@@ -28,7 +28,7 @@ class StretchedButton extends StatelessWidget {
           onPressed: onPressed,
           style: FilledButton.styleFrom(
             minimumSize: const Size(600, 48),
-            backgroundColor: backgroundColor ?? context.colorPalette.black1D,
+            backgroundColor: backgroundColor ?? context.colorPalette.blackD1D,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
             ),

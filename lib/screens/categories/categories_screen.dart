@@ -86,7 +86,9 @@ class CategoriesScreen extends StatelessWidget {
                     final category = categorySnapshot.docs[index].data();
                     return GestureDetector(
                       onTap: () {
-                        context.push(const ProvidersScreen());
+                        context.push(ProvidersScreen(
+                          category: category,
+                        ));
                       },
                       child: Container(
                         width: double.infinity,
@@ -106,7 +108,7 @@ class CategoriesScreen extends StatelessWidget {
                                 ),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: context.colorPalette.black1D,
+                                  color: context.colorPalette.blackD1D,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),

@@ -26,7 +26,9 @@ class CategoryBubble extends StatelessWidget {
           );
         } else {
           context.navigate(
-            (context) => const ProvidersScreen(),
+            (context) => ProvidersScreen(
+              category: category,
+            ),
           );
         }
       },

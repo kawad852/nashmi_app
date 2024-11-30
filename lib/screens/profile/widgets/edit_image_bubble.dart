@@ -16,7 +16,7 @@ class EditImageBubble extends StatelessWidget {
         height: 19,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: context.colorPalette.black1D,
+          color: context.colorPalette.blackD1D,
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(MyTheme.radiusSecondary),
             bottomRight: Radius.circular(MyTheme.radiusSecondary),

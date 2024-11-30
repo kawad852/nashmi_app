@@ -1,5 +1,5 @@
-import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/utils/my_theme.dart';
 
 class ColorPalette {
   final BuildContext _context;
@@ -9,26 +9,23 @@ class ColorPalette {
   static of(BuildContext context) => ColorPalette(context);
 
   bool get _isLightTheme => MyTheme.isLightTheme(_context);
-  
+
   ///common
   Color get white => Colors.white;
   Color get black => Colors.black;
 
   //black
   Color get black292 => const Color(0xFF292D32);
-  Color get black1D => const Color(0xFF1D1D1D);
+  Color get blackD1D => const Color(0xFF1D1D1D);
   Color get black3F3 => const Color(0xFF3F3F3F);
-
 
   //red
   Color get redDA0 => const Color(0xFFDA0000);
   Color get redB31 => const Color(0xFFB31018);
   Color get red8B0 => const Color(0xFF8B0304);
 
-
   //yellow
   Color get yellowFBB => const Color(0xFFFBBC05);
-
 
   //green
   Color get green1C9 => const Color(0xFF1C9924);
@@ -41,9 +38,6 @@ class ColorPalette {
   Color get green008 => const Color(0xFF008C16);
   Color get greenE6F => const Color(0xFFE6FDCF);
   Color get green007 => const Color(0xFF007A3D);
-
-
- 
 
   //grey
   Color get grey81 => const Color(0xFF818181);

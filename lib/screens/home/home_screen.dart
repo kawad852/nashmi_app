@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                   child: BaseEditor(
                     hintText: context.appLocalization.whatAreYouLooking,
                     hintStyle: TextStyle(
-                      color: context.colorPalette.black1D,
+                      color: context.colorPalette.blackD1D,
                       fontSize: 14,
                     ),
                     prefixIcon: const IconButton(

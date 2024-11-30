@@ -1,0 +1,44 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../helper/time_stamp_serializer.dart';
+import '../../utils/app_constants.dart';
+
+part 'provider_model.freezed.dart';
+part 'provider_model.g.dart';
+
+@unfreezed
+class ProviderModel with _$ProviderModel {
+  factory ProviderModel({
+    @TimestampSerializer() DateTime? createdAt,
+    String? id,
+    String? nameEn,
+    String? nameAr,
+    String? descriptionEn,
+    String? descriptionAr,
+    @Default('ACTIVE') String status,
+    String? thumbnail,
+    String? stateId,
+    String? cityId,
+    String? addressEn,
+    String? addressAr,
+    String? facebookURL,
+    String? instagramUsername,
+    double? latitude,
+    double? longitude,
+    @Default(kOrder) int order,
+    @Default(kFallBackCountryCode) String personalPhoneCountryCode,
+    String? personalPhoneNum,
+    @Default(kFallBackCountryCode) String providerPhoneCountryCode,
+    String? providerPhoneNum,
+    @Default(kFallBackCountryCode) String whatsAppNumberCountryCode,
+    String? whatsAppNumber,
+    @Default(false) bool isVerified,
+    List<String>? images,
+    @Default([]) List<String> categoryIds,
+    @Default([]) List<String> mainCategoryIds,
+    @Default([]) List<String> subCategoryIds,
+    List<String>? tagIds,
+  }) = _ProviderModel;
+
+  factory ProviderModel.fromJson(Map<String, dynamic> json) => _$ProviderModelFromJson(json);
+}
