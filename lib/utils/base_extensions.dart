@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nashmi_app/alerts/loading/app_loading_indicators.dart';
 import 'package:nashmi_app/models/countries_model.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
@@ -6,8 +8,6 @@ import 'package:nashmi_app/utils/app_routes.dart';
 import 'package:nashmi_app/utils/color_palette.dart';
 import 'package:nashmi_app/utils/countries.dart';
 import 'package:nashmi_app/utils/enums.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 extension LanguageExtension on BuildContext {
   AppLocalizations get appLocalization => AppLocalizations.of(this)!;
@@ -94,7 +94,7 @@ extension NavigatorExtension on BuildContext {
     }
   }
 
-  Future<void> pushAndRemoveUntil(Widget screen) async{
+  Future<void> pushAndRemoveUntil(Widget screen) async {
     final routeName = AppRoutes.names[screen.runtimeType];
     Navigator.pushAndRemoveUntil(
       this,

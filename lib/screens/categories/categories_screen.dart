@@ -1,27 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
+import 'package:nashmi_app/widgets/fire_builder.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  final List<CategoryModel> initialData;
+import '../../network/my_fields.dart';
+import '../../utils/my_theme.dart';
+import '../providers/providers_screen.dart';
+
+class CategoriesScreen extends StatelessWidget {
+  final CategoryModel? mainCategory;
 
   const CategoriesScreen({
     super.key,
-    required this.initialData,
+    this.mainCategory,
   });
 
-  @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
-}
-
-class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return NashmiScaffold(
@@ -53,7 +55,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(start: kScreenMargin, bottom: 10),
               child: Text(
-                context.appLocalization.whatDoWehave,
+                mainCategory != null
+                    ? context.translate(
+                        textEN: mainCategory!.nameEn!,
+                        textAR: mainCategory!.nameAr!,
+                      )
+                    : context.appLocalization.whatDoWehave,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -63,20 +70,76 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
         ),
       ),
-      child: FirePaginator(
-        pageSize: 30,
-        query: context.fireProvider.mainCategoriesQuery,
-        builder: (context, snapshot) {
-          final categories = snapshot.docs;
-          return GridView.builder(
-            itemCount: categories.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-            ),
-            itemBuilder: (context, index) {
-              final category = categories[index].data();
-              return CategoryBubble(
-                category: category,
+      child: Builder(
+        builder: (context) {
+          if (mainCategory != null) {
+            return FireBuilder(
+              futures: [
+                FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: mainCategory!.subCategories).get(),
+              ],
+              onComplete: (context, snapshot) {
+                final categorySnapshot = snapshot.data![0] as QuerySnapshot<CategoryModel>;
+                return ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(height: 10),
+                  itemCount: categorySnapshot.docs.length,
+                  itemBuilder: (context, index) {
+                    final category = categorySnapshot.docs[index].data();
+                    return GestureDetector(
+                      onTap: () {
+                        context.push(const ProvidersScreen());
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: context.colorPalette.greyF2F,
+                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                context.translate(
+                                  textEN: category.nameEn!,
+                                  textAR: category.nameAr!,
+                                ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: context.colorPalette.black1D,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          }
+          return FirePaginator(
+            pageSize: 30,
+            query: context.fireProvider.mainCategoriesQuery,
+            builder: (context, snapshot) {
+              final categories = snapshot.docs;
+              return GridView.builder(
+                itemCount: categories.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                ),
+                itemBuilder: (context, index) {
+                  final category = categories[index].data();
+                  return CategoryBubble(
+                    category: category,
+                  );
+                },
               );
             },
           );
