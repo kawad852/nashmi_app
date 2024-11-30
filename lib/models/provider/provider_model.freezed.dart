@@ -38,10 +38,10 @@ mixin _$ProviderModel {
   set status(String value) => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
   set thumbnail(String? value) => throw _privateConstructorUsedError;
-  String? get stateId => throw _privateConstructorUsedError;
-  set stateId(String? value) => throw _privateConstructorUsedError;
-  String? get cityId => throw _privateConstructorUsedError;
-  set cityId(String? value) => throw _privateConstructorUsedError;
+  StateModel? get state => throw _privateConstructorUsedError;
+  set state(StateModel? value) => throw _privateConstructorUsedError;
+  CityModel? get city => throw _privateConstructorUsedError;
+  set city(CityModel? value) => throw _privateConstructorUsedError;
   String? get addressEn => throw _privateConstructorUsedError;
   set addressEn(String? value) => throw _privateConstructorUsedError;
   String? get addressAr => throw _privateConstructorUsedError;
@@ -109,8 +109,8 @@ abstract class $ProviderModelCopyWith<$Res> {
       String? descriptionAr,
       String status,
       String? thumbnail,
-      String? stateId,
-      String? cityId,
+      StateModel? state,
+      CityModel? city,
       String? addressEn,
       String? addressAr,
       String? facebookURL,
@@ -130,6 +130,9 @@ abstract class $ProviderModelCopyWith<$Res> {
       List<String> mainCategoryIds,
       List<String> subCategoryIds,
       List<String>? tagIds});
+
+  $StateModelCopyWith<$Res>? get state;
+  $CityModelCopyWith<$Res>? get city;
 }
 
 /// @nodoc
@@ -155,8 +158,8 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
     Object? descriptionAr = freezed,
     Object? status = null,
     Object? thumbnail = freezed,
-    Object? stateId = freezed,
-    Object? cityId = freezed,
+    Object? state = freezed,
+    Object? city = freezed,
     Object? addressEn = freezed,
     Object? addressAr = freezed,
     Object? facebookURL = freezed,
@@ -210,14 +213,14 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
-      stateId: freezed == stateId
-          ? _value.stateId
-          : stateId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cityId: freezed == cityId
-          ? _value.cityId
-          : cityId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as StateModel?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as CityModel?,
       addressEn: freezed == addressEn
           ? _value.addressEn
           : addressEn // ignore: cast_nullable_to_non_nullable
@@ -296,6 +299,34 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
               as List<String>?,
     ) as $Val);
   }
+
+  /// Create a copy of ProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StateModelCopyWith<$Res>? get state {
+    if (_value.state == null) {
+      return null;
+    }
+
+    return $StateModelCopyWith<$Res>(_value.state!, (value) {
+      return _then(_value.copyWith(state: value) as $Val);
+    });
+  }
+
+  /// Create a copy of ProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CityModelCopyWith<$Res>? get city {
+    if (_value.city == null) {
+      return null;
+    }
+
+    return $CityModelCopyWith<$Res>(_value.city!, (value) {
+      return _then(_value.copyWith(city: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -315,8 +346,8 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       String? descriptionAr,
       String status,
       String? thumbnail,
-      String? stateId,
-      String? cityId,
+      StateModel? state,
+      CityModel? city,
       String? addressEn,
       String? addressAr,
       String? facebookURL,
@@ -336,6 +367,11 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       List<String> mainCategoryIds,
       List<String> subCategoryIds,
       List<String>? tagIds});
+
+  @override
+  $StateModelCopyWith<$Res>? get state;
+  @override
+  $CityModelCopyWith<$Res>? get city;
 }
 
 /// @nodoc
@@ -359,8 +395,8 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
     Object? descriptionAr = freezed,
     Object? status = null,
     Object? thumbnail = freezed,
-    Object? stateId = freezed,
-    Object? cityId = freezed,
+    Object? state = freezed,
+    Object? city = freezed,
     Object? addressEn = freezed,
     Object? addressAr = freezed,
     Object? facebookURL = freezed,
@@ -414,14 +450,14 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
-      stateId: freezed == stateId
-          ? _value.stateId
-          : stateId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cityId: freezed == cityId
-          ? _value.cityId
-          : cityId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as StateModel?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as CityModel?,
       addressEn: freezed == addressEn
           ? _value.addressEn
           : addressEn // ignore: cast_nullable_to_non_nullable
@@ -514,8 +550,8 @@ class _$ProviderModelImpl implements _ProviderModel {
       this.descriptionAr,
       this.status = 'ACTIVE',
       this.thumbnail,
-      this.stateId,
-      this.cityId,
+      this.state,
+      this.city,
       this.addressEn,
       this.addressAr,
       this.facebookURL,
@@ -558,9 +594,9 @@ class _$ProviderModelImpl implements _ProviderModel {
   @override
   String? thumbnail;
   @override
-  String? stateId;
+  StateModel? state;
   @override
-  String? cityId;
+  CityModel? city;
   @override
   String? addressEn;
   @override
@@ -610,7 +646,7 @@ class _$ProviderModelImpl implements _ProviderModel {
 
   @override
   String toString() {
-    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, stateId: $stateId, cityId: $cityId, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
+    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
   }
 
   /// Create a copy of ProviderModel
@@ -639,8 +675,8 @@ abstract class _ProviderModel implements ProviderModel {
       String? descriptionAr,
       String status,
       String? thumbnail,
-      String? stateId,
-      String? cityId,
+      StateModel? state,
+      CityModel? city,
       String? addressEn,
       String? addressAr,
       String? facebookURL,
@@ -691,11 +727,11 @@ abstract class _ProviderModel implements ProviderModel {
   String? get thumbnail;
   set thumbnail(String? value);
   @override
-  String? get stateId;
-  set stateId(String? value);
+  StateModel? get state;
+  set state(StateModel? value);
   @override
-  String? get cityId;
-  set cityId(String? value);
+  CityModel? get city;
+  set city(CityModel? value);
   @override
   String? get addressEn;
   set addressEn(String? value);

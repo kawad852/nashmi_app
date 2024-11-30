@@ -130,7 +130,9 @@ class ProvidersScreen extends StatelessWidget {
                   itemCount: snapshot.docs.length,
                   itemBuilder: (context, index) {
                     final provider = snapshot.docs[index].data();
-                    return const ProviderCard();
+                    return ProviderCard(
+                      provider: provider,
+                    );
                   },
                 ),
               );

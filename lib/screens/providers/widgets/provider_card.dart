@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/screens/single_provider/single_provider_screen.dart';
-import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -10,7 +10,12 @@ import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/rating_bubble.dart';
 
 class ProviderCard extends StatelessWidget {
-  const ProviderCard({super.key});
+  final ProviderModel provider;
+
+  const ProviderCard({
+    super.key,
+    required this.provider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +33,8 @@ class ProviderCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const CustomNetworkImage(
-              kFakeImage,
+            CustomNetworkImage(
+              provider.thumbnail!,
               width: 60,
               height: 60,
               radius: MyTheme.radiusSecondary,
@@ -40,15 +45,19 @@ class ProviderCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CustomText(
-                    "احمد محمد",
-                    overFlow: TextOverflow.ellipsis,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    context.translate(textEN: provider.nameEn, textAR: provider.nameAr),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  CustomText(
-                    "عمان ، صويلح",
-                    color: context.colorPalette.grey8F8,
-                    overFlow: TextOverflow.ellipsis,
+                  Text(
+                    "${context.translate(textEN: provider.state!.nameEn!, textAR: provider.state!.nameAr!)}, ${context.translate(textEN: provider.city!.nameEn!, textAR: provider.city!.nameAr!)}",
+                    style: TextStyle(
+                      color: context.colorPalette.grey8F8,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Row(
                     children: [

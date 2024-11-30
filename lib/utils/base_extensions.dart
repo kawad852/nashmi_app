@@ -19,10 +19,10 @@ extension LanguageExtension on BuildContext {
   bool get isRTL => Localizations.localeOf(this).languageCode == LanguageEnum.arabic;
 
   String translate({
-    required String textEN,
-    required String textAR,
+    required String? textEN,
+    required String? textAR,
   }) {
-    return isLTR ? textEN : textAR;
+    return (isLTR ? textEN : textAR) ?? "";
   }
 }
 

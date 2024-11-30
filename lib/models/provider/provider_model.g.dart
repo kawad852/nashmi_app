@@ -16,8 +16,12 @@ _$ProviderModelImpl _$$ProviderModelImplFromJson(Map<String, dynamic> json) =>
       descriptionAr: json['descriptionAr'] as String?,
       status: json['status'] as String? ?? 'ACTIVE',
       thumbnail: json['thumbnail'] as String?,
-      stateId: json['stateId'] as String?,
-      cityId: json['cityId'] as String?,
+      state: json['state'] == null
+          ? null
+          : StateModel.fromJson(json['state'] as Map<String, dynamic>),
+      city: json['city'] == null
+          ? null
+          : CityModel.fromJson(json['city'] as Map<String, dynamic>),
       addressEn: json['addressEn'] as String?,
       addressAr: json['addressAr'] as String?,
       facebookURL: json['facebookURL'] as String?,
@@ -63,8 +67,8 @@ Map<String, dynamic> _$$ProviderModelImplToJson(_$ProviderModelImpl instance) =>
       'descriptionAr': instance.descriptionAr,
       'status': instance.status,
       'thumbnail': instance.thumbnail,
-      'stateId': instance.stateId,
-      'cityId': instance.cityId,
+      'state': instance.state?.toJson(),
+      'city': instance.city?.toJson(),
       'addressEn': instance.addressEn,
       'addressAr': instance.addressAr,
       'facebookURL': instance.facebookURL,
