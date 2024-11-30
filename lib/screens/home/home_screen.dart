@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/models/ad/ad_model.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
+import 'package:nashmi_app/models/sponsor/sponsor_model.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
+import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/category/categories_screen.dart';
-import 'package:nashmi_app/screens/home/widgets/my_slider.dart';
+import 'package:nashmi_app/screens/home/widgets/ads_carousel.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
@@ -22,9 +27,13 @@ class HomeScreen extends StatelessWidget {
     return FireBuilder(
       futures: [
         context.fireProvider.mainCategoriesQuery.limit(8).get().then((value) => value.docs.map((e) => e.data()).toList()),
+        FirebaseFirestore.instance.ads.orderBy(MyFields.createdAt, descending: true).get().then((value) => value.docs.map((e) => e.data()).toList()),
+        FirebaseFirestore.instance.sponsors.orderBy(MyFields.createdAt, descending: true).get().then((value) => value.docs.map((e) => e.data()).toList()),
       ],
       onComplete: (context, snapshot) {
         final categories = snapshot.data![0] as List<CategoryModel>;
+        final ads = snapshot.data![1] as List<AdModel>;
+        final sponsors = snapshot.data![2] as List<SponsorModel>;
         return CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -92,7 +101,13 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const MySlider(),
+                    if (ads.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: AdsCarousel(
+                          ads: ads,
+                        ),
+                      ),
                     Row(
                       children: [
                         Expanded(
@@ -168,39 +183,41 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 20, bottom: 10),
-                    child: CustomText(
-                      context.appLocalization.officialSponsors,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+            if (sponsors.isNotEmpty)
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 20, bottom: 10),
+                      child: CustomText(
+                        context.appLocalization.officialSponsors,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 90,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) => const SizedBox(width: 10),
-                      itemCount: 10,
-                      padding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return const CustomNetworkImage(
-                          kFakeImage,
-                          width: 80,
-                          height: 80,
-                          radius: MyTheme.radiusSecondary,
-                        );
-                      },
+                    SizedBox(
+                      height: 90,
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) => const SizedBox(width: 10),
+                        itemCount: sponsors.length,
+                        padding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          final sponsor = sponsors[index];
+                          return CustomNetworkImage(
+                            sponsor.logo!,
+                            width: 80,
+                            height: 80,
+                            radius: MyTheme.radiusSecondary,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
           ],
         );
       },

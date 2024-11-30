@@ -3,4 +3,6 @@ class MyCollections {
   static const categories = 'categories';
   static const providers = 'providers';
   static const tags = 'tags';
+  static const ads = 'ads';
+  static const sponsors = 'sponsors';
 }
