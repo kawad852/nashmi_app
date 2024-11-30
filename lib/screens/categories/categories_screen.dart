@@ -82,6 +82,7 @@ class CategoriesScreen extends StatelessWidget {
                 return ListView.separated(
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                   itemCount: categorySnapshot.docs.length,
+                  padding: const EdgeInsets.symmetric(horizontal: kScreenMargin),
                   itemBuilder: (context, index) {
                     final category = categorySnapshot.docs[index].data();
                     return GestureDetector(

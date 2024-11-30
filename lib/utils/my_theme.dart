@@ -56,11 +56,6 @@ class MyTheme {
       useMaterial3: true,
       fontFamily: fontFamily,
       colorScheme: colorScheme,
-      listTileTheme: ListTileThemeData(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radiusPrimary),
-        ),
-      ),
       actionIconTheme: ActionIconThemeData(
         backButtonIconBuilder: (BuildContext context) {
           return Row(
@@ -81,11 +76,6 @@ class MyTheme {
             ],
           );
         },
-      ),
-      cardTheme: CardTheme(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(

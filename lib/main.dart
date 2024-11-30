@@ -79,7 +79,8 @@ class _MyAppState extends State<MyApp> {
       builder: (context, appProvider, child) {
         final isLight = appProvider.appTheme == ThemeEnum.light;
         var seedColorScheme = ColorScheme.fromSeed(
-          seedColor: const Color(0xFFC2E7D6),
+          seedColor: const Color(0xFFB31018),
+          surface: Colors.white,
           brightness: isLight ? Brightness.light : Brightness.dark,
         );
         return MultiProvider(
