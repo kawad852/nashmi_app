@@ -13,7 +13,7 @@ import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
 import 'package:nashmi_app/providers/fire_provider.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
-import 'package:nashmi_app/screens/home/home_screen.dart';
+import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
             locale: Locale(appProvider.appLocale.languageCode),
             theme: MyTheme().materialTheme(context, seedColorScheme),
             // home: _toggleRoute(context),
-            home: const HomeScreen(),
+            home: const AppNavBar(),
           ),
         );
       },
