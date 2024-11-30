@@ -8,10 +8,11 @@ class RatingBubble extends StatelessWidget {
   final double? rate;
   final bool ignoreGestures;
   final void Function(double)? onRatingUpdate;
+
   const RatingBubble({
     super.key,
     this.rate,
-    this.ignoreGestures = false,
+    this.ignoreGestures = true,
     this.onRatingUpdate,
   });
 

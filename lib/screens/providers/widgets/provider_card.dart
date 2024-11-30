@@ -61,14 +61,13 @@ class ProviderCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const RatingBubble(
-                        rate: 3,
-                        ignoreGestures: true,
+                      RatingBubble(
+                        rate: provider.avgRating,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
                         child: CustomText(
-                          "(450)",
+                          "(${provider.ratingsCount.round()})",
                           fontSize: 12,
                           color: context.colorPalette.grey8F8,
                         ),
@@ -77,7 +76,7 @@ class ProviderCard extends StatelessWidget {
                       const SizedBox(width: 3),
                       Expanded(
                         child: CustomText(
-                          "1.3 الف ${context.appLocalization.like}",
+                          "${provider.likesCount.round()} ${context.appLocalization.like}",
                           fontSize: 12,
                           overFlow: TextOverflow.ellipsis,
                           color: context.colorPalette.grey8F8,

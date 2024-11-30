@@ -54,6 +54,12 @@ mixin _$ProviderModel {
   set latitude(double? value) => throw _privateConstructorUsedError;
   double? get longitude => throw _privateConstructorUsedError;
   set longitude(double? value) => throw _privateConstructorUsedError;
+  double get avgRating => throw _privateConstructorUsedError;
+  set avgRating(double value) => throw _privateConstructorUsedError;
+  double get ratingsCount => throw _privateConstructorUsedError;
+  set ratingsCount(double value) => throw _privateConstructorUsedError;
+  double get likesCount => throw _privateConstructorUsedError;
+  set likesCount(double value) => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   set order(int value) => throw _privateConstructorUsedError;
   String get personalPhoneCountryCode => throw _privateConstructorUsedError;
@@ -117,6 +123,9 @@ abstract class $ProviderModelCopyWith<$Res> {
       String? instagramUsername,
       double? latitude,
       double? longitude,
+      double avgRating,
+      double ratingsCount,
+      double likesCount,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -166,6 +175,9 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
     Object? instagramUsername = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? avgRating = null,
+    Object? ratingsCount = null,
+    Object? likesCount = null,
     Object? order = null,
     Object? personalPhoneCountryCode = null,
     Object? personalPhoneNum = freezed,
@@ -245,6 +257,18 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
+      avgRating: null == avgRating
+          ? _value.avgRating
+          : avgRating // ignore: cast_nullable_to_non_nullable
+              as double,
+      ratingsCount: null == ratingsCount
+          ? _value.ratingsCount
+          : ratingsCount // ignore: cast_nullable_to_non_nullable
+              as double,
+      likesCount: null == likesCount
+          ? _value.likesCount
+          : likesCount // ignore: cast_nullable_to_non_nullable
+              as double,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -354,6 +378,9 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       String? instagramUsername,
       double? latitude,
       double? longitude,
+      double avgRating,
+      double ratingsCount,
+      double likesCount,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -403,6 +430,9 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
     Object? instagramUsername = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? avgRating = null,
+    Object? ratingsCount = null,
+    Object? likesCount = null,
     Object? order = null,
     Object? personalPhoneCountryCode = null,
     Object? personalPhoneNum = freezed,
@@ -482,6 +512,18 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
+      avgRating: null == avgRating
+          ? _value.avgRating
+          : avgRating // ignore: cast_nullable_to_non_nullable
+              as double,
+      ratingsCount: null == ratingsCount
+          ? _value.ratingsCount
+          : ratingsCount // ignore: cast_nullable_to_non_nullable
+              as double,
+      likesCount: null == likesCount
+          ? _value.likesCount
+          : likesCount // ignore: cast_nullable_to_non_nullable
+              as double,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -558,6 +600,9 @@ class _$ProviderModelImpl implements _ProviderModel {
       this.instagramUsername,
       this.latitude,
       this.longitude,
+      this.avgRating = 0,
+      this.ratingsCount = 0,
+      this.likesCount = 0,
       this.order = kOrder,
       this.personalPhoneCountryCode = kFallBackCountryCode,
       this.personalPhoneNum,
@@ -611,6 +656,15 @@ class _$ProviderModelImpl implements _ProviderModel {
   double? longitude;
   @override
   @JsonKey()
+  double avgRating;
+  @override
+  @JsonKey()
+  double ratingsCount;
+  @override
+  @JsonKey()
+  double likesCount;
+  @override
+  @JsonKey()
   int order;
   @override
   @JsonKey()
@@ -646,7 +700,7 @@ class _$ProviderModelImpl implements _ProviderModel {
 
   @override
   String toString() {
-    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
+    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, avgRating: $avgRating, ratingsCount: $ratingsCount, likesCount: $likesCount, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
   }
 
   /// Create a copy of ProviderModel
@@ -683,6 +737,9 @@ abstract class _ProviderModel implements ProviderModel {
       String? instagramUsername,
       double? latitude,
       double? longitude,
+      double avgRating,
+      double ratingsCount,
+      double likesCount,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -750,6 +807,15 @@ abstract class _ProviderModel implements ProviderModel {
   @override
   double? get longitude;
   set longitude(double? value);
+  @override
+  double get avgRating;
+  set avgRating(double value);
+  @override
+  double get ratingsCount;
+  set ratingsCount(double value);
+  @override
+  double get likesCount;
+  set likesCount(double value);
   @override
   int get order;
   set order(int value);
