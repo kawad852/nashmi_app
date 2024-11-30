@@ -22,7 +22,7 @@ class _OffersScreenState extends State<OffersScreen> {
     return Scaffold(
       bottomNavigationBar: const OffersNavBar(),
       body: NashmiScaffold(
-        child: CustomScrollView(
+        body: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,

@@ -41,7 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NashmiScaffold(
-        child: CustomScrollView(
+        body: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,

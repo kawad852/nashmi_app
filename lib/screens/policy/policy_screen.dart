@@ -32,7 +32,7 @@ class _PolicyScreenState extends State<PolicyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NashmiScaffold(
-        child: CustomScrollView(
+        body: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,

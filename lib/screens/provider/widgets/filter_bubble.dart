@@ -8,11 +8,14 @@ class FilterBubble extends StatelessWidget {
   final String icon;
   final String title;
   final void Function() onTap;
+  final bool selected;
+
   const FilterBubble({
     super.key,
     required this.icon,
     required this.title,
     required this.onTap,
+    required this.selected,
   });
 
   @override
@@ -37,10 +40,11 @@ class FilterBubble extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              size: 15,
-            )
+            if (selected)
+              Icon(
+                Icons.check,
+                color: context.colorPalette.green00A,
+              )
           ],
         ),
       ),

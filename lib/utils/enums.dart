@@ -10,9 +10,9 @@ class ThemeEnum {
 
 enum BookingType { hotel, flight }
 
-enum PolicyType { knowUs, termsAndConditions , privacyPolicy}
+enum PolicyType { knowUs, termsAndConditions, privacyPolicy }
 
-enum ContactType { ads, complaints}
+enum ContactType { ads, complaints }
 
 class SearchType {
   static const String cities = 'cities';
@@ -70,5 +70,14 @@ enum DirectionInd {
   oneWay('OneWay');
 
   const DirectionInd(this.value);
+  final String value;
+}
+
+enum FilterEnum {
+  topRated('TOP_RATED'),
+  mostLikes('MOST_LIKES'),
+  nearest('NEAREST');
+
+  const FilterEnum(this.value);
   final String value;
 }

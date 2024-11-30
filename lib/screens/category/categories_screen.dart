@@ -70,7 +70,7 @@ class CategoriesScreen extends StatelessWidget {
           ),
         ),
       ),
-      child: Builder(
+      body: Builder(
         builder: (context) {
           if (mainCategory != null) {
             return FireBuilder(

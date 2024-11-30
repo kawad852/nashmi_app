@@ -43,7 +43,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NashmiScaffold(
-        child: CustomScrollView(
+        body: CustomScrollView(
           slivers: [
             const SliverAppBar(
               pinned: true,

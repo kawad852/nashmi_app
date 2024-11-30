@@ -59,7 +59,7 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NashmiScaffold(
-        child: CustomScrollView(
+        body: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,

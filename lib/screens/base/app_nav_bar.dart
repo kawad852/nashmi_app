@@ -69,7 +69,7 @@ class _AppNavBarState extends State<AppNavBar> {
   Widget build(BuildContext context) {
     bool withNotch = MediaQuery.of(context).viewPadding.bottom > 0.0;
     return NashmiScaffold(
-      child: Scaffold(
+      body: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         bottomNavigationBar: Container(

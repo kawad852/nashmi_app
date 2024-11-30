@@ -113,7 +113,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
               ],
             ),
           ),
-          child: CustomScrollView(
+          body: CustomScrollView(
             slivers: [
               SliverAppBar(
                 pinned: true,

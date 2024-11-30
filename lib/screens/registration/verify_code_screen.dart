@@ -21,7 +21,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NashmiScaffold(
-        child: CustomScrollView(
+        body: CustomScrollView(
           slivers: [
             const SliverAppBar(
               pinned: true,

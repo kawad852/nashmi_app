@@ -60,7 +60,7 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NashmiScaffold(
-        child: PageView.builder(
+        body: PageView.builder(
           controller: _pageController,
           itemCount: 3,
           onPageChanged: (value) {

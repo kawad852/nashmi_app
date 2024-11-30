@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
+import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
-import 'package:nashmi_app/screens/provider/filter_screen.dart';
+import 'package:nashmi_app/screens/provider/widgets/filter_sheet.dart';
 import 'package:nashmi_app/screens/provider/widgets/provider_card.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
+import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
@@ -17,7 +19,7 @@ import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/header_tile.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
-class ProvidersScreen extends StatelessWidget {
+class ProvidersScreen extends StatefulWidget {
   final CategoryModel category;
 
   const ProvidersScreen({
@@ -25,21 +27,57 @@ class ProvidersScreen extends StatelessWidget {
     required this.category,
   });
 
+  @override
+  State<ProvidersScreen> createState() => _ProvidersScreenState();
+}
+
+class _ProvidersScreenState extends State<ProvidersScreen> {
+  var filterEnum = FilterEnum.topRated;
+
   List<String> get _getAllIds {
     List<String> ids = [];
 
-    ids.add(category.id!);
-    for (var element in category.subCategories) {
+    ids.add(widget.category.id!);
+    for (var element in widget.category.subCategories) {
       ids.add(element);
     }
 
     return ids;
   }
 
+  void _openFilterSheet(BuildContext context) {
+    showModalBottomSheet<FilterEnum?>(
+        context: context,
+        backgroundColor: context.colorPalette.greyF2F,
+        builder: (context) {
+          return FilterSheet(
+            filterEnum: filterEnum,
+          );
+        }).then((value) {
+      if (value != null && value != filterEnum) {
+        setState(() {
+          filterEnum = value;
+        });
+      }
+    });
+  }
+
+  Query<ProviderModel> _getQuery() {
+    final query = FirebaseFirestore.instance.providers.where(MyFields.categoryIds, arrayContainsAny: _getAllIds);
+    switch (filterEnum) {
+      case FilterEnum.mostLikes:
+        return query.orderBy(MyFields.likesCount, descending: true);
+      case FilterEnum.nearest:
+        return query.orderBy(MyFields.avgRating, descending: true);
+      default:
+        return query.orderBy(MyFields.avgRating, descending: true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return NashmiScaffold(
-      child: CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           SliverAppBar(
             pinned: true,
@@ -93,7 +131,7 @@ class ProvidersScreen extends StatelessWidget {
                     const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
-                        context.push(const FilterScreen());
+                        _openFilterSheet(context);
                       },
                       child: Container(
                         width: 48,
@@ -114,13 +152,14 @@ class ProvidersScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: HeaderTile(
               title: context.translate(
-                textEN: category.nameEn!,
-                textAR: category.nameAr!,
+                textEN: widget.category.nameEn!,
+                textAR: widget.category.nameAr!,
               ),
             ),
           ),
           FirePaginator(
-            query: FirebaseFirestore.instance.providers.where(MyFields.categoryIds, arrayContainsAny: _getAllIds),
+            key: ValueKey(filterEnum),
+            query: _getQuery(),
             isSliver: true,
             builder: (context, snapshot) {
               return SliverPadding(
