@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/screens/providers/widgets/filter_bubble.dart';
+import 'package:nashmi_app/screens/provider/widgets/filter_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
-import 'package:nashmi_app/screens/categories/categories_screen.dart';
+import 'package:nashmi_app/screens/category/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/my_slider.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';

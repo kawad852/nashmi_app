@@ -14,7 +14,7 @@ import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 import '../../network/my_fields.dart';
 import '../../utils/my_theme.dart';
-import '../providers/providers_screen.dart';
+import '../provider/providers_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
   final CategoryModel? mainCategory;

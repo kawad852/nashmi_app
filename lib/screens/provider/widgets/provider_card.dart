@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/provider/provider_model.dart';
-import 'package:nashmi_app/screens/single_provider/single_provider_screen.dart';
+import 'package:nashmi_app/screens/provider/provider_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -21,7 +21,11 @@ class ProviderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(const SingleProviderScreen());
+        context.navigate((context) {
+          return ProviderScreen(
+            provider: provider,
+          );
+        });
       },
       child: Container(
         width: double.infinity,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/screens/single_provider/single_provider_screen.dart';
+import 'package:nashmi_app/models/provider/provider_model.dart';
+import 'package:nashmi_app/screens/provider/provider_screen.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
@@ -38,7 +39,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  context.push(const SingleProviderScreen());
+                  context.navigate((context) {
+                    return ProviderScreen(
+                      provider: ProviderModel(),
+                    );
+                  });
                 },
                 child: Container(
                   width: double.infinity,
@@ -79,8 +84,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                   ignoreGestures: true,
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  padding: const EdgeInsets.symmetric(horizontal: 3),
                                   child: CustomText(
                                     "(450)",
                                     fontSize: 12,

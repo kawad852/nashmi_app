@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
-import 'package:nashmi_app/screens/categories/categories_screen.dart';
-import 'package:nashmi_app/screens/providers/providers_screen.dart';
+import 'package:nashmi_app/screens/category/categories_screen.dart';
+import 'package:nashmi_app/screens/provider/providers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';

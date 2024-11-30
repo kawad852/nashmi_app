@@ -5,11 +5,13 @@ import 'package:nashmi_app/utils/my_images.dart';
 class NashmiScaffold extends StatelessWidget {
   final Widget child;
   final PreferredSizeWidget? appBar;
+  final Widget? bottomNavigationBar;
 
   const NashmiScaffold({
     super.key,
     required this.child,
     this.appBar,
+    this.bottomNavigationBar,
   });
 
   @override
@@ -25,6 +27,7 @@ class NashmiScaffold extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: appBar,
+        bottomNavigationBar: bottomNavigationBar,
         body: child,
       ),
     );
