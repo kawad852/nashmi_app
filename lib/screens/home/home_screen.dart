@@ -5,6 +5,7 @@ import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/models/sponsor/sponsor_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
+import 'package:nashmi_app/providers/providers_search_screen.dart';
 import 'package:nashmi_app/screens/category/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/ads_carousel.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
@@ -16,7 +17,6 @@ import 'package:nashmi_app/widgets/category_bubble.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/editors/base_editor.dart';
 import 'package:nashmi_app/widgets/fire_builder.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -76,22 +76,11 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              flexibleSpace: Align(
+              flexibleSpace: const Align(
                 alignment: AlignmentDirectional.bottomEnd,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: BaseEditor(
-                    hintText: context.appLocalization.whatAreYouLooking,
-                    hintStyle: TextStyle(
-                      color: context.colorPalette.blackD1D,
-                      fontSize: 14,
-                    ),
-                    prefixIcon: const IconButton(
-                      onPressed: null,
-                      icon: CustomSvg(MyIcons.search),
-                    ),
-                    onChanged: (value) {},
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: ProvidersSearchScreen(),
                 ),
               ),
             ),
