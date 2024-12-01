@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             SliverAppBar(
               pinned: true,
               leadingWidth: double.infinity,
-              collapsedHeight: 100,
+              collapsedHeight: 110,
               leading: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -76,11 +76,11 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              flexibleSpace: const Align(
+              flexibleSpace: Align(
                 alignment: AlignmentDirectional.bottomEnd,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: ProvidersSearchScreen(),
+                  padding: const EdgeInsets.symmetric(horizontal: 20).copyWith(bottom: 10),
+                  child: const ProvidersSearchScreen(),
                 ),
               ),
             ),

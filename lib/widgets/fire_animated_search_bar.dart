@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 import 'my_search_anchor.dart';
 
@@ -34,6 +35,7 @@ class _FireAnimatedSearchBarState extends State<FireAnimatedSearchBar> {
         widget.onChanged(value, setState);
       },
       builder: widget.builder,
+      viewBackgroundColor: context.colorScheme.surface,
       resultsBuilder: widget.resultsBuilder,
     );
   }
