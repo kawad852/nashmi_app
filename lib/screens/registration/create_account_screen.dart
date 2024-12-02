@@ -178,7 +178,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            context.pushAndRemoveUntil(const RegistrationScreen());
+                            context.pushAndRemoveUntil((context) => const RegistrationScreen());
                           },
                           child: CustomText(
                             context.appLocalization.login,

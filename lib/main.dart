@@ -13,10 +13,12 @@ import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
 import 'package:nashmi_app/providers/fire_provider.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
-import 'package:nashmi_app/screens/base/app_nav_bar.dart';
+import 'package:nashmi_app/screens/home/home_screen.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
+import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
+import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/utils/shared_pref.dart';
 import 'package:provider/provider.dart';
 
@@ -64,8 +66,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  UserProvider get _userProvider => context.userProvider;
+
   Widget _toggleRoute(BuildContext context) {
-    return const IntroScreen();
+    if (_userProvider.isAuthenticated) {
+      return const HomeScreen();
+    } else if (MySharedPreferences.passedIntro) {
+      return const RegistrationScreen();
+    } else {
+      return const IntroScreen();
+    }
   }
 
   @override
@@ -101,8 +111,8 @@ class _MyAppState extends State<MyApp> {
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale(appProvider.appLocale.languageCode),
             theme: MyTheme().materialTheme(context, seedColorScheme),
-            // home: _toggleRoute(context),
-            home: const AppNavBar(),
+            home: _toggleRoute(context),
+            // home: const AppNavBar(),
           ),
         );
       },

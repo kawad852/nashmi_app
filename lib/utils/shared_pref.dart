@@ -41,4 +41,7 @@ class MySharedPreferences {
 
   static String get countryCode => _sharedPreferences.getString('countryCode') ?? kFallBackCountryCode;
   static set countryCode(String value) => _sharedPreferences.setString('countryCode', value);
+
+  static bool get passedIntro => _sharedPreferences.getBool('passedIntro') ?? false;
+  static set passedIntro(bool value) => _sharedPreferences.setBool('passedIntro', value);
 }

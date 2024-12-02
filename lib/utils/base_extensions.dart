@@ -94,15 +94,13 @@ extension NavigatorExtension on BuildContext {
     }
   }
 
-  Future<void> pushAndRemoveUntil(Widget screen) async {
-    final routeName = AppRoutes.names[screen.runtimeType];
+  Future<void> pushAndRemoveUntil(Widget Function(BuildContext context) builder) async {
+    // final routeName = AppRoutes.names[screen.runtimeType];
     Navigator.pushAndRemoveUntil(
       this,
       MaterialPageRoute(
-        builder: (context) {
-          return screen;
-        },
-        settings: RouteSettings(name: routeName),
+        builder: builder,
+        // settings: RouteSettings(name: routeName),
       ),
       (route) => false,
     );
