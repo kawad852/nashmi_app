@@ -10,4 +10,5 @@ const kAlgoliaApiKey = 'f8d1e85aff1c774a61757ea385c36088';
 class AlgoliaIndices {
   static const String providers = 'providers';
   static const String categories = 'categories';
+  static const String tags = 'tags';
 }

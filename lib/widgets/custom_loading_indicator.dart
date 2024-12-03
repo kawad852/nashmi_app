@@ -1,5 +1,5 @@
-import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 class CustomLoadingIndicator extends StatelessWidget {
   final bool withBackgroundColor;
@@ -13,7 +13,7 @@ class CustomLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       type: withBackgroundColor ? MaterialType.canvas : MaterialType.transparency,
-      color: context.colorScheme.background,
+      color: context.colorScheme.surface,
       child: Center(
         child: context.loaders.circular(),
       ),

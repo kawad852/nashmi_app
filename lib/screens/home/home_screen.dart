@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
 import 'package:nashmi_app/models/ad/ad_model.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/models/sponsor/sponsor_model.dart';
+import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/providers/providers_search_screen.dart';
@@ -14,22 +16,44 @@ import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
+import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/fire_builder.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<dynamic>> _futures;
+
+  void _initialize() {
+    _futures = ApiService.build(
+      callBack: () async {
+        final categoriesFuture = context.fireProvider.mainCategoriesQuery.limit(8).get().then((value) => value.docs.map((e) => e.data()).toList());
+        final adsFuture = FirebaseFirestore.instance.ads.orderBy(MyFields.createdAt, descending: true).get().then((value) => value.docs.map((e) => e.data()).toList());
+        final sponsorsFuture =
+            FirebaseFirestore.instance.sponsors.orderBy(MyFields.createdAt, descending: true).get().then((value) => value.docs.map((e) => e.data()).toList());
+        return Future.wait([categoriesFuture, adsFuture, sponsorsFuture]);
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FireBuilder(
-      futures: [
-        context.fireProvider.mainCategoriesQuery.limit(8).get().then((value) => value.docs.map((e) => e.data()).toList()),
-        FirebaseFirestore.instance.ads.orderBy(MyFields.createdAt, descending: true).get().then((value) => value.docs.map((e) => e.data()).toList()),
-        FirebaseFirestore.instance.sponsors.orderBy(MyFields.createdAt, descending: true).get().then((value) => value.docs.map((e) => e.data()).toList()),
-      ],
+    return CustomFutureBuilder(
+      future: _futures,
+      withBackgroundColor: true,
       onComplete: (context, snapshot) {
         final categories = snapshot.data![0] as List<CategoryModel>;
         final ads = snapshot.data![1] as List<AdModel>;
@@ -208,6 +232,16 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
           ],
+        );
+      },
+      onError: (error) {
+        return AppErrorWidget(
+          error: error,
+          onRetry: () {
+            setState(() {
+              _initialize();
+            });
+          },
         );
       },
     );

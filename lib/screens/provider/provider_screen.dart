@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nashmi_app/controllers/map_controller.dart';
 import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/models/tag/tag_model.dart';
+import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/provider/widgets/favorite_button.dart';
@@ -11,15 +12,16 @@ import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
+import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/fire_builder.dart';
 import 'package:nashmi_app/widgets/map_bubble.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/rating_bubble.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 
+import '../../alerts/errors/app_error_widget.dart';
 import '../../models/category/category_model.dart';
 
 class MyObject {
@@ -42,34 +44,42 @@ class ProviderScreen extends StatefulWidget {
 }
 
 class _ProviderScreenState extends State<ProviderScreen> {
-  ProviderModel get _provider => widget.provider;
+  late Future<List<dynamic>> _futures;
 
-  List<String> fakeData = [
-    "دهان اساس",
-    "دهان زياتي",
-    "ورق جدران",
-    "دهان ابواب",
-    "دهان اثاث",
-    "خلط الوان وتصميم واجهات",
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return FireBuilder(
-      futures: [
-        FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: _provider.categoryIds).get().then((value) {
+  void _initialize() {
+    _futures = ApiService.build(
+      callBack: () async {
+        final providerFuture = Future.value(widget.provider);
+        final categoriesFuture = FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: widget.provider.categoryIds).get().then((value) {
           final categories = value.docs.map((e) => e.data()).toList();
           categories.sort((a, b) => (b.mainCategory ? 1 : 0) - (a.mainCategory ? 1 : 0));
           return categories;
-        }),
-        FirebaseFirestore.instance.tags.where(MyFields.id, whereIn: _provider.tagIds).orderBy(MyFields.createdAt, descending: true).get().then((value) {
+        });
+        final tagsFuture =
+            FirebaseFirestore.instance.tags.where(MyFields.id, whereIn: widget.provider.tagIds).orderBy(MyFields.createdAt, descending: true).get().then((value) {
           final tags = value.docs.map((e) => e.data()).toList();
           return tags;
-        }),
-      ],
+        });
+        return Future.wait([providerFuture, categoriesFuture, tagsFuture]);
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomFutureBuilder(
+      future: _futures,
+      withBackgroundColor: true,
       onComplete: (context, snapshot) {
-        final categories = snapshot.data![0] as List<CategoryModel>;
-        final tags = snapshot.data![1] as List<TagModel>;
+        final provider = snapshot.data![0] as ProviderModel;
+        final categories = snapshot.data![1] as List<CategoryModel>;
+        final tags = snapshot.data![2] as List<TagModel>;
         return NashmiScaffold(
           bottomNavigationBar: BottomAppBar(
             color: Colors.transparent,
@@ -123,7 +133,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: FavoriteButton(
-                      id: _provider.id!,
+                      id: provider.id!,
                     ),
                   ),
                 ],
@@ -140,7 +150,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                           Row(
                             children: [
                               CustomNetworkImage(
-                                _provider.thumbnail!,
+                                provider.thumbnail!,
                                 width: 86,
                                 height: 86,
                                 radius: MyTheme.radiusSecondary,
@@ -155,8 +165,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         Flexible(
                                           child: CustomText(
                                             context.translate(
-                                              textEN: _provider.nameEn,
-                                              textAR: _provider.nameAr,
+                                              textEN: provider.nameEn,
+                                              textAR: provider.nameAr,
                                             ),
                                             overFlow: TextOverflow.ellipsis,
                                             fontSize: 16,
@@ -248,12 +258,12 @@ class _ProviderScreenState extends State<ProviderScreen> {
                           Row(
                             children: [
                               RatingBubble(
-                                rate: _provider.avgRating,
+                                rate: provider.avgRating,
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: CustomText(
-                                  "(${_provider.ratingsCount})",
+                                  "(${provider.ratingsCount})",
                                   fontSize: 12,
                                   color: context.colorPalette.grey8F8,
                                 ),
@@ -270,8 +280,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                           ),
                           Text(
                             context.translate(
-                              textEN: _provider.descriptionEn,
-                              textAR: _provider.descriptionAr,
+                              textEN: provider.descriptionEn,
+                              textAR: provider.descriptionAr,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -304,7 +314,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                         ],
                       ),
                     ),
-                    if (_provider.images!.isNotEmpty)
+                    if (provider.images!.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Column(
@@ -325,12 +335,12 @@ class _ProviderScreenState extends State<ProviderScreen> {
                               height: 200,
                               child: ListView.separated(
                                 separatorBuilder: (context, index) => const SizedBox(width: 10),
-                                itemCount: _provider.images!.length,
+                                itemCount: provider.images!.length,
                                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
-                                  final image = _provider.images![index];
+                                  final image = provider.images![index];
                                   return CustomNetworkImage(
                                     image,
                                     width: 200,
@@ -357,7 +367,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             ),
                           ),
                           Text(
-                            "${context.translate(textEN: _provider.state?.nameEn, textAR: _provider.state?.nameAr)}, ${context.translate(textEN: _provider.city?.nameEn, textAR: _provider.city?.nameAr)}, ${context.translate(textEN: _provider.addressEn, textAR: _provider.addressAr)}",
+                            "${context.translate(textEN: provider.state?.nameEn, textAR: provider.state?.nameAr)}, ${context.translate(textEN: provider.city?.nameEn, textAR: provider.city?.nameAr)}, ${context.translate(textEN: provider.addressEn, textAR: provider.addressAr)}",
                           ),
                           const SizedBox(height: 10),
                           Padding(
@@ -369,8 +379,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 child: MapBubble(
                                   controller: MapController(
                                     context,
-                                    lat: _provider.latitude,
-                                    lng: _provider.longitude,
+                                    lat: provider.latitude,
+                                    lng: provider.longitude,
                                   ),
                                 ),
                               ),
@@ -384,6 +394,16 @@ class _ProviderScreenState extends State<ProviderScreen> {
               ),
             ],
           ),
+        );
+      },
+      onError: (error) {
+        return AppErrorWidget(
+          error: error,
+          onRetry: () {
+            setState(() {
+              _initialize();
+            });
+          },
         );
       },
     );

@@ -1,12 +1,11 @@
 import 'package:algoliasearch/algoliasearch.dart';
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/screens/provider/provider_screen.dart';
+import 'package:nashmi_app/models/tag/tag_model.dart';
+import 'package:nashmi_app/widgets/search_builder.dart';
 
 import '../../alerts/errors/app_error_widget.dart';
 import '../../utils/app_constants.dart';
 import '../../utils/base_extensions.dart';
-import '../../utils/my_theme.dart';
-import '../../widgets/custom_network_image.dart';
 import '../models/provider/provider_model.dart';
 import '../utils/my_icons.dart';
 import '../widgets/custom_future_builder.dart';
@@ -23,7 +22,7 @@ class ProvidersSearchScreen extends StatefulWidget {
 
 class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
   late SearchClient _algolia;
-  late Future<List<ProviderModel>> _searchFuture;
+  late Future<List<dynamic>> _searchFuture;
 
   void _initialize(String value) {
     if (value.isEmpty) {
@@ -33,10 +32,10 @@ class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
     _searchFuture = _fetch(value);
   }
 
-  Future<List<ProviderModel>> _fetch(String query) async {
+  Future<List<dynamic>> _fetch(String query) async {
     try {
       if (query == '') {
-        return List<ProviderModel>.empty();
+        return [];
       }
       final providersFuture = _algolia
           .searchIndex(
@@ -49,10 +48,21 @@ class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
           .then((value) {
         return value.hits.map((e) => ProviderModel.fromJson(e.toJson())).toList();
       });
-      return providersFuture;
+      final tagsFuture = _algolia
+          .searchIndex(
+        request: SearchForHits(
+          indexName: AlgoliaIndices.tags,
+          query: query,
+          hitsPerPage: 10,
+        ),
+      )
+          .then((value) {
+        return value.hits.map((e) => TagModel.fromJson(e.toJson())).toList();
+      });
+      return Future.wait([providersFuture, tagsFuture]);
     } catch (e) {
       debugPrint("SearchError::: $e");
-      return List<ProviderModel>.empty();
+      return [];
     }
   }
 
@@ -98,43 +108,15 @@ class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
         return CustomFutureBuilder(
           future: _searchFuture,
           onComplete: (context, snapshot) {
-            final providers = snapshot.data!;
-            if (providers.isEmpty) {
+            final providers = snapshot.data![0] as List<ProviderModel>;
+            final tags = snapshot.data![1] as List<TagModel>;
+            if (providers.isEmpty && tags.isEmpty) {
               return const SizedBox.shrink();
             }
             return SingleChildScrollView(
-              child: Column(
-                children: List.generate(
-                  providers.length,
-                  (int index) {
-                    final element = providers[index];
-                    return ListTile(
-                      onTap: () {
-                        context.navigate((context) {
-                          return ProviderScreen(provider: element);
-                        });
-                      },
-                      leading: CustomNetworkImage(
-                        element.thumbnail!,
-                        height: 45,
-                        width: 45,
-                        radius: MyTheme.radiusPrimary,
-                      ),
-                      title: Text(
-                        context.translate(textEN: element.nameEn!, textAR: element.nameAr!),
-                      ),
-                      subtitle: Text(
-                        context.translate(textEN: element.descriptionEn!, textAR: element.descriptionAr!),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 13,
-                      ),
-                    );
-                  },
-                ),
+              child: SearchBuilder(
+                tagIds: tags.map((e) => e.id!).toList(),
+                providers: providers,
               ),
             );
           },

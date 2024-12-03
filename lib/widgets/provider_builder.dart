@@ -4,10 +4,9 @@ import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
 import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/screens/provider/widgets/provider_card.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
-import 'package:nashmi_app/widgets/shimmer/shimmer_loading.dart';
+import 'package:nashmi_app/widgets/provider_shimmer.dart';
 
 import '../../../network/fire_queries.dart';
-import '../../../utils/dimensions.dart';
 import '../models/provider/provider_model.dart';
 import 'custom_future_builder.dart';
 
@@ -24,13 +23,13 @@ class ProviderBuilder extends StatefulWidget {
 }
 
 class _ProviderBuilderState extends State<ProviderBuilder> {
-  late Future<DocumentSnapshot<ProviderModel>> _productsFuture;
+  late Future<DocumentSnapshot<ProviderModel>> _providersFuture;
 
   String get _providerId => widget.id;
   FirebaseFirestore get _firebaseFirestore => FirebaseFirestore.instance;
 
   void _initialize() {
-    _productsFuture = ApiService.build(
+    _providersFuture = ApiService.build(
       callBack: () async {
         return _firebaseFirestore.providers.doc(_providerId).get();
       },
@@ -46,7 +45,7 @@ class _ProviderBuilderState extends State<ProviderBuilder> {
   @override
   Widget build(BuildContext context) {
     return CustomFutureBuilder(
-      future: _productsFuture,
+      future: _providersFuture,
       onError: (error) {
         return AppErrorWidget(
           error: error,
@@ -58,61 +57,7 @@ class _ProviderBuilderState extends State<ProviderBuilder> {
         );
       },
       onLoading: () {
-        return Card(
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: ShimmerLoading(
-              builder: (context, bubble) {
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    bubble(
-                      height: 120,
-                      width: 120,
-                      margin: const EdgeInsetsDirectional.only(end: 10),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          bubble(
-                            height: kTextShimmerHeight,
-                            width: 70,
-                          ),
-                          bubble(
-                            height: kTextShimmerHeight,
-                            width: 120,
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  bubble(
-                                    height: kTextShimmerHeight,
-                                    width: 50,
-                                  ),
-                                  bubble(
-                                    height: 30,
-                                    width: 30,
-                                    radius: 100,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-        );
+        return const ProviderShimmer();
       },
       onComplete: (context, snapshot) {
         final provider = snapshot.data!.data();

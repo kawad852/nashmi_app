@@ -15,11 +15,8 @@ class ShimmerLoading extends StatelessWidget {
         EdgeInsetsGeometry? padding,
       }) bubble) builder;
 
-  final EdgeInsetsGeometry? padding;
-
   const ShimmerLoading({
     Key? key,
-    this.padding,
     required this.builder,
   }) : super(key: key);
 
