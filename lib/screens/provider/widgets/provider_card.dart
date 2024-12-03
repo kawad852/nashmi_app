@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/screens/provider/provider_screen.dart';
+import 'package:nashmi_app/screens/provider/widgets/favorite_button.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -11,10 +12,12 @@ import 'package:nashmi_app/widgets/rating_bubble.dart';
 
 class ProviderCard extends StatelessWidget {
   final ProviderModel provider;
+  final bool showFav;
 
   const ProviderCard({
     super.key,
     required this.provider,
+    this.showFav = false,
   });
 
   @override
@@ -91,10 +94,13 @@ class ProviderCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              size: 15,
-            )
+            if (showFav)
+              FavoriteButton(id: provider.id!)
+            else
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 15,
+              )
           ],
         ),
       ),
