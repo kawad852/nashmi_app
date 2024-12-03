@@ -5,4 +5,5 @@ class MyCollections {
   static const tags = 'tags';
   static const ads = 'ads';
   static const sponsors = 'sponsors';
+  static const favorites = 'favorites';
 }

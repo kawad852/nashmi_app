@@ -15,7 +15,7 @@ class AppOverlayLoader {
       ..maskColor = Colors.black26
       ..backgroundColor = Colors.transparent
       ..boxShadow = [];
-    EasyLoading.show(indicator: indicator ?? navigatorKey.currentContext!.loaders.circular());
+    EasyLoading.show(indicator: indicator ?? rootNavigatorKey.currentContext!.loaders.circular());
   }
 
   static bool get isShown => EasyLoading.isShow;

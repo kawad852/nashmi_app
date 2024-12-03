@@ -1,10 +1,20 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
+import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/controllers/phone_controller.dart';
+import 'package:nashmi_app/providers/user_provider.dart';
 import 'package:nashmi_app/screens/registration/create_account_screen.dart';
 import 'package:nashmi_app/screens/registration/forgot_password_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
+import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/password_editor.dart';
@@ -12,11 +22,19 @@ import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/titled_textfield.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+import '../../alerts/loading/app_over_loader.dart';
+import '../../network/api_service.dart';
+import '../../utils/enums.dart';
 import 'widgets/guest_button.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  final String? guestRoute;
+  const RegistrationScreen({
+    super.key,
+    this.guestRoute,
+  });
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -24,6 +42,129 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late PhoneController phoneController;
+
+  FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
+  UserProvider get _userProvider => context.userProvider;
+
+  String? get _guestRoute => widget.guestRoute;
+
+  Future<void> _signInAnonymously(BuildContext context) async {
+    ApiService.fetch(
+      context,
+      callBack: () async {
+        await _firebaseAuth.signInAnonymously();
+        if (context.mounted) {
+          // DiscoverRoute(updateDeviceToken: false).go(context);
+        }
+      },
+    );
+  }
+
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      AppOverlayLoader.show();
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+      if (googleAuth?.accessToken == null) {
+        AppOverlayLoader.hide();
+        return;
+      }
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final auth = await _firebaseAuth.signInWithCredential(credential);
+      if (context.mounted) {
+        await _userProvider.register(
+          context,
+          auth,
+          provider: AuthProviders.google,
+          guestRoute: _guestRoute,
+        );
+      }
+    } on PlatformException catch (e) {
+      AppOverlayLoader.hide();
+      if (context.mounted) {
+        if (e.code == GoogleSignIn.kNetworkError) {
+          context.showSnackBar(context.appLocalization.networkError);
+        } else {
+          if (context.mounted) {
+            context.showSnackBar(context.appLocalization.generalError);
+          }
+        }
+      }
+      debugPrint("GoogleSignInException:: $e");
+    } catch (e) {
+      AppOverlayLoader.hide();
+      if (context.mounted) {
+        context.showSnackBar(context.appLocalization.generalError);
+      }
+      debugPrint("GoogleSignInException:: $e");
+    }
+  }
+
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      AppOverlayLoader.show();
+      final rawNonce = generateNonce();
+      final nonce = sha256ofString(rawNonce);
+
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        nonce: nonce,
+      );
+
+      final oauthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        rawNonce: rawNonce,
+        accessToken: appleCredential.authorizationCode,
+      );
+
+      final auth = await _firebaseAuth.signInWithCredential(oauthCredential);
+      if (context.mounted) {
+        await _userProvider.register(
+          context,
+          auth,
+          provider: AuthProviders.apple,
+          guestRoute: _guestRoute,
+        );
+      }
+    } on PlatformException catch (e) {
+      AppOverlayLoader.hide();
+      if (e.code == GoogleSignIn.kNetworkError && context.mounted) {
+        context.showSnackBar(context.appLocalization.networkError, duration: 8);
+      } else {
+        if (context.mounted) {
+          context.showSnackBar(context.appLocalization.generalError);
+        }
+      }
+      debugPrint("AppleSignInException:: $e");
+    } catch (e) {
+      AppOverlayLoader.hide();
+      debugPrint("AppleSignInException:: $e");
+    } finally {
+      AppOverlayLoader.hide();
+    }
+  }
+
+  String generateNonce([int length = 32]) {
+    const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final random = math.Random.secure();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
+  }
+
+  String sha256ofString(String input) {
+    final bytes = utf8.encode(input);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
+  }
 
   @override
   void initState() {
@@ -178,7 +319,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           icon: const CustomSvg(MyIcons.apple),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _signInWithGoogle(context);
+                          },
                           icon: const CustomSvg(MyIcons.google),
                         ),
                         IconButton(

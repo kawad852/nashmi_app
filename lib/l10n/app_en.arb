@@ -115,5 +115,8 @@
   "introDes2":"Search from anywhere in the Hashemite Kingdom of Jordan for any A service or facility you need within the Hashemite Kingdom of Jordan simply.",
   "skip":"Skip",
   "invalidCredentials": "Invalid credentials",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "requireRecentLogin": "This operation is sensitive and requires recent authentication. Log in again before retrying this request.",
+  "deleteAccountSuccess": "Your account has been deleted successfully.",
+  "authFailed": "Authorization Failed"
 }

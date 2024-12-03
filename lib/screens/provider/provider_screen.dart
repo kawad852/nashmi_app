@@ -5,6 +5,7 @@ import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/models/tag/tag_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
+import 'package:nashmi_app/screens/provider/widgets/favorite_button.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
@@ -121,11 +122,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 actions: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const CustomSvg(
-                        MyIcons.favorite,
-                      ),
+                    child: FavoriteButton(
+                      id: _provider.id!,
                     ),
                   ),
                 ],

@@ -20,7 +20,7 @@ extension AppFeedbacks on BuildContext {
         )
         .closed
         .then((value) {
-      ScaffoldMessenger.of(navigatorKey.currentContext!).removeCurrentSnackBar();
+      ScaffoldMessenger.of(rootNavigatorKey.currentContext!).removeCurrentSnackBar();
     });
   }
 

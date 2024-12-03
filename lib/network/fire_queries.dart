@@ -5,6 +5,7 @@ import 'package:nashmi_app/models/tag/tag_model.dart';
 import '../models/ad/ad_model.dart';
 import '../models/category/category_model.dart';
 import '../models/sponsor/sponsor_model.dart';
+import '../models/user/user_model.dart';
 import 'my_collections.dart';
 
 extension FireQueries on FirebaseFirestore {
@@ -30,6 +31,11 @@ extension FireQueries on FirebaseFirestore {
 
   CollectionReference<SponsorModel> get sponsors => collection(MyCollections.sponsors).withConverter<SponsorModel>(
         fromFirestore: (snapshot, _) => SponsorModel.fromJson(snapshot.data()!),
+        toFirestore: (snapshot, _) => snapshot.toJson(),
+      );
+
+  CollectionReference<UserModel> get users => collection(MyCollections.users).withConverter<UserModel>(
+        fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
         toFirestore: (snapshot, _) => snapshot.toJson(),
       );
 }

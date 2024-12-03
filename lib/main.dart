@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
 import 'package:nashmi_app/providers/fire_provider.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
-import 'package:nashmi_app/screens/home/home_screen.dart';
+import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -23,10 +24,11 @@ import 'package:nashmi_app/utils/shared_pref.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
+import 'models/user/user_model.dart';
 
 // mhyar
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey(debugLabel: "Main Navigator");
 
 @pragma('vm:entry-point')
 Future<void> onBackgroundMessage(RemoteMessage message) async {
@@ -42,7 +44,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //MySharedPreferences.clearStorage();
+  // MySharedPreferences.clearStorage();
+  // await FirebaseAuth.instance.signOut();
   // MySharedPreferences.isPassedIntro = false;
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
@@ -70,7 +73,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget _toggleRoute(BuildContext context) {
     if (_userProvider.isAuthenticated) {
-      return const HomeScreen();
+      return const AppNavBar();
     } else if (MySharedPreferences.passedIntro) {
       return const RegistrationScreen();
     } else {
@@ -95,6 +98,23 @@ class _MyAppState extends State<MyApp> {
         );
         return MultiProvider(
           providers: [
+            StreamProvider<UserModel?>.value(
+              key: ValueKey(_userProvider.isAuthenticated),
+              value: _userProvider.isAuthenticated ? _userProvider.userDocRef.snapshots().map((event) => event.data()) : null,
+              initialData: MySharedPreferences.user,
+              lazy: false,
+              updateShouldNotify: (initialValue, value) {
+                MySharedPreferences.user = value;
+                Future.microtask(() {
+                  if (value == null || value.blocked) {
+                    Fluttertoast.showToast(msg: "Authorization Failed");
+                    // ignore: use_build_context_synchronously
+                    _userProvider.logout(rootNavigatorKey.currentContext!);
+                  }
+                });
+                return true;
+              },
+            ),
             StreamProvider<List<CategoryModel>>.value(
               value: FirebaseFirestore.instance.categories.snapshots().map((event) => event.docs.map((e) => e.data()).toList()),
               initialData: const [],
@@ -104,7 +124,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
           child: MaterialApp(
-            navigatorKey: navigatorKey,
+            navigatorKey: rootNavigatorKey,
             builder: EasyLoading.init(),
             debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,

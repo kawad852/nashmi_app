@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:nashmi_app/models/auth_model.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user/user_model.dart';
 
 class MySharedPreferences {
   static late SharedPreferences _sharedPreferences;
@@ -17,16 +18,17 @@ class MySharedPreferences {
     user = null;
   }
 
-  static UserData? get user {
+  static UserModel? get user {
     String? value = _sharedPreferences.getString('user');
-    UserData? user;
+    UserModel? userModel;
     if (value != null && value.isNotEmpty && value != 'null') {
-      user = UserData.fromJson(jsonDecode(value));
+      userModel = UserModel.fromJson(jsonDecode(value));
     }
-    return user;
+    return userModel;
   }
 
-  static set user(UserData? value) {
+  static set user(UserModel? value) {
+    value?.createdAt = null;
     _sharedPreferences.setString('user', jsonEncode(value?.toJson()));
   }
 

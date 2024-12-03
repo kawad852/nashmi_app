@@ -81,3 +81,10 @@ enum FilterEnum {
   const FilterEnum(this.value);
   final String value;
 }
+
+class AuthProviders {
+  static const String google = 'google';
+  static const String apple = 'apple';
+  static const String phone = 'phone';
+  static const String email = 'email';
+}
