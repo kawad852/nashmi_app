@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/models/favorite/favorite_model.dart';
+import 'package:nashmi_app/models/like/like_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
@@ -26,6 +27,10 @@ class UserProvider extends ChangeNotifier {
   DocumentReference<UserModel> get userDocRef => _firebaseFirestore.users.doc(userUid);
   CollectionReference<FavoriteModel> get favoritesCollectionRef => userDocRef.collection(MyCollections.favorites).withConverter<FavoriteModel>(
         fromFirestore: (snapshot, _) => FavoriteModel.fromJson(snapshot.data()!),
+        toFirestore: (snapshot, _) => snapshot.toJson(),
+      );
+  CollectionReference<LikeModel> get likesCollectionRef => userDocRef.collection(MyCollections.likes).withConverter<LikeModel>(
+        fromFirestore: (snapshot, _) => LikeModel.fromJson(snapshot.data()!),
         toFirestore: (snapshot, _) => snapshot.toJson(),
       );
 

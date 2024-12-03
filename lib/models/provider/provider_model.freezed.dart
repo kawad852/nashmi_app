@@ -56,10 +56,10 @@ mixin _$ProviderModel {
   set longitude(double? value) => throw _privateConstructorUsedError;
   double get avgRating => throw _privateConstructorUsedError;
   set avgRating(double value) => throw _privateConstructorUsedError;
-  double get ratingsCount => throw _privateConstructorUsedError;
-  set ratingsCount(double value) => throw _privateConstructorUsedError;
-  double get likesCount => throw _privateConstructorUsedError;
-  set likesCount(double value) => throw _privateConstructorUsedError;
+  int get ratingsCount => throw _privateConstructorUsedError;
+  set ratingsCount(int value) => throw _privateConstructorUsedError;
+  int get likesCount => throw _privateConstructorUsedError;
+  set likesCount(int value) => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   set order(int value) => throw _privateConstructorUsedError;
   String get personalPhoneCountryCode => throw _privateConstructorUsedError;
@@ -124,8 +124,8 @@ abstract class $ProviderModelCopyWith<$Res> {
       double? latitude,
       double? longitude,
       double avgRating,
-      double ratingsCount,
-      double likesCount,
+      int ratingsCount,
+      int likesCount,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -264,11 +264,11 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
       ratingsCount: null == ratingsCount
           ? _value.ratingsCount
           : ratingsCount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as int,
       likesCount: null == likesCount
           ? _value.likesCount
           : likesCount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as int,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -379,8 +379,8 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       double? latitude,
       double? longitude,
       double avgRating,
-      double ratingsCount,
-      double likesCount,
+      int ratingsCount,
+      int likesCount,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -519,11 +519,11 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
       ratingsCount: null == ratingsCount
           ? _value.ratingsCount
           : ratingsCount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as int,
       likesCount: null == likesCount
           ? _value.likesCount
           : likesCount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as int,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -659,10 +659,10 @@ class _$ProviderModelImpl implements _ProviderModel {
   double avgRating;
   @override
   @JsonKey()
-  double ratingsCount;
+  int ratingsCount;
   @override
   @JsonKey()
-  double likesCount;
+  int likesCount;
   @override
   @JsonKey()
   int order;
@@ -738,8 +738,8 @@ abstract class _ProviderModel implements ProviderModel {
       double? latitude,
       double? longitude,
       double avgRating,
-      double ratingsCount,
-      double likesCount,
+      int ratingsCount,
+      int likesCount,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -811,11 +811,11 @@ abstract class _ProviderModel implements ProviderModel {
   double get avgRating;
   set avgRating(double value);
   @override
-  double get ratingsCount;
-  set ratingsCount(double value);
+  int get ratingsCount;
+  set ratingsCount(int value);
   @override
-  double get likesCount;
-  set likesCount(double value);
+  int get likesCount;
+  set likesCount(int value);
   @override
   int get order;
   set order(int value);

@@ -29,8 +29,8 @@ _$ProviderModelImpl _$$ProviderModelImplFromJson(Map<String, dynamic> json) =>
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
       avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0,
-      ratingsCount: (json['ratingsCount'] as num?)?.toDouble() ?? 0,
-      likesCount: (json['likesCount'] as num?)?.toDouble() ?? 0,
+      ratingsCount: (json['ratingsCount'] as num?)?.toInt() ?? 0,
+      likesCount: (json['likesCount'] as num?)?.toInt() ?? 0,
       order: (json['order'] as num?)?.toInt() ?? kOrder,
       personalPhoneCountryCode:
           json['personalPhoneCountryCode'] as String? ?? kFallBackCountryCode,

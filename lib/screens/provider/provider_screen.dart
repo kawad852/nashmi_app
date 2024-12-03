@@ -6,12 +6,15 @@ import 'package:nashmi_app/models/tag/tag_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
+import 'package:nashmi_app/providers/user_provider.dart';
 import 'package:nashmi_app/screens/provider/widgets/favorite_button.dart';
+import 'package:nashmi_app/screens/provider/widgets/like_builder.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
+import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
@@ -46,17 +49,19 @@ class ProviderScreen extends StatefulWidget {
 class _ProviderScreenState extends State<ProviderScreen> {
   late Future<List<dynamic>> _futures;
 
+  UserProvider get _userProvider => context.userProvider;
+
   void _initialize() {
     _futures = ApiService.build(
       callBack: () async {
         final providerFuture = Future.value(widget.provider);
-        final categoriesFuture = FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: widget.provider.categoryIds).get().then((value) {
+        final provider = await providerFuture;
+        final categoriesFuture = FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: provider.categoryIds).get().then((value) {
           final categories = value.docs.map((e) => e.data()).toList();
           categories.sort((a, b) => (b.mainCategory ? 1 : 0) - (a.mainCategory ? 1 : 0));
           return categories;
         });
-        final tagsFuture =
-            FirebaseFirestore.instance.tags.where(MyFields.id, whereIn: widget.provider.tagIds).orderBy(MyFields.createdAt, descending: true).get().then((value) {
+        final tagsFuture = FirebaseFirestore.instance.tags.where(MyFields.id, whereIn: provider.tagIds).orderBy(MyFields.createdAt, descending: true).get().then((value) {
           final tags = value.docs.map((e) => e.data()).toList();
           return tags;
         });
@@ -163,14 +168,16 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     Row(
                                       children: [
                                         Flexible(
-                                          child: CustomText(
+                                          child: Text(
                                             context.translate(
                                               textEN: provider.nameEn,
                                               textAR: provider.nameAr,
                                             ),
-                                            overFlow: TextOverflow.ellipsis,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                         const Padding(
@@ -187,65 +194,36 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         color: context.colorPalette.grey8F8,
                                       ),
                                     ),
+                                    const SizedBox(height: 10),
                                     Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        GestureDetector(
-                                          onTap: () {},
-                                          child: Container(
-                                            width: 98,
-                                            margin: const EdgeInsets.only(top: 5),
-                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                            decoration: BoxDecoration(
-                                              color: context.colorPalette.greyF2F,
-                                              borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                const CustomSvg(MyIcons.emptyLike),
-                                                Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                  child: CustomText(
-                                                    context.appLocalization.like,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: CustomText(
-                                                    "827",
-                                                    overFlow: TextOverflow.ellipsis,
-                                                    fontSize: 12,
-                                                    color: context.colorPalette.grey8F8,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                        LikeBuilder(
+                                          count: provider.likesCount,
+                                          id: provider.id!,
                                         ),
                                         const SizedBox(width: 10),
-                                        Expanded(
-                                          child: GestureDetector(
-                                            onTap: () {},
-                                            child: Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                                              decoration: BoxDecoration(
-                                                color: context.colorPalette.greyF2F,
-                                                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  const CustomSvg(MyIcons.starEdge),
-                                                  const SizedBox(width: 6),
-                                                  Expanded(
-                                                    child: Text(
-                                                      context.appLocalization.addYourRating,
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(
-                                                        color: context.colorPalette.black3F3,
-                                                      ),
-                                                    ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+                                          decoration: BoxDecoration(
+                                            color: context.colorPalette.greyF2F,
+                                            borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const CustomSvg(MyIcons.starEdge),
+                                              const SizedBox(width: 6),
+                                              Flexible(
+                                                child: Text(
+                                                  context.appLocalization.addYourRating,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: context.colorPalette.black3F3,
                                                   ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ),
                                       ],

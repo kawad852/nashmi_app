@@ -25,9 +25,8 @@ class FavoriteButton extends StatefulWidget {
 class _FavoriteButtonState extends State<FavoriteButton> {
   late Stream<DocumentSnapshot<FavoriteModel>> _stream;
 
-  DocumentReference<FavoriteModel> get _favDocRef => context.userProvider.favoritesCollectionRef.doc(_providerId);
-
   String get _providerId => widget.id;
+  DocumentReference<FavoriteModel> get _favDocRef => context.userProvider.favoritesCollectionRef.doc(_providerId);
 
   void _toggleFavorite(bool inFav) {
     if (inFav) {

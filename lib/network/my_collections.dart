@@ -6,4 +6,5 @@ class MyCollections {
   static const ads = 'ads';
   static const sponsors = 'sponsors';
   static const favorites = 'favorites';
+  static const likes = 'likes';
 }
