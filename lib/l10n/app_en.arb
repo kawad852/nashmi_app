@@ -118,5 +118,9 @@
   "cancel": "Cancel",
   "requireRecentLogin": "This operation is sensitive and requires recent authentication. Log in again before retrying this request.",
   "deleteAccountSuccess": "Your account has been deleted successfully.",
-  "authFailed": "Authorization Failed"
+  "authFailed": "Authorization Failed",
+  "reviews": "Reviews",
+  "reviewSubmittedMsg": "Your review has been submitted successfully",
+  "comment": "Comment",
+  "submit": "Submit"
 }

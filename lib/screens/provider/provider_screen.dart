@@ -7,8 +7,10 @@ import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
+import 'package:nashmi_app/screens/provider/reviews_screen.dart';
 import 'package:nashmi_app/screens/provider/widgets/favorite_button.dart';
 import 'package:nashmi_app/screens/provider/widgets/like_builder.dart';
+import 'package:nashmi_app/screens/provider/widgets/review_builder.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
@@ -21,7 +23,7 @@ import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/map_bubble.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
-import 'package:nashmi_app/widgets/rating_bubble.dart';
+import 'package:nashmi_app/widgets/rating_stars.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 
 import '../../alerts/errors/app_error_widget.dart';
@@ -203,29 +205,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                           id: provider.id!,
                                         ),
                                         const SizedBox(width: 10),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-                                          decoration: BoxDecoration(
-                                            color: context.colorPalette.greyF2F,
-                                            borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const CustomSvg(MyIcons.starEdge),
-                                              const SizedBox(width: 6),
-                                              Flexible(
-                                                child: Text(
-                                                  context.appLocalization.addYourRating,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: context.colorPalette.black3F3,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        ReviewBuilder(id: provider.id!),
                                       ],
                                     ),
                                   ],
@@ -233,29 +213,34 @@ class _ProviderScreenState extends State<ProviderScreen> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              RatingBubble(
-                                rate: provider.avgRating,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: CustomText(
+                          if (provider.ratingsCount > 0)
+                            Row(
+                              children: [
+                                RatingStars(
+                                  rate: provider.avgRating,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
                                   "(${provider.ratingsCount})",
-                                  fontSize: 12,
-                                  color: context.colorPalette.grey8F8,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: context.colorPalette.grey8F8,
+                                  ),
                                 ),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: CustomText(
-                                  context.appLocalization.viewRatings,
-                                  fontSize: 12,
-                                  decoration: TextDecoration.underline,
+                                TextButton(
+                                  onPressed: () {
+                                    context.navigate((context) {
+                                      return ReviewsScreen(id: provider.id!);
+                                    });
+                                  },
+                                  child: CustomText(
+                                    context.appLocalization.viewRatings,
+                                    fontSize: 12,
+                                    decoration: TextDecoration.underline,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
                           Text(
                             context.translate(
                               textEN: provider.descriptionEn,

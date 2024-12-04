@@ -4,16 +4,18 @@ import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 
-class RatingBubble extends StatelessWidget {
+class RatingStars extends StatelessWidget {
   final double? rate;
   final bool ignoreGestures;
   final void Function(double)? onRatingUpdate;
+  final double size;
 
-  const RatingBubble({
+  const RatingStars({
     super.key,
     this.rate,
     this.ignoreGestures = true,
     this.onRatingUpdate,
+    this.size = 15,
   });
 
   @override
@@ -25,7 +27,7 @@ class RatingBubble extends StatelessWidget {
       direction: Axis.horizontal,
       allowHalfRating: true,
       ignoreGestures: ignoreGestures,
-      itemSize: 15,
+      itemSize: size,
       itemCount: 5,
       itemPadding: const EdgeInsets.symmetric(horizontal: 2),
       itemBuilder: (context, _) => const CustomSvg(MyIcons.star),

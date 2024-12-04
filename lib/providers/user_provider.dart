@@ -22,6 +22,8 @@ class UserProvider extends ChangeNotifier {
   User? get user => _firebaseAuth.currentUser;
   String? get userUid => user?.uid;
   bool get isAuthenticated => user != null && !user!.isAnonymous && user!.emailVerified;
+  UserModel get userModel => MySharedPreferences.user!;
+
   FirebaseFirestore get _firebaseFirestore => FirebaseFirestore.instance;
   FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
   DocumentReference<UserModel> get userDocRef => _firebaseFirestore.users.doc(userUid);

@@ -7,4 +7,5 @@ class MyCollections {
   static const sponsors = 'sponsors';
   static const favorites = 'favorites';
   static const likes = 'likes';
+  static const reviews = 'reviews';
 }

@@ -5,6 +5,7 @@ import 'package:nashmi_app/models/like/like_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
+import 'package:nashmi_app/widgets/shimmer/shimmer_loading.dart';
 
 import '../../../helper/my_factory.dart';
 import '../../../network/my_fields.dart';
@@ -80,7 +81,14 @@ class _LikeBuilderState extends State<LikeBuilder> {
   Widget build(BuildContext context) {
     return CustomStreamBuilder(
       stream: _stream,
-      onLoading: () => const SizedBox.shrink(),
+      onLoading: () => ShimmerLoading(
+        builder: (context, bubble) {
+          return bubble(
+            height: 40,
+            width: 90,
+          );
+        },
+      ),
       onError: (error) => const SizedBox.shrink(),
       onComplete: (context, snapshot) {
         final isLike = snapshot.data!.exists;

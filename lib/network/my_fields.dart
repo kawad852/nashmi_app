@@ -9,4 +9,5 @@ class MyFields {
   static const String likesCount = 'likesCount';
   static const String deviceToken = 'deviceToken';
   static const String tagIds = 'tagIds';
+  static const String ratingsCount = 'ratingsCount';
 }

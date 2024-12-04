@@ -8,7 +8,7 @@ import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/rating_bubble.dart';
+import 'package:nashmi_app/widgets/rating_stars.dart';
 
 class ProviderCard extends StatelessWidget {
   final ProviderModel provider;
@@ -68,7 +68,7 @@ class ProviderCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      RatingBubble(
+                      RatingStars(
                         rate: provider.avgRating,
                       ),
                       Padding(
