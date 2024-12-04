@@ -88,6 +88,17 @@ class _ProviderScreenState extends State<ProviderScreen> {
         final categories = snapshot.data![1] as List<CategoryModel>;
         final tags = snapshot.data![2] as List<TagModel>;
         return NashmiScaffold(
+          appBar: AppBar(
+            forceMaterialTransparency: true,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                child: FavoriteButton(
+                  id: provider.id!,
+                ),
+              ),
+            ],
+          ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.transparent,
             child: Row(
@@ -131,225 +142,208 @@ class _ProviderScreenState extends State<ProviderScreen> {
               ],
             ),
           ),
-          body: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                backgroundColor: Colors.transparent,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 7),
-                    child: FavoriteButton(
-                      id: provider.id!,
-                    ),
-                  ),
-                ],
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(vertical: kScreenMargin),
-                sliver: SliverList.list(
+          body: ListView(
+            padding: const EdgeInsets.symmetric(vertical: kScreenMargin),
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                    Row(
+                      children: [
+                        CustomNetworkImage(
+                          provider.thumbnail!,
+                          width: 86,
+                          height: 86,
+                          radius: MyTheme.radiusSecondary,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CustomNetworkImage(
-                                provider.thumbnail!,
-                                width: 86,
-                                height: 86,
-                                radius: MyTheme.radiusSecondary,
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            context.translate(
-                                              textEN: provider.nameEn,
-                                              textAR: provider.nameAr,
-                                            ),
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 5),
-                                          child: CustomSvg(MyIcons.check),
-                                        ),
-                                        const CustomSvg(MyIcons.redStar),
-                                      ],
-                                    ),
-                                    Text(
-                                      categories.map((e) => context.translate(textEN: e.nameEn, textAR: e.nameAr)).join(", "),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: context.colorPalette.grey8F8,
+                              Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      context.translate(
+                                        textEN: provider.nameEn,
+                                        textAR: provider.nameAr,
                                       ),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        LikeBuilder(
-                                          count: provider.likesCount,
-                                          id: provider.id!,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        ReviewBuilder(id: provider.id!),
-                                      ],
+                                  ),
+                                  if (provider.isVerified)
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 5),
+                                      child: CustomSvg(MyIcons.check),
                                     ),
-                                  ],
+                                  // const CustomSvg(MyIcons.redStar),
+                                ],
+                              ),
+                              Text(
+                                categories.map((e) => context.translate(textEN: e.nameEn, textAR: e.nameAr)).join(", "),
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: context.colorPalette.grey8F8,
                                 ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  LikeBuilder(
+                                    count: provider.likesCount,
+                                    id: provider.id!,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  ReviewBuilder(id: provider.id!),
+                                ],
                               ),
                             ],
                           ),
-                          if (provider.ratingsCount > 0)
-                            Row(
-                              children: [
-                                RatingStars(
-                                  rate: provider.avgRating,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  "(${provider.ratingsCount})",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: context.colorPalette.grey8F8,
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    context.navigate((context) {
-                                      return ReviewsScreen(id: provider.id!);
-                                    });
-                                  },
-                                  child: CustomText(
-                                    context.appLocalization.viewRatings,
-                                    fontSize: 12,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ),
+                      ],
+                    ),
+                    if (provider.ratingsCount > 0)
+                      Row(
+                        children: [
+                          RatingStars(
+                            rate: provider.avgRating,
+                          ),
+                          const SizedBox(width: 8),
                           Text(
-                            context.translate(
-                              textEN: provider.descriptionEn,
-                              textAR: provider.descriptionAr,
+                            "(${provider.ratingsCount})",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: context.colorPalette.grey8F8,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            direction: Axis.horizontal,
-                            children: tags.map((element) {
-                              return Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    height: 34,
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                                    margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
-                                    decoration: BoxDecoration(
-                                      color: context.colorPalette.greyF2F,
-                                      borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                                    ),
-                                    child: Text(
-                                      context.translate(textEN: element.nameEn, textAR: element.nameAr),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }).toList(),
+                          TextButton(
+                            onPressed: () {
+                              context.navigate((context) {
+                                return ReviewsScreen(id: provider.id!);
+                              });
+                            },
+                            child: CustomText(
+                              context.appLocalization.viewRatings,
+                              fontSize: 12,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ],
                       ),
+                    Text(
+                      context.translate(
+                        textEN: provider.descriptionEn,
+                        textAR: provider.descriptionAr,
+                      ),
                     ),
-                    if (provider.images!.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(height: 8),
+                    Wrap(
+                      direction: Axis.horizontal,
+                      children: tags.map((element) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                            Container(
+                              height: 34,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: context.colorPalette.greyF2F,
+                                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                              ),
                               child: Text(
-                                context.appLocalization.images,
-                                style: TextStyle(
-                                  color: context.colorPalette.red8B0,
-                                  fontSize: 16,
+                                context.translate(textEN: element.nameEn, textAR: element.nameAr),
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 200,
-                              child: ListView.separated(
-                                separatorBuilder: (context, index) => const SizedBox(width: 10),
-                                itemCount: provider.images!.length,
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final image = provider.images![index];
-                                  return CustomNetworkImage(
-                                    image,
-                                    width: 200,
-                                    height: 200,
-                                    radius: MyTheme.radiusSecondary,
-                                  );
-                                },
-                              ),
-                            ),
                           ],
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+              if (provider.images!.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          context.appLocalization.images,
+                          style: TextStyle(
+                            color: context.colorPalette.red8B0,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
+                      SizedBox(
+                        height: 200,
+                        child: ListView.separated(
+                          separatorBuilder: (context, index) => const SizedBox(width: 10),
+                          itemCount: provider.images!.length,
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final image = provider.images![index];
+                            return CustomNetworkImage(
+                              image,
+                              width: 200,
+                              height: 200,
+                              radius: MyTheme.radiusSecondary,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.appLocalization.addressAndLocation,
+                      style: TextStyle(
+                        color: context.colorPalette.red8B0,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      "${context.translate(textEN: provider.state?.nameEn, textAR: provider.state?.nameAr)}, ${context.translate(textEN: provider.city?.nameEn, textAR: provider.city?.nameAr)}, ${context.translate(textEN: provider.addressEn, textAR: provider.addressAr)}",
+                    ),
+                    const SizedBox(height: 10),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            context.appLocalization.addressAndLocation,
-                            style: TextStyle(
-                              color: context.colorPalette.red8B0,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                        child: SizedBox(
+                          height: 90,
+                          child: MapBubble(
+                            controller: MapController(
+                              context,
+                              lat: provider.latitude,
+                              lng: provider.longitude,
                             ),
                           ),
-                          Text(
-                            "${context.translate(textEN: provider.state?.nameEn, textAR: provider.state?.nameAr)}, ${context.translate(textEN: provider.city?.nameEn, textAR: provider.city?.nameAr)}, ${context.translate(textEN: provider.addressEn, textAR: provider.addressAr)}",
-                          ),
-                          const SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                              child: SizedBox(
-                                height: 90,
-                                child: MapBubble(
-                                  controller: MapController(
-                                    context,
-                                    lat: provider.latitude,
-                                    lng: provider.longitude,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ],

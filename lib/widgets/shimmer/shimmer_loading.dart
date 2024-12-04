@@ -23,8 +23,8 @@ class ShimmerLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: context.colorScheme.surfaceContainerHighest,
-      highlightColor: context.colorScheme.onInverseSurface,
+      baseColor: context.colorPalette.greyF2F,
+      highlightColor: context.colorPalette.greyF9F,
       child: builder(
         context,
         ({radius, height, width, margin, padding}) {
@@ -34,7 +34,7 @@ class ShimmerLoading extends StatelessWidget {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              color: Colors.orange,
+              color: context.colorScheme.surface,
               borderRadius: BorderRadius.circular(radius ?? MyTheme.radiusSecondary),
             ),
           );
