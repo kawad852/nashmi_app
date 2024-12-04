@@ -17,7 +17,7 @@ class ReviewBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: context.colorScheme.secondaryContainer,
+        color: context.colorPalette.greyF2F,
         borderRadius: BorderRadius.circular(5),
       ),
       child: ListTile(
