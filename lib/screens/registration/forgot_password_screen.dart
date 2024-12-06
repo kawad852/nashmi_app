@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/controllers/phone_controller.dart';
-import 'package:nashmi_app/screens/registration/verify_code_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_back.dart';
@@ -95,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   children: [
                     StretchedButton(
                       onPressed: () {
-                        context.push(const VerifyCodeScreen());
+                        // context.push(const VerifyCodeScreen());
                       },
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: CustomText(

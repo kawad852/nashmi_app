@@ -80,6 +80,15 @@ enum FilterEnum {
   final String value;
 }
 
+enum GenderType {
+  male('MALE'),
+  female('FEMALE');
+
+  final String value;
+
+  const GenderType(this.value);
+}
+
 class AuthProviders {
   static const String google = 'google';
   static const String apple = 'apple';

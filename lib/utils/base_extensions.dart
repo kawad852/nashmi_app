@@ -46,8 +46,7 @@ extension CommonExtensions on BuildContext {
   String? get countryCode => AppProvider.countryCode;
   String getDialCode(String code) => kCountries.singleWhere((element) => element.code == code, orElse: () => CountryModel(code: kFallBackCountryCode)).dialCode!;
 
-  TextStyle get mediumBoldTitle => textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold);
-  TextStyle get largeBoldTitle => textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold);
+  String getToken(String code, String phone) => "nashmi-$code-$phone";
 
   Future<T?> navigate<T>(
     Widget Function(BuildContext context) builder, {

@@ -36,21 +36,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: MyIcons.offersSelect,
               title: context.appLocalization.getKnowUs,
               onTap: () {
-                context.push(const PolicyScreen(id: PolicyDocuments.aboutUs));
+                context.navigate((context) => const PolicyScreen(id: PolicyDocuments.aboutUs));
               },
             ),
             ProfileBubble(
               icon: MyIcons.terms,
               title: context.appLocalization.termsAndConditions,
               onTap: () {
-                context.push(const PolicyScreen(id: PolicyDocuments.termsOfUse));
+                context.navigate((context) => const PolicyScreen(id: PolicyDocuments.termsOfUse));
               },
             ),
             ProfileBubble(
               icon: MyIcons.policy,
               title: context.appLocalization.privacyPolicy,
               onTap: () {
-                context.push(const PolicyScreen(id: PolicyDocuments.privacyPolicy));
+                context.navigate((context) => const PolicyScreen(id: PolicyDocuments.privacyPolicy));
               },
             ),
             ProfileBubble(

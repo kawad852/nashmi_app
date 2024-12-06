@@ -40,6 +40,8 @@ mixin _$UserModel {
   set provider(String? value) => throw _privateConstructorUsedError;
   String? get phoneCountryCode => throw _privateConstructorUsedError;
   set phoneCountryCode(String? value) => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
+  set gender(String? value) => throw _privateConstructorUsedError;
   bool get blocked => throw _privateConstructorUsedError;
   set blocked(bool value) => throw _privateConstructorUsedError;
   String get languageCode => throw _privateConstructorUsedError;
@@ -70,6 +72,7 @@ abstract class $UserModelCopyWith<$Res> {
       String? deviceToken,
       String? provider,
       String? phoneCountryCode,
+      String? gender,
       bool blocked,
       String languageCode});
 }
@@ -98,6 +101,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? deviceToken = freezed,
     Object? provider = freezed,
     Object? phoneCountryCode = freezed,
+    Object? gender = freezed,
     Object? blocked = null,
     Object? languageCode = null,
   }) {
@@ -138,6 +142,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.phoneCountryCode
           : phoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       blocked: null == blocked
           ? _value.blocked
           : blocked // ignore: cast_nullable_to_non_nullable
@@ -168,6 +176,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       String? deviceToken,
       String? provider,
       String? phoneCountryCode,
+      String? gender,
       bool blocked,
       String languageCode});
 }
@@ -194,6 +203,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? deviceToken = freezed,
     Object? provider = freezed,
     Object? phoneCountryCode = freezed,
+    Object? gender = freezed,
     Object? blocked = null,
     Object? languageCode = null,
   }) {
@@ -234,6 +244,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.phoneCountryCode
           : phoneCountryCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       blocked: null == blocked
           ? _value.blocked
           : blocked // ignore: cast_nullable_to_non_nullable
@@ -259,6 +273,7 @@ class _$UserModelImpl implements _UserModel {
       this.deviceToken,
       this.provider,
       this.phoneCountryCode,
+      this.gender,
       this.blocked = false,
       this.languageCode = LanguageEnum.english});
 
@@ -285,6 +300,8 @@ class _$UserModelImpl implements _UserModel {
   @override
   String? phoneCountryCode;
   @override
+  String? gender;
+  @override
   @JsonKey()
   bool blocked;
   @override
@@ -293,7 +310,7 @@ class _$UserModelImpl implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(createdAt: $createdAt, id: $id, displayName: $displayName, email: $email, phone: $phone, photoURL: $photoURL, deviceToken: $deviceToken, provider: $provider, phoneCountryCode: $phoneCountryCode, blocked: $blocked, languageCode: $languageCode)';
+    return 'UserModel(createdAt: $createdAt, id: $id, displayName: $displayName, email: $email, phone: $phone, photoURL: $photoURL, deviceToken: $deviceToken, provider: $provider, phoneCountryCode: $phoneCountryCode, gender: $gender, blocked: $blocked, languageCode: $languageCode)';
   }
 
   /// Create a copy of UserModel
@@ -323,6 +340,7 @@ abstract class _UserModel implements UserModel {
       String? deviceToken,
       String? provider,
       String? phoneCountryCode,
+      String? gender,
       bool blocked,
       String languageCode}) = _$UserModelImpl;
 
@@ -358,6 +376,9 @@ abstract class _UserModel implements UserModel {
   @override
   String? get phoneCountryCode;
   set phoneCountryCode(String? value);
+  @override
+  String? get gender;
+  set gender(String? value);
   @override
   bool get blocked;
   set blocked(bool value);

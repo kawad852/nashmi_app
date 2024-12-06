@@ -6,12 +6,14 @@ class NashmiScaffold extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
 
   const NashmiScaffold({
     super.key,
     required this.body,
     this.appBar,
     this.bottomNavigationBar,
+    this.floatingActionButton,
   });
 
   @override
@@ -27,6 +29,7 @@ class NashmiScaffold extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: appBar,
+        floatingActionButton: floatingActionButton,
         bottomNavigationBar: bottomNavigationBar,
         body: body,
       ),

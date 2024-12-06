@@ -122,5 +122,8 @@
   "reviews": "Reviews",
   "reviewSubmittedMsg": "Your review has been submitted successfully",
   "comment": "Comment",
-  "submit": "Submit"
+  "submit": "Submit",
+  "termsMsg": "to continue, must agree to terms and conditions",
+  "genderMsg": "Select your gender",
+  "enterOtp": "Enter pin code"
 }

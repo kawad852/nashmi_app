@@ -10,6 +10,10 @@ PODS:
     - Firebase/Firestore (= 11.4.0)
     - firebase_core
     - Flutter
+  - cloud_functions (5.1.5):
+    - Firebase/Functions (= 11.4.0)
+    - firebase_core
+    - Flutter
   - Firebase/Analytics (11.4.0):
     - Firebase/Core
   - Firebase/Auth (11.4.0):
@@ -23,6 +27,9 @@ PODS:
   - Firebase/Firestore (11.4.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 11.4.0)
+  - Firebase/Functions (11.4.0):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 11.4.0)
   - Firebase/Messaging (11.4.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 11.4.0)
@@ -99,6 +106,14 @@ PODS:
     - FirebaseFirestoreGRPCCPPBinary (= 1.65.1)
     - leveldb-library (~> 1.22)
     - nanopb (~> 3.30910.0)
+  - FirebaseFunctions (11.4.0):
+    - FirebaseAppCheckInterop (~> 11.0)
+    - FirebaseAuthInterop (~> 11.0)
+    - FirebaseCore (~> 11.4)
+    - FirebaseCoreExtension (~> 11.4)
+    - FirebaseMessagingInterop (~> 11.0)
+    - FirebaseSharedSwift (~> 11.0)
+    - GTMSessionFetcher/Core (< 5.0, >= 3.4)
   - FirebaseInstallations (11.4.0):
     - FirebaseCore (~> 11.0)
     - GoogleUtilities/Environment (~> 8.0)
@@ -113,6 +128,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - nanopb (~> 3.30910.0)
+  - FirebaseMessagingInterop (11.4.0)
   - FirebaseSharedSwift (11.4.0)
   - Flutter (1.0.0)
   - flutter_branch_sdk (8.2.0):
@@ -235,6 +251,7 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -274,8 +291,10 @@ SPEC REPOS:
     - FirebaseFirestoreGRPCCoreBinary
     - FirebaseFirestoreGRPCCPPBinary
     - FirebaseFirestoreInternalBinary
+    - FirebaseFunctions
     - FirebaseInstallations
     - FirebaseMessaging
+    - FirebaseMessagingInterop
     - FirebaseSharedSwift
     - Google-Maps-iOS-Utils
     - GoogleAppMeasurement
@@ -294,6 +313,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  cloud_functions:
+    :path: ".symlinks/plugins/cloud_functions/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_auth:
@@ -345,6 +366,7 @@ SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   BranchSDK: ef7d89062afb08b20f65d5b1633b215ee77ab77f
   cloud_firestore: 8794ea2885e367f0a2096338964ddfd49739b2c7
+  cloud_functions: d1dc9179c2db1729cb9bd0c9683909216a0f2230
   Firebase: cf1b19f21410b029b6786a54e9764a0cacad3c99
   firebase_analytics: fa7e5b20c2b58042e3301f5112a473d365bd490c
   firebase_auth: 42718683069d35d73af7a986b55b194589039e5e
@@ -364,8 +386,10 @@ SPEC CHECKSUMS:
   FirebaseFirestoreGRPCCoreBinary: 472bd808e1886a5efb2fd03dd09b98d34641a335
   FirebaseFirestoreGRPCCPPBinary: db76d83d2b7517623f8426ed7f7a17bad2478084
   FirebaseFirestoreInternalBinary: 01c33a6d789b95dce32dbdfcaf30d60ddf8902d8
+  FirebaseFunctions: 75a996cdf66565468fa73072b08905a2d6d3262d
   FirebaseInstallations: 6ef4a1c7eb2a61ee1f74727d7f6ce2e72acf1414
   FirebaseMessaging: f8a160d99c2c2e5babbbcc90c4a3e15db036aee2
+  FirebaseMessagingInterop: 249006abd2ef8fbf9dae3572eb2def468a647b37
   FirebaseSharedSwift: 505dae2d05969dbf6d43749a642bb1bf230f0252
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_branch_sdk: b3763b3d53a7cfbc87c51136bed66fcdc282bdf5
