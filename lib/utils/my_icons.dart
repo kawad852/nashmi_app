@@ -42,4 +42,5 @@ class MyIcons {
   static const String locationOffer = '${_path}location_offer.svg';
   static const String scan = '${_path}scan.svg';
   static const String share = '${_path}share.svg';
+  static const String nashmi = '${_path}nashmi.svg';
 }

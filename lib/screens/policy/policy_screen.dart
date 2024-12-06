@@ -1,74 +1,75 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/utils/base_extensions.dart';
-import 'package:nashmi_app/utils/enums.dart';
-import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/custom_back.dart';
-import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
+
+import '../../models/policy/policy_model.dart';
+import '../../network/fire_queries.dart';
+import '../../utils/base_extensions.dart';
+import '../../widgets/custom_future_builder.dart';
 
 class PolicyScreen extends StatefulWidget {
-  final PolicyType policyType;
-  const PolicyScreen({super.key, required this.policyType});
+  final String id;
+
+  const PolicyScreen({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<PolicyScreen> createState() => _PolicyScreenState();
 }
 
 class _PolicyScreenState extends State<PolicyScreen> {
-  PolicyType get _policyType => widget.policyType;
+  late Future<DocumentSnapshot<PolicyModel>> _policyFuture;
 
-  String _getTitle() {
-    switch (_policyType) {
-      case PolicyType.knowUs:
-        return context.appLocalization.getKnowUs;
-      case PolicyType.privacyPolicy:
-        return context.appLocalization.privacyPolicy;
-      case PolicyType.termsAndConditions:
-        return context.appLocalization.termsAndConditions;
-    }
+  FirebaseFirestore get _firebaseFirestore => FirebaseFirestore.instance;
+  String get _policyId => widget.id;
+
+  void _initializeFuture() {
+    _policyFuture = _firebaseFirestore.policies.doc(_policyId).get();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeFuture();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NashmiScaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              centerTitle: true,
-              leadingWidth: kBarLeadingWith,
-              leading: const CustomBack(),
-              title: CustomText(
-                _getTitle(),
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+    return CustomFutureBuilder(
+      future: _policyFuture,
+      withBackgroundColor: true,
+      onComplete: (context, snapshot) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(context.translate(
+              textEN: snapshot.data!.data()!.titleEn!,
+              textAR: snapshot.data!.data()!.titleAr!,
+            )),
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Html(
+              data: context.translate(
+                textEN: snapshot.data!.data()!.contentEn!,
+                textAR: snapshot.data!.data()!.contentAr!,
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.only(top: 15, bottom: 25),
-                      child: CustomText(
-                        "تطبيق سوق نشمي",
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    CustomText(
-                      "هنا يمكن كتابة معلومات ووصف عن سوق نشمي من خلال لوحة التحكم هنا يمكن كتابة معلومات ووصف عن سوق نشمي من خلال لوحة التحكم هنا يمكن كتابة معلومات ووصف عن سوق نشمي من خلال لوحة التحكم هنا يمكن كتابة معلومات ووصف عن سوق نشمي من خلال لوحة التحكم ",
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
+      onError: (error) {
+        return AppErrorWidget(
+          error: error,
+          onRetry: () {
+            setState(() {
+              _initializeFuture();
+            });
+          },
+        );
+      },
     );
   }
 }

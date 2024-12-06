@@ -8,8 +8,6 @@ class ThemeEnum {
   static const String dark = 'dark';
 }
 
-enum BookingType { hotel, flight }
-
 enum PolicyType { knowUs, termsAndConditions, privacyPolicy }
 
 enum ContactType { ads, complaints }

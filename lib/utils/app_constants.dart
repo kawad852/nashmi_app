@@ -12,3 +12,9 @@ class AlgoliaIndices {
   static const String categories = 'categories';
   static const String tags = 'tags';
 }
+
+class PolicyDocuments {
+  static const String privacyPolicy = 'BklYRnbuGMi4r2Y7Qe3Y';
+  static const String termsOfUse = '9heum2QGHq0mNBnhbRs2';
+  static const String aboutUs = 'qq28whc9BmBCHpeiWE3O';
+}
