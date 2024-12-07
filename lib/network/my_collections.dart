@@ -9,4 +9,5 @@ class MyCollections {
   static const likes = 'likes';
   static const reviews = 'reviews';
   static const policies = 'policies';
+  static const settings = 'settings';
 }

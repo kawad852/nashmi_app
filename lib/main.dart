@@ -9,14 +9,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nashmi_app/models/category/category_model.dart';
-import 'package:nashmi_app/network/fire_queries.dart';
+import 'package:nashmi_app/models/offer_settings/offer_settings_model.dart';
+import 'package:nashmi_app/network/my_collections.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
 import 'package:nashmi_app/providers/fire_provider.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
 import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
+import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
@@ -115,9 +116,24 @@ class _MyAppState extends State<MyApp> {
                 return true;
               },
             ),
-            StreamProvider<List<CategoryModel>>.value(
-              value: FirebaseFirestore.instance.categories.snapshots().map((event) => event.docs.map((e) => e.data()).toList()),
-              initialData: const [],
+            // StreamProvider<List<CategoryModel>>.value(
+            //   value: FirebaseFirestore.instance.categories.snapshots().map((event) => event.docs.map((e) => e.data()).toList()),
+            //   initialData: const [],
+            //   updateShouldNotify: (initialValue, value) {
+            //     return true;
+            //   },
+            // ),
+            StreamProvider<OfferSettingsModel?>.value(
+              value: FirebaseFirestore.instance
+                  .collection(MyCollections.settings)
+                  .withConverter<OfferSettingsModel>(
+                    fromFirestore: (snapshot, _) => OfferSettingsModel.fromJson(snapshot.data()!),
+                    toFirestore: (snapshot, _) => snapshot.toJson(),
+                  )
+                  .doc(kOfferDocument)
+                  .snapshots()
+                  .map((e) => e.data()),
+              initialData: null,
               updateShouldNotify: (initialValue, value) {
                 return true;
               },

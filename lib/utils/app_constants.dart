@@ -6,6 +6,7 @@ const kGuestId = "guest";
 const kOrder = 9999999;
 const kAlgoliaApplicationId = '9RWKQLY0HL';
 const kAlgoliaApiKey = 'f8d1e85aff1c774a61757ea385c36088';
+const String kOfferDocument = 'HVB9pU03MBuOlG9b0dxT';
 
 class AlgoliaIndices {
   static const String providers = 'providers';
