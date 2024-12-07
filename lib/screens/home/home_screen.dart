@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           style: style,
                                         ),
                                         Text(
-                                          UiHelper.formatDuration(context, offer.lunchAt!),
+                                          UiHelper.formatDuration(context, offer.lunchAt!).join(':'),
                                           style: style,
                                         ),
                                       ],

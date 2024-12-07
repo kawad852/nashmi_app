@@ -7,7 +7,7 @@ class UiHelper {
   static String getFlag(String code) => 'assets/flags/${code.toLowerCase()}.svg';
   static CountryModel getCountry(String code) => kCountries.firstWhere((element) => element.code == code);
 
-  static String formatDuration(BuildContext context, DateTime timestamp) {
+  static List<String> formatDuration(BuildContext context, DateTime timestamp) {
     final now = DateTime.now();
     final difference = now.difference(timestamp);
 
@@ -22,6 +22,6 @@ class UiHelper {
     if (minutes > 0) parts.add('$minutes');
     if (seconds > 0) parts.add('$seconds');
 
-    return parts.join(':');
+    return parts;
   }
 }
