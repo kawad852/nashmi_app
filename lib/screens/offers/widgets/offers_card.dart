@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/models/offer/offer_model.dart';
 import 'package:nashmi_app/screens/single_offer/single_offer_screen.dart';
-import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 
 class OffersCard extends StatelessWidget {
-  const OffersCard({super.key});
+  final OfferModel offer;
+
+  const OffersCard({
+    super.key,
+    required this.offer,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final provider = offer.provider!;
     return CustomNetworkImage(
-      kFakeImage,
+      offer.thumbnail!,
       width: 160,
       height: 230,
       radius: MyTheme.radiusSecondary,
@@ -46,18 +52,18 @@ class OffersCard extends StatelessWidget {
                   color: context.colorPalette.white,
                   borderRadius: BorderRadius.circular(MyTheme.radiusPrimary),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     CustomNetworkImage(
-                      kFakeImage,
+                      provider.thumbnail!,
                       width: 20,
                       height: 20,
                       radius: MyTheme.radiusPrimary,
                     ),
-                    SizedBox(width: 3),
+                    const SizedBox(width: 3),
                     Expanded(
                       child: CustomText(
-                        "iSystem Jordan",
+                        context.translate(textEN: provider.nameEn, textAR: provider.nameAr),
                         overFlow: TextOverflow.ellipsis,
                         fontSize: 12,
                       ),
@@ -71,21 +77,21 @@ class OffersCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomText(
-                    "هاتف ايفون 15Pro",
+                  CustomText(
+                    context.translate(textEN: offer.nameEn, textAR: offer.nameAr),
                     maxLines: 1,
                     fontWeight: FontWeight.bold,
                     overFlow: TextOverflow.ellipsis,
                   ),
                   CustomText(
-                    "فقط بـ 99 دينار",
+                    context.appLocalization.offerPriceLabel(context.currency, offer.offerPrice!),
                     maxLines: 1,
                     overFlow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.bold,
                     color: context.colorPalette.redB31,
                   ),
-                  const CustomText(
-                    "لأول 100 مشتري فقط",
+                  CustomText(
+                    context.appLocalization.purchaseLimitLabel(offer.purchaseLimit!),
                     maxLines: 1,
                     overFlow: TextOverflow.ellipsis,
                     fontSize: 12,

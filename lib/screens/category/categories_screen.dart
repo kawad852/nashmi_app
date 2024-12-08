@@ -138,6 +138,14 @@ class CategoriesScreen extends StatelessWidget {
                   crossAxisCount: 4,
                 ),
                 itemBuilder: (context, index) {
+                  if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                    snapshot.fetchMore();
+                  }
+
+                  if (snapshot.isFetchingMore) {
+                    return snapshot.toggleLoader();
+                  }
+
                   final category = categories[index].data();
                   return CategoryBubble(
                     category: category,

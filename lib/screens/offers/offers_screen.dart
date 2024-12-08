@@ -111,6 +111,7 @@ class _OffersScreenState extends State<OffersScreen> {
                         if (snapshot.docs.isEmpty) {
                           return const SizedBox.shrink();
                         }
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -133,8 +134,18 @@ class _OffersScreenState extends State<OffersScreen> {
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
+                                  if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                                    snapshot.fetchMore();
+                                  }
+
+                                  if (snapshot.isFetchingMore) {
+                                    return snapshot.toggleLoader();
+                                  }
+
                                   final offer = snapshot.docs[index].data();
-                                  return const OffersCard();
+                                  return OffersCard(
+                                    offer: offer,
+                                  );
                                 },
                               ),
                             ),
@@ -148,7 +159,9 @@ class _OffersScreenState extends State<OffersScreen> {
                 isSliver: true,
                 builder: (context, snapshot) {
                   if (snapshot.docs.isEmpty) {
-                    return const SizedBox.shrink();
+                    return const SliverToBoxAdapter(
+                      child: SizedBox.shrink(),
+                    );
                   }
                   return SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -169,6 +182,14 @@ class _OffersScreenState extends State<OffersScreen> {
                             separatorBuilder: (context, index) => Divider(color: context.colorPalette.greyF7E),
                             itemCount: snapshot.docs.length,
                             itemBuilder: (context, index) {
+                              if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                                snapshot.fetchMore();
+                              }
+
+                              if (snapshot.isFetchingMore) {
+                                return snapshot.toggleLoader();
+                              }
+
                               final offer = snapshot.docs[index].data();
                               return MoreOfferCard(
                                 offer: offer,

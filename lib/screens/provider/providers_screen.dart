@@ -168,6 +168,14 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                   itemCount: snapshot.docs.length,
                   itemBuilder: (context, index) {
+                    if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                      snapshot.fetchMore();
+                    }
+
+                    if (snapshot.isFetchingMore) {
+                      return snapshot.toggleLoader();
+                    }
+
                     final provider = snapshot.docs[index].data();
                     return ProviderCard(
                       provider: provider,

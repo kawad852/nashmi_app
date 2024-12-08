@@ -62,6 +62,14 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
             padding: const EdgeInsets.all(kScreenMargin),
             separatorBuilder: (context, index) => const SizedBox(height: 10),
             itemBuilder: (context, index) {
+              if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                snapshot.fetchMore();
+              }
+
+              if (snapshot.isFetchingMore) {
+                return snapshot.toggleLoader();
+              }
+
               final review = snapshot.docs[index].data();
               return ReviewBubble(
                 review: review,
