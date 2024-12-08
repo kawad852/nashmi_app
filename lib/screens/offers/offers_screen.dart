@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:nashmi_app/helper/separator.dart';
+import 'package:nashmi_app/models/offer/offer_model.dart';
 import 'package:nashmi_app/models/offer_settings/offer_settings_model.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
+import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/offers/widgets/more_offer_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offers_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offers_nav_bar.dart';
@@ -9,7 +12,7 @@ import 'package:nashmi_app/screens/offers/widgets/time_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
-import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +26,22 @@ class OffersScreen extends StatefulWidget {
 }
 
 class _OffersScreenState extends State<OffersScreen> {
+  late Future<List<dynamic>> _futures;
+  late Query<OfferModel> _pinnedQuery;
+  late Query<OfferModel> _offersQuery;
+
+  void _initialize() {
+    final query = FirebaseFirestore.instance.offers.orderBy(MyFields.createdAt, descending: true);
+    _pinnedQuery = query.where(MyFields.pinned, isEqualTo: true);
+    _offersQuery = query.where(MyFields.pinned, isEqualTo: false);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Selector<OfferSettingsModel?, OfferSettingsModel?>(
@@ -69,10 +88,12 @@ class _OffersScreenState extends State<OffersScreen> {
                   onPressed: () {},
                   icon: const CustomSvg(MyIcons.menu),
                 ),
-                title: CustomText(
+                title: Text(
                   context.appLocalization.nashmiDay,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 actions: [
                   IconButton(
@@ -84,60 +105,81 @@ class _OffersScreenState extends State<OffersScreen> {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: CustomText(
-                          context.appLocalization.luxuriousOffers,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 230,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(width: 10),
-                          itemCount: 10,
-                          padding: const EdgeInsetsDirectional.only(top: 10, start: 20, end: 20),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return const OffersCard();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: FirePaginator(
+                      query: _pinnedQuery,
+                      builder: (context, snapshot) {
+                        if (snapshot.docs.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                context.appLocalization.luxuriousOffers,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 230,
+                              child: ListView.separated(
+                                separatorBuilder: (context, index) => const SizedBox(width: 10),
+                                itemCount: snapshot.docs.length,
+                                padding: const EdgeInsetsDirectional.only(top: 10, start: 20, end: 20),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final offer = snapshot.docs[index].data();
+                                  return const OffersCard();
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                sliver: SliverToBoxAdapter(
-                  child: ShrinkWrappingViewport(
-                    offset: ViewportOffset.zero(),
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: CustomText(
-                          context.appLocalization.more,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+              FirePaginator(
+                query: _offersQuery,
+                isSliver: true,
+                builder: (context, snapshot) {
+                  if (snapshot.docs.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  return SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    sliver: SliverMainAxisGroup(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Text(
+                            context.appLocalization.more,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        sliver: SliverList.separated(
-                          separatorBuilder: (context, index) => const SizedBox(height: 10),
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return const MoreOfferCard();
-                          },
+                        SliverPadding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          sliver: SliverList.separated(
+                            separatorBuilder: (context, index) => Divider(color: context.colorPalette.greyF7E),
+                            itemCount: snapshot.docs.length,
+                            itemBuilder: (context, index) {
+                              final offer = snapshot.docs[index].data();
+                              return MoreOfferCard(
+                                offer: offer,
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),

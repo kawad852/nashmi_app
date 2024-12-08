@@ -126,5 +126,7 @@
   "termsMsg": "to continue, must agree to terms and conditions",
   "genderMsg": "Select your gender",
   "enterOtp": "Enter pin code",
-  "startAfter": "Start After"
+  "startAfter": "Start After",
+  "offerPriceLabel": "Only {offerPrice} {currency}",
+  "purchaseLimitLabel": "For the first {limit} buyers only"
 }

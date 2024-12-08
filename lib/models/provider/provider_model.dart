@@ -47,3 +47,15 @@ class ProviderModel with _$ProviderModel {
 
   factory ProviderModel.fromJson(Map<String, dynamic> json) => _$ProviderModelFromJson(json);
 }
+
+@unfreezed
+class LightProviderModel with _$LightProviderModel {
+  factory LightProviderModel({
+    String? id,
+    String? nameEn,
+    String? nameAr,
+    String? thumbnail,
+  }) = _LightProviderModel;
+
+  factory LightProviderModel.fromJson(Map<String, dynamic> json) => _$LightProviderModelFromJson(json);
+}

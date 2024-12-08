@@ -126,5 +126,7 @@
   "termsMsg": "للمتابعة، يجب الموافقة على الشروط والاحكام",
   "genderMsg": "اختر الجنس",
   "enterOtp": "ادخل الرمز",
-  "startAfter": "يبدأ بعد"
+  "startAfter": "يبدأ بعد",
+  "offerPriceLabel": "فقط ب {offerPrice} {currency}",
+  "purchaseLimitLabel": "لأول {limit} مشتري فقط"
 }

@@ -45,7 +45,7 @@ extension CommonExtensions on BuildContext {
   double get systemButtonHeight => Theme.of(this).buttonTheme.height;
   String? get countryCode => AppProvider.countryCode;
   String getDialCode(String code) => kCountries.singleWhere((element) => element.code == code, orElse: () => CountryModel(code: kFallBackCountryCode)).dialCode!;
-
+  String get currency => isLTR ? 'JD' : 'د.أ';
   String getToken(String code, String phone) => "nashmi-$code-$phone";
 
   Future<T?> navigate<T>(

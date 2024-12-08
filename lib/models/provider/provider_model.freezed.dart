@@ -863,3 +863,198 @@ abstract class _ProviderModel implements ProviderModel {
   _$$ProviderModelImplCopyWith<_$ProviderModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+LightProviderModel _$LightProviderModelFromJson(Map<String, dynamic> json) {
+  return _LightProviderModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LightProviderModel {
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
+  String? get nameEn => throw _privateConstructorUsedError;
+  set nameEn(String? value) => throw _privateConstructorUsedError;
+  String? get nameAr => throw _privateConstructorUsedError;
+  set nameAr(String? value) => throw _privateConstructorUsedError;
+  String? get thumbnail => throw _privateConstructorUsedError;
+  set thumbnail(String? value) => throw _privateConstructorUsedError;
+
+  /// Serializes this LightProviderModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LightProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LightProviderModelCopyWith<LightProviderModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LightProviderModelCopyWith<$Res> {
+  factory $LightProviderModelCopyWith(
+          LightProviderModel value, $Res Function(LightProviderModel) then) =
+      _$LightProviderModelCopyWithImpl<$Res, LightProviderModel>;
+  @useResult
+  $Res call({String? id, String? nameEn, String? nameAr, String? thumbnail});
+}
+
+/// @nodoc
+class _$LightProviderModelCopyWithImpl<$Res, $Val extends LightProviderModel>
+    implements $LightProviderModelCopyWith<$Res> {
+  _$LightProviderModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LightProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? nameEn = freezed,
+    Object? nameAr = freezed,
+    Object? thumbnail = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameEn: freezed == nameEn
+          ? _value.nameEn
+          : nameEn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameAr: freezed == nameAr
+          ? _value.nameAr
+          : nameAr // ignore: cast_nullable_to_non_nullable
+              as String?,
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LightProviderModelImplCopyWith<$Res>
+    implements $LightProviderModelCopyWith<$Res> {
+  factory _$$LightProviderModelImplCopyWith(_$LightProviderModelImpl value,
+          $Res Function(_$LightProviderModelImpl) then) =
+      __$$LightProviderModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? id, String? nameEn, String? nameAr, String? thumbnail});
+}
+
+/// @nodoc
+class __$$LightProviderModelImplCopyWithImpl<$Res>
+    extends _$LightProviderModelCopyWithImpl<$Res, _$LightProviderModelImpl>
+    implements _$$LightProviderModelImplCopyWith<$Res> {
+  __$$LightProviderModelImplCopyWithImpl(_$LightProviderModelImpl _value,
+      $Res Function(_$LightProviderModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LightProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? nameEn = freezed,
+    Object? nameAr = freezed,
+    Object? thumbnail = freezed,
+  }) {
+    return _then(_$LightProviderModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameEn: freezed == nameEn
+          ? _value.nameEn
+          : nameEn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameAr: freezed == nameAr
+          ? _value.nameAr
+          : nameAr // ignore: cast_nullable_to_non_nullable
+              as String?,
+      thumbnail: freezed == thumbnail
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LightProviderModelImpl implements _LightProviderModel {
+  _$LightProviderModelImpl({this.id, this.nameEn, this.nameAr, this.thumbnail});
+
+  factory _$LightProviderModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LightProviderModelImplFromJson(json);
+
+  @override
+  String? id;
+  @override
+  String? nameEn;
+  @override
+  String? nameAr;
+  @override
+  String? thumbnail;
+
+  @override
+  String toString() {
+    return 'LightProviderModel(id: $id, nameEn: $nameEn, nameAr: $nameAr, thumbnail: $thumbnail)';
+  }
+
+  /// Create a copy of LightProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LightProviderModelImplCopyWith<_$LightProviderModelImpl> get copyWith =>
+      __$$LightProviderModelImplCopyWithImpl<_$LightProviderModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LightProviderModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LightProviderModel implements LightProviderModel {
+  factory _LightProviderModel(
+      {String? id,
+      String? nameEn,
+      String? nameAr,
+      String? thumbnail}) = _$LightProviderModelImpl;
+
+  factory _LightProviderModel.fromJson(Map<String, dynamic> json) =
+      _$LightProviderModelImpl.fromJson;
+
+  @override
+  String? get id;
+  set id(String? value);
+  @override
+  String? get nameEn;
+  set nameEn(String? value);
+  @override
+  String? get nameAr;
+  set nameAr(String? value);
+  @override
+  String? get thumbnail;
+  set thumbnail(String? value);
+
+  /// Create a copy of LightProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LightProviderModelImplCopyWith<_$LightProviderModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -10,4 +10,5 @@ class MyCollections {
   static const reviews = 'reviews';
   static const policies = 'policies';
   static const settings = 'settings';
+  static const offers = 'offers';
 }

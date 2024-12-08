@@ -95,3 +95,21 @@ Map<String, dynamic> _$$ProviderModelImplToJson(_$ProviderModelImpl instance) =>
       'subCategoryIds': instance.subCategoryIds,
       'tagIds': instance.tagIds,
     };
+
+_$LightProviderModelImpl _$$LightProviderModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LightProviderModelImpl(
+      id: json['id'] as String?,
+      nameEn: json['nameEn'] as String?,
+      nameAr: json['nameAr'] as String?,
+      thumbnail: json['thumbnail'] as String?,
+    );
+
+Map<String, dynamic> _$$LightProviderModelImplToJson(
+        _$LightProviderModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'nameEn': instance.nameEn,
+      'nameAr': instance.nameAr,
+      'thumbnail': instance.thumbnail,
+    };
