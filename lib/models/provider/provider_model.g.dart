@@ -103,6 +103,11 @@ _$LightProviderModelImpl _$$LightProviderModelImplFromJson(
       nameEn: json['nameEn'] as String?,
       nameAr: json['nameAr'] as String?,
       thumbnail: json['thumbnail'] as String?,
+      categoryIds: (json['categoryIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      isVerified: json['isVerified'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$LightProviderModelImplToJson(
@@ -112,4 +117,6 @@ Map<String, dynamic> _$$LightProviderModelImplToJson(
       'nameEn': instance.nameEn,
       'nameAr': instance.nameAr,
       'thumbnail': instance.thumbnail,
+      'categoryIds': instance.categoryIds,
+      'isVerified': instance.isVerified,
     };

@@ -5,8 +5,12 @@ import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 
-class OfferDetalis extends StatelessWidget {
-  const OfferDetalis({super.key});
+class PurchasesBar extends StatelessWidget {
+  final int count;
+  const PurchasesBar({
+    super.key,
+    required this.count,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class OfferDetalis extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                       CustomText(
-                        " 12 ",
+                        " $count ",
                         color: context.colorPalette.redB31,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -123,8 +127,7 @@ class OfferDetalis extends StatelessWidget {
                     begin: const Duration(hours: 15, minutes: 15, seconds: 15),
                     end: Duration.zero,
                   ),
-                  builder:
-                      (BuildContext context, Duration value, Widget? child) {
+                  builder: (BuildContext context, Duration value, Widget? child) {
                     final hours = value.inHours;
                     final minutes = value.inMinutes.remainder(60);
                     final seconds = value.inSeconds.remainder(60);

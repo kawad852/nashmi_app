@@ -878,6 +878,10 @@ mixin _$LightProviderModel {
   set nameAr(String? value) => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
   set thumbnail(String? value) => throw _privateConstructorUsedError;
+  List<String> get categoryIds => throw _privateConstructorUsedError;
+  set categoryIds(List<String> value) => throw _privateConstructorUsedError;
+  bool get isVerified => throw _privateConstructorUsedError;
+  set isVerified(bool value) => throw _privateConstructorUsedError;
 
   /// Serializes this LightProviderModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -895,7 +899,13 @@ abstract class $LightProviderModelCopyWith<$Res> {
           LightProviderModel value, $Res Function(LightProviderModel) then) =
       _$LightProviderModelCopyWithImpl<$Res, LightProviderModel>;
   @useResult
-  $Res call({String? id, String? nameEn, String? nameAr, String? thumbnail});
+  $Res call(
+      {String? id,
+      String? nameEn,
+      String? nameAr,
+      String? thumbnail,
+      List<String> categoryIds,
+      bool isVerified});
 }
 
 /// @nodoc
@@ -917,6 +927,8 @@ class _$LightProviderModelCopyWithImpl<$Res, $Val extends LightProviderModel>
     Object? nameEn = freezed,
     Object? nameAr = freezed,
     Object? thumbnail = freezed,
+    Object? categoryIds = null,
+    Object? isVerified = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -935,6 +947,14 @@ class _$LightProviderModelCopyWithImpl<$Res, $Val extends LightProviderModel>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
+      categoryIds: null == categoryIds
+          ? _value.categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isVerified: null == isVerified
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -947,7 +967,13 @@ abstract class _$$LightProviderModelImplCopyWith<$Res>
       __$$LightProviderModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? nameEn, String? nameAr, String? thumbnail});
+  $Res call(
+      {String? id,
+      String? nameEn,
+      String? nameAr,
+      String? thumbnail,
+      List<String> categoryIds,
+      bool isVerified});
 }
 
 /// @nodoc
@@ -967,6 +993,8 @@ class __$$LightProviderModelImplCopyWithImpl<$Res>
     Object? nameEn = freezed,
     Object? nameAr = freezed,
     Object? thumbnail = freezed,
+    Object? categoryIds = null,
+    Object? isVerified = null,
   }) {
     return _then(_$LightProviderModelImpl(
       id: freezed == id
@@ -985,6 +1013,14 @@ class __$$LightProviderModelImplCopyWithImpl<$Res>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
+      categoryIds: null == categoryIds
+          ? _value.categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isVerified: null == isVerified
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -992,7 +1028,13 @@ class __$$LightProviderModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LightProviderModelImpl implements _LightProviderModel {
-  _$LightProviderModelImpl({this.id, this.nameEn, this.nameAr, this.thumbnail});
+  _$LightProviderModelImpl(
+      {this.id,
+      this.nameEn,
+      this.nameAr,
+      this.thumbnail,
+      this.categoryIds = const [],
+      this.isVerified = false});
 
   factory _$LightProviderModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LightProviderModelImplFromJson(json);
@@ -1005,10 +1047,16 @@ class _$LightProviderModelImpl implements _LightProviderModel {
   String? nameAr;
   @override
   String? thumbnail;
+  @override
+  @JsonKey()
+  List<String> categoryIds;
+  @override
+  @JsonKey()
+  bool isVerified;
 
   @override
   String toString() {
-    return 'LightProviderModel(id: $id, nameEn: $nameEn, nameAr: $nameAr, thumbnail: $thumbnail)';
+    return 'LightProviderModel(id: $id, nameEn: $nameEn, nameAr: $nameAr, thumbnail: $thumbnail, categoryIds: $categoryIds, isVerified: $isVerified)';
   }
 
   /// Create a copy of LightProviderModel
@@ -1033,7 +1081,9 @@ abstract class _LightProviderModel implements LightProviderModel {
       {String? id,
       String? nameEn,
       String? nameAr,
-      String? thumbnail}) = _$LightProviderModelImpl;
+      String? thumbnail,
+      List<String> categoryIds,
+      bool isVerified}) = _$LightProviderModelImpl;
 
   factory _LightProviderModel.fromJson(Map<String, dynamic> json) =
       _$LightProviderModelImpl.fromJson;
@@ -1050,6 +1100,12 @@ abstract class _LightProviderModel implements LightProviderModel {
   @override
   String? get thumbnail;
   set thumbnail(String? value);
+  @override
+  List<String> get categoryIds;
+  set categoryIds(List<String> value);
+  @override
+  bool get isVerified;
+  set isVerified(bool value);
 
   /// Create a copy of LightProviderModel
   /// with the given fields replaced by the non-null parameter values.

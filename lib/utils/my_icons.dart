@@ -43,4 +43,5 @@ class MyIcons {
   static const String scan = '${_path}scan.svg';
   static const String share = '${_path}share.svg';
   static const String nashmi = '${_path}nashmi.svg';
+  static const String line = '${_path}line.svg';
 }

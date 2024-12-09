@@ -55,6 +55,8 @@ class LightProviderModel with _$LightProviderModel {
     String? nameEn,
     String? nameAr,
     String? thumbnail,
+    @Default([]) List<String> categoryIds,
+    @Default(false) bool isVerified,
   }) = _LightProviderModel;
 
   factory LightProviderModel.fromJson(Map<String, dynamic> json) => _$LightProviderModelFromJson(json);

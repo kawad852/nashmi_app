@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/offer/offer_model.dart';
-import 'package:nashmi_app/screens/single_offer/single_offer_screen.dart';
+import 'package:nashmi_app/screens/offers/offer_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 
-class OffersCard extends StatelessWidget {
+class OfferCard extends StatelessWidget {
   final OfferModel offer;
 
-  const OffersCard({
+  const OfferCard({
     super.key,
     required this.offer,
   });
@@ -23,7 +23,11 @@ class OffersCard extends StatelessWidget {
       height: 230,
       radius: MyTheme.radiusSecondary,
       onTap: () {
-        context.push(const SingleOfferScreen());
+        context.navigate(
+          (context) => OfferScreen(
+            id: offer.id!,
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(

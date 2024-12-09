@@ -128,5 +128,7 @@
   "enterOtp": "ادخل الرمز",
   "startAfter": "يبدأ بعد",
   "offerPriceLabel": "فقط ب {offerPrice} {currency}",
-  "purchaseLimitLabel": "لأول {limit} مشتري فقط"
+  "purchaseLimitLabel": "لأول {limit} مشتري فقط",
+  "onlyWith": "فقط ب",
+  "insteadOf": "بدلاً من"
 }

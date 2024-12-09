@@ -6,7 +6,7 @@ import 'package:nashmi_app/models/offer_settings/offer_settings_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/offers/widgets/more_offer_card.dart';
-import 'package:nashmi_app/screens/offers/widgets/offers_card.dart';
+import 'package:nashmi_app/screens/offers/widgets/offer_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offers_nav_bar.dart';
 import 'package:nashmi_app/screens/offers/widgets/time_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
@@ -143,7 +143,7 @@ class _OffersScreenState extends State<OffersScreen> {
                                   }
 
                                   final offer = snapshot.docs[index].data();
-                                  return OffersCard(
+                                  return OfferCard(
                                     offer: offer,
                                   );
                                 },

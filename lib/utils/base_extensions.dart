@@ -15,7 +15,6 @@ extension LanguageExtension on BuildContext {
   String get languageCode => Localizations.localeOf(this).languageCode;
 
   bool get isLTR => Localizations.localeOf(this).languageCode == LanguageEnum.english;
-
   bool get isRTL => Localizations.localeOf(this).languageCode == LanguageEnum.arabic;
 
   String translate({

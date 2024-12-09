@@ -128,5 +128,7 @@
   "enterOtp": "Enter pin code",
   "startAfter": "Start After",
   "offerPriceLabel": "Only {offerPrice} {currency}",
-  "purchaseLimitLabel": "For the first {limit} buyers only"
+  "purchaseLimitLabel": "For the first {limit} buyers only",
+  "onlyWith": "only",
+  "insteadOf": "instead of"
 }
