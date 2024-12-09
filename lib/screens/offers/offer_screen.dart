@@ -25,14 +25,14 @@ class OfferScreen extends StatefulWidget {
   State<OfferScreen> createState() => _OfferScreenState();
 }
 
-class _OfferScreenState extends State<OfferScreen> {
+class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
   late Stream<DocumentSnapshot<OfferModel>> _offerStream;
 
   void _initialize() {
     _offerStream = FirebaseFirestore.instance.offers.doc(widget.id).snapshots();
   }
 
-  void _updateViews(int value) {
+  void _updateCurrentViews(int value) {
     FirebaseFirestore.instance.offers.doc(widget.id).update({
       MyFields.currentViews: FieldValue.increment(value),
     });
@@ -41,8 +41,25 @@ class _OfferScreenState extends State<OfferScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _initialize();
-    _updateViews(1);
+    _updateCurrentViews(1);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _updateCurrentViews(-1);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _updateCurrentViews(1);
+    } else if (state == AppLifecycleState.paused) {
+      _updateCurrentViews(-1);
+    }
   }
 
   @override

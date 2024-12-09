@@ -72,10 +72,17 @@ class _ProviderScreenState extends State<ProviderScreen> {
     );
   }
 
+  void _incrementViews() {
+    FirebaseFirestore.instance.providers.doc(widget.provider.id).update({
+      MyFields.totalViews: FieldValue.increment(1),
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _initialize();
+    _incrementViews();
   }
 
   @override

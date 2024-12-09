@@ -12,4 +12,5 @@ class MyFields {
   static const String ratingsCount = 'ratingsCount';
   static const String pinned = 'pinned';
   static const String currentViews = 'currentViews';
+  static const String totalViews = 'totalViews';
 }

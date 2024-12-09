@@ -30,6 +30,7 @@ class ProviderModel with _$ProviderModel {
     @Default(0) double avgRating,
     @Default(0) int ratingsCount,
     @Default(0) int likesCount,
+    @Default(0) int totalViews,
     @Default(kOrder) int order,
     @Default(kFallBackCountryCode) String personalPhoneCountryCode,
     String? personalPhoneNum,

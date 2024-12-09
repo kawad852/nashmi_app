@@ -60,6 +60,8 @@ mixin _$ProviderModel {
   set ratingsCount(int value) => throw _privateConstructorUsedError;
   int get likesCount => throw _privateConstructorUsedError;
   set likesCount(int value) => throw _privateConstructorUsedError;
+  int get totalViews => throw _privateConstructorUsedError;
+  set totalViews(int value) => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   set order(int value) => throw _privateConstructorUsedError;
   String get personalPhoneCountryCode => throw _privateConstructorUsedError;
@@ -126,6 +128,7 @@ abstract class $ProviderModelCopyWith<$Res> {
       double avgRating,
       int ratingsCount,
       int likesCount,
+      int totalViews,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -178,6 +181,7 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
     Object? avgRating = null,
     Object? ratingsCount = null,
     Object? likesCount = null,
+    Object? totalViews = null,
     Object? order = null,
     Object? personalPhoneCountryCode = null,
     Object? personalPhoneNum = freezed,
@@ -268,6 +272,10 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
       likesCount: null == likesCount
           ? _value.likesCount
           : likesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalViews: null == totalViews
+          ? _value.totalViews
+          : totalViews // ignore: cast_nullable_to_non_nullable
               as int,
       order: null == order
           ? _value.order
@@ -381,6 +389,7 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       double avgRating,
       int ratingsCount,
       int likesCount,
+      int totalViews,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -433,6 +442,7 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
     Object? avgRating = null,
     Object? ratingsCount = null,
     Object? likesCount = null,
+    Object? totalViews = null,
     Object? order = null,
     Object? personalPhoneCountryCode = null,
     Object? personalPhoneNum = freezed,
@@ -524,6 +534,10 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
           ? _value.likesCount
           : likesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      totalViews: null == totalViews
+          ? _value.totalViews
+          : totalViews // ignore: cast_nullable_to_non_nullable
+              as int,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -603,6 +617,7 @@ class _$ProviderModelImpl implements _ProviderModel {
       this.avgRating = 0,
       this.ratingsCount = 0,
       this.likesCount = 0,
+      this.totalViews = 0,
       this.order = kOrder,
       this.personalPhoneCountryCode = kFallBackCountryCode,
       this.personalPhoneNum,
@@ -665,6 +680,9 @@ class _$ProviderModelImpl implements _ProviderModel {
   int likesCount;
   @override
   @JsonKey()
+  int totalViews;
+  @override
+  @JsonKey()
   int order;
   @override
   @JsonKey()
@@ -700,7 +718,7 @@ class _$ProviderModelImpl implements _ProviderModel {
 
   @override
   String toString() {
-    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, avgRating: $avgRating, ratingsCount: $ratingsCount, likesCount: $likesCount, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
+    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, avgRating: $avgRating, ratingsCount: $ratingsCount, likesCount: $likesCount, totalViews: $totalViews, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
   }
 
   /// Create a copy of ProviderModel
@@ -740,6 +758,7 @@ abstract class _ProviderModel implements ProviderModel {
       double avgRating,
       int ratingsCount,
       int likesCount,
+      int totalViews,
       int order,
       String personalPhoneCountryCode,
       String? personalPhoneNum,
@@ -816,6 +835,9 @@ abstract class _ProviderModel implements ProviderModel {
   @override
   int get likesCount;
   set likesCount(int value);
+  @override
+  int get totalViews;
+  set totalViews(int value);
   @override
   int get order;
   set order(int value);

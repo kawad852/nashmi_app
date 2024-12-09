@@ -31,6 +31,7 @@ _$ProviderModelImpl _$$ProviderModelImplFromJson(Map<String, dynamic> json) =>
       avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0,
       ratingsCount: (json['ratingsCount'] as num?)?.toInt() ?? 0,
       likesCount: (json['likesCount'] as num?)?.toInt() ?? 0,
+      totalViews: (json['totalViews'] as num?)?.toInt() ?? 0,
       order: (json['order'] as num?)?.toInt() ?? kOrder,
       personalPhoneCountryCode:
           json['personalPhoneCountryCode'] as String? ?? kFallBackCountryCode,
@@ -81,6 +82,7 @@ Map<String, dynamic> _$$ProviderModelImplToJson(_$ProviderModelImpl instance) =>
       'avgRating': instance.avgRating,
       'ratingsCount': instance.ratingsCount,
       'likesCount': instance.likesCount,
+      'totalViews': instance.totalViews,
       'order': instance.order,
       'personalPhoneCountryCode': instance.personalPhoneCountryCode,
       'personalPhoneNum': instance.personalPhoneNum,
