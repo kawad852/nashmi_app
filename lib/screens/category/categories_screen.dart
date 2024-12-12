@@ -136,6 +136,7 @@ class CategoriesScreen extends StatelessWidget {
                 itemCount: categories.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
+                  childAspectRatio: 0.8,
                 ),
                 itemBuilder: (context, index) {
                   if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
