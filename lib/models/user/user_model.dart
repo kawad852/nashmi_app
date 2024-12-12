@@ -19,6 +19,7 @@ class UserModel with _$UserModel {
     String? provider,
     String? phoneCountryCode,
     String? gender,
+    String? username,
     @Default(false) bool blocked,
     @Default(LanguageEnum.english) String languageCode,
   }) = _UserModel;

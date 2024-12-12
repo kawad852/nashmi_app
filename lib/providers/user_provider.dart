@@ -21,6 +21,7 @@ import '../models/user/user_model.dart';
 import '../network/api_service.dart';
 import '../network/my_collections.dart';
 import '../network/my_fields.dart';
+import '../utils/app_constants.dart';
 
 class UserProvider extends ChangeNotifier {
   Function()? onGuestRegistration;
@@ -69,6 +70,7 @@ class UserProvider extends ChangeNotifier {
         user.languageCode = MySharedPreferences.language;
         final userDocument = await _firebaseFirestore.users.doc(user.id).get();
         if (!userDocument.exists) {
+          user.username = await _getUsername();
           MySharedPreferences.user = user;
           final json = {
             ...user.toJson(),
@@ -191,5 +193,19 @@ class UserProvider extends ChangeNotifier {
         }
       },
     );
+  }
+
+  Future<String> _getUsername() async {
+    var newId = 0;
+    final date = DateTime.now();
+    final orderIdDocumentRef = _firebaseFirestore.collection(MyCollections.settings).doc(kUserIdDocument);
+    await _firebaseFirestore.runTransaction((Transaction transaction) async {
+      final snapshot = await transaction.get(orderIdDocumentRef);
+      newId = snapshot.data()!['user_id'];
+      transaction.update(orderIdDocumentRef, {
+        'user_id': FieldValue.increment(1),
+      });
+    });
+    return '${date.year}${date.month}${date.day}$newId';
   }
 }

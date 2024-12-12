@@ -18,6 +18,7 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       provider: json['provider'] as String?,
       phoneCountryCode: json['phoneCountryCode'] as String?,
       gender: json['gender'] as String?,
+      username: json['username'] as String?,
       blocked: json['blocked'] as bool? ?? false,
       languageCode: json['languageCode'] as String? ?? LanguageEnum.english,
     );
@@ -34,6 +35,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'provider': instance.provider,
       'phoneCountryCode': instance.phoneCountryCode,
       'gender': instance.gender,
+      'username': instance.username,
       'blocked': instance.blocked,
       'languageCode': instance.languageCode,
     };
