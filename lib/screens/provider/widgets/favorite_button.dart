@@ -67,7 +67,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
             },
             icon: CustomSvg(
               inFav ? MyIcons.favSelect : MyIcons.favorite,
-              color: inFav ? context.colorPalette.redB31 : null,
+              color: inFav ? context.colorPalette.red018 : null,
             ),
           ),
         );

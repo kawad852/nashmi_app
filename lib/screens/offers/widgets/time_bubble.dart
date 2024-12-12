@@ -14,7 +14,7 @@ class TimeBubble extends StatelessWidget {
       height: 35,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: context.colorPalette.redB31,
+        color: context.colorPalette.red018,
         borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
       ),
       child: CustomText(

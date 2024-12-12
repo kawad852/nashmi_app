@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CustomSmoothIndicator extends StatelessWidget {
   final int count, index;
@@ -23,7 +23,7 @@ class CustomSmoothIndicator extends StatelessWidget {
         dotWidth: 8,
         dotHeight: 8,
         dotColor: context.colorScheme.surfaceVariant,
-        activeDotColor: context.colorPalette.redB31,
+        activeDotColor: context.colorPalette.red018,
       ),
     );
   }

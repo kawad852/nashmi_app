@@ -88,7 +88,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     },
                     child: CustomText(
                       context.appLocalization.login,
-                      color: context.colorPalette.redB31,
+                      color: context.colorPalette.red018,
                     ),
                   ),
                 ],
@@ -124,7 +124,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     CustomText(
                       " ${context.appLocalization.nashmi}",
                       fontSize: 22,
-                      color: context.colorPalette.redB31,
+                      color: context.colorPalette.red018,
                       fontWeight: FontWeight.bold,
                     ),
                   ],
@@ -187,7 +187,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   children: [
                     Checkbox(
                       value: _isAgreeTerms,
-                      activeColor: context.colorPalette.redB31,
+                      activeColor: context.colorPalette.red018,
                       onChanged: (value) {
                         setState(() {
                           _isAgreeTerms = value!;
@@ -206,7 +206,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         },
                         child: CustomText(
                           context.appLocalization.termsAndPolicy,
-                          color: context.colorPalette.redB31,
+                          color: context.colorPalette.red018,
                         ),
                       ),
                     ),

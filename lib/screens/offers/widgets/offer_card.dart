@@ -92,7 +92,7 @@ class OfferCard extends StatelessWidget {
                     maxLines: 1,
                     overFlow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.bold,
-                    color: context.colorPalette.redB31,
+                    color: context.colorPalette.red018,
                   ),
                   CustomText(
                     context.appLocalization.purchaseLimitLabel(offer.purchaseLimit!),

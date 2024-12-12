@@ -21,7 +21,7 @@ class ColorPalette {
 
   //red
   Color get redDA0 => const Color(0xFFDA0000);
-  Color get redB31 => const Color(0xFFB31018);
+  Color get red018 => const Color(0xFFB31018);
   Color get red8B0 => const Color(0xFF8B0304);
 
   //yellow

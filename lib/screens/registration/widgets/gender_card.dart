@@ -27,9 +27,7 @@ class GenderCard extends StatelessWidget {
           height: 48,
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            color: isSelected
-                ? context.colorPalette.redB31
-                : context.colorPalette.greyF2F,
+            color: isSelected ? context.colorPalette.red018 : context.colorPalette.greyF2F,
             borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
           ),
           child: Row(

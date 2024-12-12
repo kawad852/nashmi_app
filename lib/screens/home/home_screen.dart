@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         "صهيب البكار",
                         overFlow: TextOverflow.ellipsis,
                         fontSize: 16,
-                        color: context.colorPalette.redB31,
+                        color: context.colorPalette.red018,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

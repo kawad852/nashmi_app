@@ -40,7 +40,7 @@ class UserInfo extends StatelessWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                  color: context.colorPalette.redB31,
+                  color: context.colorPalette.red018,
                 ),
                 alignment: Alignment.center,
                 child: CustomSvg(MyIcons.nashmi),

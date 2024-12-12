@@ -130,6 +130,7 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
                     PurchasesBar(
                       count: offer.purchasesCount,
                       limit: offer.purchaseLimit!,
+                      purchased: alreadyPurchased,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -222,7 +223,7 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
                                 TextSpan(
                                   text: " ${offer.offerPrice} ${context.currency} ",
                                   style: TextStyle(
-                                    color: context.colorPalette.redB31,
+                                    color: context.colorPalette.red018,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

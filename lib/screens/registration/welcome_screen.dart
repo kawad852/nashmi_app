@@ -51,7 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           TextSpan(
                             text: " بالنشمي صهيب",
                             style: TextStyle(
-                              color: context.colorPalette.redB31,
+                              color: context.colorPalette.red018,
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),

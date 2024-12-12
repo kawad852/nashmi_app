@@ -133,7 +133,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     TextSpan(
                       text: " بالنشمي صهيب",
                       style: TextStyle(
-                        color: context.colorPalette.redB31,
+                        color: context.colorPalette.red018,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -173,7 +173,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     TextSpan(
                       text: " 01:22",
                       style: TextStyle(
-                        color: context.colorPalette.redB31,
+                        color: context.colorPalette.red018,
                         fontSize: 14,
                       ),
                     ),

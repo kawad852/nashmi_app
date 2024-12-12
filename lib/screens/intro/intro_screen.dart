@@ -137,7 +137,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                 TextSpan(
                                   text: info.$3,
                                   style: TextStyle(
-                                    color: context.colorPalette.redB31,
+                                    color: context.colorPalette.red018,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
                                   ),

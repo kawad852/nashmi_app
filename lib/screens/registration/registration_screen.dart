@@ -262,7 +262,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       },
                       child: CustomText(
                         context.appLocalization.forgotYourPassword,
-                        color: context.colorPalette.redB31,
+                        color: context.colorPalette.red018,
                       ),
                     ),
                   ),
@@ -299,7 +299,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               child: CustomText(
                                 context.appLocalization.createAccount,
                                 fontSize: 16,
-                                color: context.colorPalette.redB31,
+                                color: context.colorPalette.red018,
                               ),
                             ),
                           ),

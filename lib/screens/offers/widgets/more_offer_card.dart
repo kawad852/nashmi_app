@@ -52,7 +52,7 @@ class MoreOfferCard extends StatelessWidget {
                         ),
                         CustomText(
                           context.appLocalization.offerPriceLabel(context.currency, offer.offerPrice!),
-                          color: context.colorPalette.redB31,
+                          color: context.colorPalette.red018,
                           overFlow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.bold,
                         ),

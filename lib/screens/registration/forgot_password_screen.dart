@@ -64,7 +64,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         CustomText(
                           context.appLocalization.yaNashmi,
                           fontSize: 22,
-                          color: context.colorPalette.redB31,
+                          color: context.colorPalette.red018,
                           fontWeight: FontWeight.bold,
                         ),
                       ],
