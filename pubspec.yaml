@@ -74,6 +74,8 @@ dependencies:
   algoliasearch: ^1.24.1
   hexcolor: ^3.0.1
   cloud_functions: ^5.1.5
+  mobile_scanner: ^6.0.2
+  rxdart: ^0.28.0
 
   #firebase
   firebase_core: ^3.8.0

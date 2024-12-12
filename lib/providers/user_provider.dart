@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/models/favorite/favorite_model.dart';
 import 'package:nashmi_app/models/like/like_model.dart';
+import 'package:nashmi_app/models/purchase/purchase_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
@@ -38,6 +39,11 @@ class UserProvider extends ChangeNotifier {
       );
   CollectionReference<LikeModel> get likesCollectionRef => userDocRef.collection(MyCollections.likes).withConverter<LikeModel>(
         fromFirestore: (snapshot, _) => LikeModel.fromJson(snapshot.data()!),
+        toFirestore: (snapshot, _) => snapshot.toJson(),
+      );
+
+  CollectionReference<PurchaseModel> get purchasesCollectionRef => userDocRef.collection(MyCollections.purchases).withConverter<PurchaseModel>(
+        fromFirestore: (snapshot, _) => PurchaseModel.fromJson(snapshot.data()!),
         toFirestore: (snapshot, _) => snapshot.toJson(),
       );
 

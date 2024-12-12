@@ -7,9 +7,12 @@ import 'package:nashmi_app/widgets/custom_text.dart';
 
 class PurchasesBar extends StatelessWidget {
   final int count;
+  final int limit;
+
   const PurchasesBar({
     super.key,
     required this.count,
+    required this.limit,
   });
 
   @override
@@ -30,26 +33,34 @@ class PurchasesBar extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      CustomText(
+                      Text(
                         context.appLocalization.sold,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      CustomText(
+                      Text(
                         " $count ",
-                        color: context.colorPalette.redB31,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        style: TextStyle(
+                          color: context.colorPalette.redB31,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      CustomText(
+                      Text(
                         context.appLocalization.ofe,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      const CustomText(
-                        " 20",
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        " $limit",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),

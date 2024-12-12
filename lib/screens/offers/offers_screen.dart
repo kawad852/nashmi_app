@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/helper/separator.dart';
 import 'package:nashmi_app/models/offer/offer_model.dart';
-import 'package:nashmi_app/models/offer_settings/offer_settings_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/offers/widgets/more_offer_card.dart';
@@ -14,9 +13,9 @@ import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
-import 'package:provider/provider.dart';
 
 import '../../helper/ui_helper.dart';
+import 'offer_settings_selector.dart';
 
 class OffersScreen extends StatefulWidget {
   const OffersScreen({super.key});
@@ -44,8 +43,7 @@ class _OffersScreenState extends State<OffersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<OfferSettingsModel?, OfferSettingsModel?>(
-      selector: (context, provider) => provider,
+    return OfferSettingsSelector(
       builder: (context, offer, child) {
         if (offer == null) {
           return const SizedBox.shrink();

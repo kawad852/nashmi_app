@@ -130,5 +130,7 @@
   "offerPriceLabel": "فقط ب {offerPrice} {currency}",
   "purchaseLimitLabel": "لأول {limit} مشتري فقط",
   "onlyWith": "فقط ب",
-  "insteadOf": "بدلاً من"
+  "insteadOf": "بدلاً من",
+  "offerEndedLabel": "ما رح تقدر تمسح الـ QR Code ، العرض خلص",
+  "successScanMsg": "تم المسح بنجاح"
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nashmi_app/models/countries_model.dart';
 
@@ -8,7 +9,7 @@ class UiHelper {
   static CountryModel getCountry(String code) => kCountries.firstWhere((element) => element.code == code);
 
   static List<String> formatDuration(BuildContext context, DateTime timestamp) {
-    final now = DateTime.now();
+    final now = Timestamp.now().toDate();
     final difference = now.difference(timestamp);
 
     final days = difference.inDays;
@@ -21,6 +22,7 @@ class UiHelper {
     if (hours > 0) parts.add('$hours');
     if (minutes > 0) parts.add('$minutes');
     if (seconds > 0) parts.add('$seconds');
+    print("value:: $minutes");
 
     return parts;
   }

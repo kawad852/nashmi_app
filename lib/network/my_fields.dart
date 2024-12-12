@@ -13,4 +13,6 @@ class MyFields {
   static const String pinned = 'pinned';
   static const String currentViews = 'currentViews';
   static const String totalViews = 'totalViews';
+  static const String purchasesCount = 'purchasesCount';
+  static const String lastPurchaseAt = 'lastPurchaseAt';
 }
