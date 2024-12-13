@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/models/city/city_model.dart';
 import 'package:nashmi_app/models/state/state_model.dart';
+import 'package:nashmi_app/providers/location_provider.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/widgets/area_sheet.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/my_icons.dart';
 import 'custom_svg.dart';
@@ -59,35 +61,44 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return InkWell(
-      onTap: () {
-        _openSheet(context);
-      },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text.rich(
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            TextSpan(
-              children: [
-                if (_state != null)
-                  TextSpan(
-                    text: context.translate(textEN: _state!.nameEn, textAR: _state!.nameAr),
-                  ),
-                if (_city != null)
-                  TextSpan(
-                    text: context.translate(textEN: _city!.nameEn, textAR: _city!.nameAr),
-                  ),
-              ],
-            ),
+    return Consumer<LocationProvider>(
+      builder: (context, locationProvider, child) {
+        final state = locationProvider.state;
+        final city = locationProvider.city;
+
+        return InkWell(
+          onTap: () {
+            _openSheet(context);
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text.rich(
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                TextSpan(
+                  children: [
+                    if (_state != null || state != null)
+                      TextSpan(
+                        text: _state != null ? context.translate(textEN: _state!.nameEn, textAR: _state!.nameAr) : state,
+                      ),
+                    if (_city != null || city != null) ...[
+                      const TextSpan(text: ", "),
+                      TextSpan(
+                        text: _city != null ? context.translate(textEN: _city!.nameEn, textAR: _city!.nameAr) : city,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 5),
+              const CustomSvg(MyIcons.arrowDown),
+            ],
           ),
-          const SizedBox(width: 5),
-          const CustomSvg(MyIcons.arrowDown),
-        ],
-      ),
+        );
+      },
     );
   }
 

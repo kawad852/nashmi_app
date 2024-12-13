@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:nashmi_app/utils/shared_pref.dart';
 
 import '../alerts/feedback/app_feedback.dart';
 import '../alerts/loading/app_over_loader.dart';
@@ -11,6 +13,10 @@ import '../utils/base_extensions.dart';
 class LocationProvider extends ChangeNotifier {
   double? latitude;
   double? longitude;
+
+  String? state;
+  String? city;
+
   bool isLoading = false;
 
   bool get isLocationGranted => latitude != null && longitude != null;
@@ -63,6 +69,7 @@ class LocationProvider extends ChangeNotifier {
       final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
       latitude = position.latitude;
       longitude = position.longitude;
+      getAddress(latitude!, longitude!);
       notifyListeners();
       debugPrint("Position:: Latitude:: $latitude Longitude:: $longitude");
       if (onPermissionGranted != null) {
@@ -97,5 +104,15 @@ class LocationProvider extends ChangeNotifier {
     //     Geolocator.openLocationSettings();
     //   },
     // );
+  }
+
+  Future<void> getAddress(double lat, double lng) async {
+    await setLocaleIdentifier(MySharedPreferences.language);
+    List<Placemark> placeMarks = await placemarkFromCoordinates(lat, lng);
+    if (placeMarks.isNotEmpty) {
+      final place = placeMarks.first;
+      state = place.administrativeArea;
+      city = place.name;
+    }
   }
 }
