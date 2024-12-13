@@ -22,6 +22,7 @@ import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/user_selector.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -72,17 +73,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   children: [
                     CustomText(
-                      "${context.appLocalization.helloDear} 👋, ",
+                      "${context.appLocalization.helloDear} 👋 ",
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     Expanded(
-                      child: CustomText(
-                        "صهيب البكار",
-                        overFlow: TextOverflow.ellipsis,
-                        fontSize: 16,
-                        color: context.colorPalette.red018,
-                        fontWeight: FontWeight.bold,
+                      child: UserSelector(
+                        builder: (context, user) {
+                          if (user?.displayName == null) {
+                            return const SizedBox.shrink();
+                          }
+                          return Text(
+                            user!.displayName!,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: context.colorPalette.red018,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          );
+                        },
                       ),
                     ),
                     InkWell(
