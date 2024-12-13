@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () async {},
                       child: const Row(
                         children: [
                           CustomText(

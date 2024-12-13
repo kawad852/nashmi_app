@@ -136,5 +136,10 @@
   "outOfStockText": "Out of stock",
   "purchasedText": "Purchased",
   "logout": "Logout",
-  "successfullyUpdated": "Successfully Updated"
+  "successfullyUpdated": "Successfully Updated",
+  "edit": "Edit",
+  "locationAccess": "Location Access",
+  "locationAccessBody": "Allow location access so that we can display the stores closest to you",
+  "allow": "Allow",
+  "locationServiceDisabled": "Location services are disabled in your device"
 }

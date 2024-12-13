@@ -50,10 +50,6 @@ mixin _$ProviderModel {
   set facebookURL(String? value) => throw _privateConstructorUsedError;
   String? get instagramUsername => throw _privateConstructorUsedError;
   set instagramUsername(String? value) => throw _privateConstructorUsedError;
-  double? get latitude => throw _privateConstructorUsedError;
-  set latitude(double? value) => throw _privateConstructorUsedError;
-  double? get longitude => throw _privateConstructorUsedError;
-  set longitude(double? value) => throw _privateConstructorUsedError;
   double get avgRating => throw _privateConstructorUsedError;
   set avgRating(double value) => throw _privateConstructorUsedError;
   int get ratingsCount => throw _privateConstructorUsedError;
@@ -91,6 +87,8 @@ mixin _$ProviderModel {
   set subCategoryIds(List<String> value) => throw _privateConstructorUsedError;
   List<String>? get tagIds => throw _privateConstructorUsedError;
   set tagIds(List<String>? value) => throw _privateConstructorUsedError;
+  GeoModel? get geo => throw _privateConstructorUsedError;
+  set geo(GeoModel? value) => throw _privateConstructorUsedError;
 
   /// Serializes this ProviderModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -123,8 +121,6 @@ abstract class $ProviderModelCopyWith<$Res> {
       String? addressAr,
       String? facebookURL,
       String? instagramUsername,
-      double? latitude,
-      double? longitude,
       double avgRating,
       int ratingsCount,
       int likesCount,
@@ -141,10 +137,12 @@ abstract class $ProviderModelCopyWith<$Res> {
       List<String> categoryIds,
       List<String> mainCategoryIds,
       List<String> subCategoryIds,
-      List<String>? tagIds});
+      List<String>? tagIds,
+      GeoModel? geo});
 
   $StateModelCopyWith<$Res>? get state;
   $CityModelCopyWith<$Res>? get city;
+  $GeoModelCopyWith<$Res>? get geo;
 }
 
 /// @nodoc
@@ -176,8 +174,6 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
     Object? addressAr = freezed,
     Object? facebookURL = freezed,
     Object? instagramUsername = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
     Object? avgRating = null,
     Object? ratingsCount = null,
     Object? likesCount = null,
@@ -195,6 +191,7 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
     Object? mainCategoryIds = null,
     Object? subCategoryIds = null,
     Object? tagIds = freezed,
+    Object? geo = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: freezed == createdAt
@@ -253,14 +250,6 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
           ? _value.instagramUsername
           : instagramUsername // ignore: cast_nullable_to_non_nullable
               as String?,
-      latitude: freezed == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      longitude: freezed == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double?,
       avgRating: null == avgRating
           ? _value.avgRating
           : avgRating // ignore: cast_nullable_to_non_nullable
@@ -329,6 +318,10 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
           ? _value.tagIds
           : tagIds // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      geo: freezed == geo
+          ? _value.geo
+          : geo // ignore: cast_nullable_to_non_nullable
+              as GeoModel?,
     ) as $Val);
   }
 
@@ -359,6 +352,20 @@ class _$ProviderModelCopyWithImpl<$Res, $Val extends ProviderModel>
       return _then(_value.copyWith(city: value) as $Val);
     });
   }
+
+  /// Create a copy of ProviderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GeoModelCopyWith<$Res>? get geo {
+    if (_value.geo == null) {
+      return null;
+    }
+
+    return $GeoModelCopyWith<$Res>(_value.geo!, (value) {
+      return _then(_value.copyWith(geo: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -384,8 +391,6 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       String? addressAr,
       String? facebookURL,
       String? instagramUsername,
-      double? latitude,
-      double? longitude,
       double avgRating,
       int ratingsCount,
       int likesCount,
@@ -402,12 +407,15 @@ abstract class _$$ProviderModelImplCopyWith<$Res>
       List<String> categoryIds,
       List<String> mainCategoryIds,
       List<String> subCategoryIds,
-      List<String>? tagIds});
+      List<String>? tagIds,
+      GeoModel? geo});
 
   @override
   $StateModelCopyWith<$Res>? get state;
   @override
   $CityModelCopyWith<$Res>? get city;
+  @override
+  $GeoModelCopyWith<$Res>? get geo;
 }
 
 /// @nodoc
@@ -437,8 +445,6 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
     Object? addressAr = freezed,
     Object? facebookURL = freezed,
     Object? instagramUsername = freezed,
-    Object? latitude = freezed,
-    Object? longitude = freezed,
     Object? avgRating = null,
     Object? ratingsCount = null,
     Object? likesCount = null,
@@ -456,6 +462,7 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
     Object? mainCategoryIds = null,
     Object? subCategoryIds = null,
     Object? tagIds = freezed,
+    Object? geo = freezed,
   }) {
     return _then(_$ProviderModelImpl(
       createdAt: freezed == createdAt
@@ -514,14 +521,6 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
           ? _value.instagramUsername
           : instagramUsername // ignore: cast_nullable_to_non_nullable
               as String?,
-      latitude: freezed == latitude
-          ? _value.latitude
-          : latitude // ignore: cast_nullable_to_non_nullable
-              as double?,
-      longitude: freezed == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
-              as double?,
       avgRating: null == avgRating
           ? _value.avgRating
           : avgRating // ignore: cast_nullable_to_non_nullable
@@ -590,6 +589,10 @@ class __$$ProviderModelImplCopyWithImpl<$Res>
           ? _value.tagIds
           : tagIds // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      geo: freezed == geo
+          ? _value.geo
+          : geo // ignore: cast_nullable_to_non_nullable
+              as GeoModel?,
     ));
   }
 }
@@ -612,8 +615,6 @@ class _$ProviderModelImpl implements _ProviderModel {
       this.addressAr,
       this.facebookURL,
       this.instagramUsername,
-      this.latitude,
-      this.longitude,
       this.avgRating = 0,
       this.ratingsCount = 0,
       this.likesCount = 0,
@@ -630,7 +631,8 @@ class _$ProviderModelImpl implements _ProviderModel {
       this.categoryIds = const [],
       this.mainCategoryIds = const [],
       this.subCategoryIds = const [],
-      this.tagIds});
+      this.tagIds,
+      this.geo});
 
   factory _$ProviderModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProviderModelImplFromJson(json);
@@ -665,10 +667,6 @@ class _$ProviderModelImpl implements _ProviderModel {
   String? facebookURL;
   @override
   String? instagramUsername;
-  @override
-  double? latitude;
-  @override
-  double? longitude;
   @override
   @JsonKey()
   double avgRating;
@@ -715,10 +713,12 @@ class _$ProviderModelImpl implements _ProviderModel {
   List<String> subCategoryIds;
   @override
   List<String>? tagIds;
+  @override
+  GeoModel? geo;
 
   @override
   String toString() {
-    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, latitude: $latitude, longitude: $longitude, avgRating: $avgRating, ratingsCount: $ratingsCount, likesCount: $likesCount, totalViews: $totalViews, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds)';
+    return 'ProviderModel(createdAt: $createdAt, id: $id, nameEn: $nameEn, nameAr: $nameAr, descriptionEn: $descriptionEn, descriptionAr: $descriptionAr, status: $status, thumbnail: $thumbnail, state: $state, city: $city, addressEn: $addressEn, addressAr: $addressAr, facebookURL: $facebookURL, instagramUsername: $instagramUsername, avgRating: $avgRating, ratingsCount: $ratingsCount, likesCount: $likesCount, totalViews: $totalViews, order: $order, personalPhoneCountryCode: $personalPhoneCountryCode, personalPhoneNum: $personalPhoneNum, providerPhoneCountryCode: $providerPhoneCountryCode, providerPhoneNum: $providerPhoneNum, whatsAppNumberCountryCode: $whatsAppNumberCountryCode, whatsAppNumber: $whatsAppNumber, isVerified: $isVerified, images: $images, categoryIds: $categoryIds, mainCategoryIds: $mainCategoryIds, subCategoryIds: $subCategoryIds, tagIds: $tagIds, geo: $geo)';
   }
 
   /// Create a copy of ProviderModel
@@ -753,8 +753,6 @@ abstract class _ProviderModel implements ProviderModel {
       String? addressAr,
       String? facebookURL,
       String? instagramUsername,
-      double? latitude,
-      double? longitude,
       double avgRating,
       int ratingsCount,
       int likesCount,
@@ -771,7 +769,8 @@ abstract class _ProviderModel implements ProviderModel {
       List<String> categoryIds,
       List<String> mainCategoryIds,
       List<String> subCategoryIds,
-      List<String>? tagIds}) = _$ProviderModelImpl;
+      List<String>? tagIds,
+      GeoModel? geo}) = _$ProviderModelImpl;
 
   factory _ProviderModel.fromJson(Map<String, dynamic> json) =
       _$ProviderModelImpl.fromJson;
@@ -820,12 +819,6 @@ abstract class _ProviderModel implements ProviderModel {
   @override
   String? get instagramUsername;
   set instagramUsername(String? value);
-  @override
-  double? get latitude;
-  set latitude(double? value);
-  @override
-  double? get longitude;
-  set longitude(double? value);
   @override
   double get avgRating;
   set avgRating(double value);
@@ -877,6 +870,9 @@ abstract class _ProviderModel implements ProviderModel {
   @override
   List<String>? get tagIds;
   set tagIds(List<String>? value);
+  @override
+  GeoModel? get geo;
+  set geo(GeoModel? value);
 
   /// Create a copy of ProviderModel
   /// with the given fields replaced by the non-null parameter values.

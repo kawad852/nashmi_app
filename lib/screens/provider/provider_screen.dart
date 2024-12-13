@@ -346,8 +346,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                           child: MapBubble(
                             controller: MapController(
                               context,
-                              lat: provider.latitude,
-                              lng: provider.longitude,
+                              lat: provider.geo!.geoPoint!.latitude,
+                              lng: provider.geo!.geoPoint!.longitude,
                             ),
                           ),
                         ),

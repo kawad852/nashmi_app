@@ -7,6 +7,7 @@ import 'package:nashmi_app/screens/offers/offers_screen.dart';
 import 'package:nashmi_app/screens/profile/profile_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
+import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 class AppNavBar extends StatefulWidget {
@@ -57,6 +58,7 @@ class _AppNavBarState extends State<AppNavBar> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    context.locationProvider.determinePosition(context);
   }
 
   @override

@@ -26,8 +26,6 @@ _$ProviderModelImpl _$$ProviderModelImplFromJson(Map<String, dynamic> json) =>
       addressAr: json['addressAr'] as String?,
       facebookURL: json['facebookURL'] as String?,
       instagramUsername: json['instagramUsername'] as String?,
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
       avgRating: (json['avgRating'] as num?)?.toDouble() ?? 0,
       ratingsCount: (json['ratingsCount'] as num?)?.toInt() ?? 0,
       likesCount: (json['likesCount'] as num?)?.toInt() ?? 0,
@@ -59,6 +57,9 @@ _$ProviderModelImpl _$$ProviderModelImplFromJson(Map<String, dynamic> json) =>
           const [],
       tagIds:
           (json['tagIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      geo: json['geo'] == null
+          ? null
+          : GeoModel.fromJson(json['geo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProviderModelImplToJson(_$ProviderModelImpl instance) =>
@@ -77,8 +78,6 @@ Map<String, dynamic> _$$ProviderModelImplToJson(_$ProviderModelImpl instance) =>
       'addressAr': instance.addressAr,
       'facebookURL': instance.facebookURL,
       'instagramUsername': instance.instagramUsername,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
       'avgRating': instance.avgRating,
       'ratingsCount': instance.ratingsCount,
       'likesCount': instance.likesCount,
@@ -96,6 +95,7 @@ Map<String, dynamic> _$$ProviderModelImplToJson(_$ProviderModelImpl instance) =>
       'mainCategoryIds': instance.mainCategoryIds,
       'subCategoryIds': instance.subCategoryIds,
       'tagIds': instance.tagIds,
+      'geo': instance.geo?.toJson(),
     };
 
 _$LightProviderModelImpl _$$LightProviderModelImplFromJson(

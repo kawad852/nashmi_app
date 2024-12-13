@@ -13,6 +13,7 @@ import 'package:nashmi_app/models/offer_settings/offer_settings_model.dart';
 import 'package:nashmi_app/network/my_collections.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
 import 'package:nashmi_app/providers/fire_provider.dart';
+import 'package:nashmi_app/providers/location_provider.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
 import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
@@ -56,6 +57,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => AppProvider()),
         ChangeNotifierProvider(create: (context) => FireProvider()),
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => LocationProvider()),
       ],
       child: const MyApp(),
     ),

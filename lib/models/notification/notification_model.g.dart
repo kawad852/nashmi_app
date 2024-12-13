@@ -31,11 +31,11 @@ _$NotificationModelImpl _$$NotificationModelImplFromJson(
 Map<String, dynamic> _$$NotificationModelImplToJson(
         _$NotificationModelImpl instance) =>
     <String, dynamic>{
-      'data': instance.data,
+      'data': instance.data?.toJson(),
       'topic': instance.topic,
       'token': instance.token,
-      'notification': instance.notification,
+      'notification': instance.notification?.toJson(),
       'priority': instance.priority,
-      'apns': instance.apns,
+      'apns': instance.apns?.toJson(),
       'click_action': instance.clickAction,
     };

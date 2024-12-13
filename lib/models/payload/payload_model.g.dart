@@ -15,5 +15,5 @@ _$PayloadModelImpl _$$PayloadModelImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$PayloadModelImplToJson(_$PayloadModelImpl instance) =>
     <String, dynamic>{
-      'aps': instance.aps,
+      'aps': instance.aps?.toJson(),
     };

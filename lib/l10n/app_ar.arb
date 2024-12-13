@@ -136,5 +136,10 @@
   "outOfStockText": "راحت عليك ، خلصت الكمية",
   "purchasedText": "تم شراء العرض",
   "logout": "تسجيل الخروج",
-  "successfullyUpdated": "تم التحديث بنجاح"
+  "successfullyUpdated": "تم التحديث بنجاح",
+  "edit": "تعديل",
+  "locationAccess": "السماح بالوصول للموقع",
+  "locationAccessBody": "يرجى اعطاء صلاحية بالوصول إلى الموقع لنتمكن من عرض المحلات الأقرب منك",
+  "allow": "السماح",
+  "locationServiceDisabled": "خدمة تحديد الموقع غير مفعلة في هاتفك"
 }
