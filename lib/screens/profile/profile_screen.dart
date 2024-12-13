@@ -3,6 +3,7 @@ import 'package:nashmi_app/screens/contact/contact_screen.dart';
 import 'package:nashmi_app/screens/policy/policy_screen.dart';
 import 'package:nashmi_app/screens/profile/widgets/profile_bubble.dart';
 import 'package:nashmi_app/screens/profile/widgets/user_info.dart';
+import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -10,6 +11,7 @@ import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
+import 'package:nashmi_app/widgets/user_selector.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,15 +20,25 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        child: StretchedButton(
-          child: Text(context.appLocalization.logout),
-          onPressed: () {
-            context.userProvider.logout(context);
+        child: UserSelector(
+          builder: (context, user) {
+            final authenticated = user != null;
+            return StretchedButton(
+              child: Text(authenticated ? context.appLocalization.logout : context.appLocalization.login),
+              onPressed: () {
+                if (authenticated) {
+                  context.userProvider.logout(context);
+                } else {
+                  context.navigate((context) => const RegistrationScreen());
+                }
+              },
+            );
           },
         ),
       ),
@@ -92,4 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

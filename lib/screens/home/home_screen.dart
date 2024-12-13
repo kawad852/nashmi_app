@@ -32,7 +32,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
   late Future<List<dynamic>> _futures;
 
   void _initialize() {
@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return CustomFutureBuilder(
       future: _futures,
       withBackgroundColor: true,
@@ -286,4 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

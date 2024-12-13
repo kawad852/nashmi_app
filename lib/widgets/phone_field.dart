@@ -9,11 +9,13 @@ import 'package:nashmi_app/widgets/editors/base_editor.dart';
 class PhoneField extends StatefulWidget {
   final PhoneController controller;
   final bool required;
+  final bool readOnly;
 
   const PhoneField({
     super.key,
     required this.controller,
     this.required = true,
+    this.readOnly = false,
   });
 
   @override
@@ -68,6 +70,7 @@ class _PhoneFieldState extends State<PhoneField> {
         hintText: context.appLocalization.phoneNum,
         keyboardType: TextInputType.phone,
         required: widget.required,
+        readOnly: widget.readOnly,
         validator: (value) {
           if (!widget.required && (value == null || value.isEmpty)) {
             return null;
@@ -78,7 +81,9 @@ class _PhoneFieldState extends State<PhoneField> {
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: TextButton.icon(
             onPressed: () {
-              _showCountriesSheet(context);
+              if (!widget.readOnly) {
+                _showCountriesSheet(context);
+              }
             },
             label: Text(_controller.getDialCode()),
             icon: const Icon(Icons.arrow_drop_down_rounded),

@@ -135,5 +135,6 @@
   "successScanMsg": "Scanned Successfully",
   "outOfStockText": "Out of stock",
   "purchasedText": "Purchased",
-  "logout": "Logout"
+  "logout": "Logout",
+  "successfullyUpdated": "Successfully Updated"
 }

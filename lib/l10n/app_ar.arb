@@ -135,5 +135,6 @@
   "successScanMsg": "تم المسح بنجاح",
   "outOfStockText": "راحت عليك ، خلصت الكمية",
   "purchasedText": "تم شراء العرض",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "successfullyUpdated": "تم التحديث بنجاح"
 }

@@ -210,4 +210,22 @@ class UserProvider extends ChangeNotifier {
     });
     return '${date.year}${date.month}${date.day}$newId';
   }
+
+  void updateProfile(
+    BuildContext context, {
+    required UserModel user,
+  }) {
+    ApiService.fetch(
+      context,
+      callBack: () async {
+        await userDocRef.update(user.toJson());
+        if (context.mounted) {
+          MySharedPreferences.user = user;
+          notifyListeners();
+          Navigator.pop(context);
+          context.showSnackBar(context.appLocalization.successfullyUpdated);
+        }
+      },
+    );
+  }
 }

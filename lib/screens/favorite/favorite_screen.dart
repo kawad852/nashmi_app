@@ -14,7 +14,7 @@ class FavoriteScreen extends StatefulWidget {
   State<FavoriteScreen> createState() => _FavoriteScreenState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+class _FavoriteScreenState extends State<FavoriteScreen> with AutomaticKeepAliveClientMixin {
   late Query<FavoriteModel> _query;
 
   void _initializeQuery() {
@@ -29,6 +29,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return CustomFirestoreQueryBuilder(
       query: _query,
       onComplete: (context, snapshot) {
@@ -61,4 +62,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
