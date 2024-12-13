@@ -16,13 +16,30 @@ import '../../network/my_fields.dart';
 import '../../utils/my_theme.dart';
 import '../provider/providers_screen.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   final CategoryModel? mainCategory;
+  final String? id;
 
   const CategoriesScreen({
     super.key,
     this.mainCategory,
+    this.id,
   });
+
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  // late Future<CategoryModel> _categoryFuture;
+  //
+  // void _initialize() {
+  //   if(widget.mainCategory != null) {
+  //     _categoryFuture = Future.value(widget.mainCategory);
+  //   } else {
+  //     _categoryFuture =
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +72,10 @@ class CategoriesScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(start: kScreenMargin, bottom: 10),
               child: Text(
-                mainCategory != null
+                widget.mainCategory != null
                     ? context.translate(
-                        textEN: mainCategory!.nameEn!,
-                        textAR: mainCategory!.nameAr!,
+                        textEN: widget.mainCategory!.nameEn!,
+                        textAR: widget.mainCategory!.nameAr!,
                       )
                     : context.appLocalization.whatDoWehave,
                 style: const TextStyle(
@@ -72,10 +89,10 @@ class CategoriesScreen extends StatelessWidget {
       ),
       body: Builder(
         builder: (context) {
-          if (mainCategory != null) {
+          if (widget.mainCategory != null) {
             return FireBuilder(
               futures: [
-                FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: mainCategory!.subCategories).get(),
+                FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: widget.mainCategory!.subCategories).get(),
               ],
               onComplete: (context, snapshot) {
                 final categorySnapshot = snapshot.data![0] as QuerySnapshot<CategoryModel>;

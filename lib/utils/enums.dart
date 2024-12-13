@@ -101,3 +101,12 @@ class NotificationsType {
   static const String provider = 'provider';
   static const String category = 'category';
 }
+
+enum AdEnum {
+  provider('PROVIDER'),
+  offer('OFFER'),
+  category('CATEGORY');
+
+  const AdEnum(this.value);
+  final String value;
+}

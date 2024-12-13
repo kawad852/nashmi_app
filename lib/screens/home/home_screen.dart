@@ -73,10 +73,12 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
-                    CustomText(
+                    Text(
                       "${context.appLocalization.helloDear} 👋 ",
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Expanded(
                       child: UserSelector(
