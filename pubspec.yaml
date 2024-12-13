@@ -76,6 +76,7 @@ dependencies:
   cloud_functions: ^5.1.5
   mobile_scanner: ^6.0.2
   rxdart: ^0.28.0
+  image_picker: ^1.1.2
 
   #firebase
   firebase_core: ^3.8.0
@@ -84,6 +85,7 @@ dependencies:
   firebase_messaging: ^15.1.5
   firebase_analytics: ^11.3.5
   firebase_ui_firestore: ^1.7.0
+  firebase_storage: ^12.3.7
 
 dev_dependencies:
   build_runner: ^2.4.12

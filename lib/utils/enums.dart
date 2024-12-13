@@ -95,3 +95,9 @@ class AuthProviders {
   static const String phone = 'phone';
   static const String email = 'email';
 }
+
+class NotificationsType {
+  static const String general = 'general';
+  static const String provider = 'provider';
+  static const String category = 'category';
+}

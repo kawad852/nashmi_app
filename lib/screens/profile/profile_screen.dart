@@ -9,7 +9,6 @@ import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
-import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/user_selector.dart';
 
@@ -48,10 +47,12 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
           children: [
             const UserInfo(),
             const SizedBox(height: 20),
-            CustomText(
+            Text(
               context.appLocalization.list,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
             ProfileBubble(

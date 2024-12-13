@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/screens/profile/edit_profile_screen.dart';
+import 'package:nashmi_app/screens/profile/widgets/nashmi_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -35,16 +36,7 @@ class UserInfo extends StatelessWidget {
                 radius: MyTheme.radiusSecondary,
               )
             else
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                  color: context.colorPalette.red018,
-                ),
-                alignment: Alignment.center,
-                child: CustomSvg(MyIcons.nashmi),
-              ),
+              const NashmiBubble(),
             const SizedBox(width: 10),
             Expanded(
               child: Column(

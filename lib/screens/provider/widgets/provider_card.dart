@@ -27,6 +27,7 @@ class ProviderCard extends StatelessWidget {
         context.navigate((context) {
           return ProviderScreen(
             provider: provider,
+            id: null,
           );
         });
       },

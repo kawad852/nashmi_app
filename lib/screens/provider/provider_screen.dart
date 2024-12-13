@@ -29,19 +29,14 @@ import 'package:nashmi_app/widgets/stretch_button.dart';
 import '../../alerts/errors/app_error_widget.dart';
 import '../../models/category/category_model.dart';
 
-class MyObject {
-  final String name;
-  final bool isActive;
-
-  MyObject(this.name, this.isActive);
-}
-
 class ProviderScreen extends StatefulWidget {
-  final ProviderModel provider;
+  final ProviderModel? provider;
+  final String? id;
 
   const ProviderScreen({
     super.key,
     required this.provider,
+    this.id,
   });
 
   @override
@@ -56,7 +51,12 @@ class _ProviderScreenState extends State<ProviderScreen> {
   void _initialize() {
     _futures = ApiService.build(
       callBack: () async {
-        final providerFuture = Future.value(widget.provider);
+        late Future<ProviderModel> providerFuture;
+        if (widget.provider != null) {
+          providerFuture = Future.value(widget.provider);
+        } else {
+          providerFuture = FirebaseFirestore.instance.providers.doc(widget.id).get().then((value) => value.data()!);
+        }
         final provider = await providerFuture;
         final categoriesFuture = FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: provider.categoryIds).get().then((value) {
           final categories = value.docs.map((e) => e.data()).toList();
@@ -73,7 +73,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
   }
 
   void _incrementViews() {
-    FirebaseFirestore.instance.providers.doc(widget.provider.id).update({
+    FirebaseFirestore.instance.providers.doc(widget.id ?? widget.provider?.id).update({
       MyFields.totalViews: FieldValue.increment(1),
     });
   }

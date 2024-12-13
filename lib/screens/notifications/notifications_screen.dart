@@ -1,9 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/utils/app_constants.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:nashmi_app/utils/base_extensions.dart';
+import 'package:nashmi_app/utils/dimensions.dart';
+import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
+
+import '../../models/notification/notification_model.dart';
+import '../../network/my_collections.dart';
+import '../../network/my_fields.dart';
+import '../../notifications/notifications_route.dart';
+import '../../utils/shared_pref.dart';
+import '../../widgets/builders/custom_firestore_query_builder.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -12,73 +22,128 @@ class NotificationsScreen extends StatefulWidget {
   State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class _NotificationsScreenState extends State<NotificationsScreen> with AutomaticKeepAliveClientMixin {
+  late Query<NotificationModel> _notificationsQuery;
+
+  void _initializeQuery() {
+    _notificationsQuery = FirebaseFirestore.instance
+        .collectionGroup(MyCollections.notifications)
+        .where(MyFields.topic, isEqualTo: 'all_${MySharedPreferences.language}')
+        .orderBy(MyFields.createdAt, descending: true)
+        .withConverter<NotificationModel>(
+          fromFirestore: (snapshot, _) => NotificationModel.fromJson(snapshot.data()!),
+          toFirestore: (snapshot, _) => snapshot.toJson(),
+        );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeQuery();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          centerTitle: true,
-          title: CustomText(
-            context.appLocalization.notifications,
+    super.build(context);
+    return NashmiScaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        forceMaterialTransparency: true,
+        title: Text(
+          context.appLocalization.notifications,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          sliver: SliverList.separated(
-            separatorBuilder: (context, index) => const SizedBox(height: 10),
-            itemCount: 10,
+      ),
+      body: CustomFirestoreQueryBuilder(
+        query: _notificationsQuery,
+        onComplete: (context, snapshot) {
+          // if (snapshot.docs.isEmpty) {
+          //   return EmptyWidget(
+          //     icon: FontAwesomeIcons.bell,
+          //     title: context.appLocalization.emptyNotificationsTitle,
+          //     body: context.appLocalization.emptyNotificationsBody,
+          //   );
+          // }
+
+          return ListView.separated(
+            separatorBuilder: (context, index) => Divider(color: context.colorPalette.greyF7E),
+            itemCount: snapshot.docs.length,
+            padding: const EdgeInsets.all(kScreenMargin),
             itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const CustomNetworkImage(
-                        kFakeImage,
-                        width: 70,
-                        height: 70,
-                        radius: MyTheme.radiusSecondary,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const CustomText(
-                              "يوم نشمي يوم النشامى",
-                              overFlow: TextOverflow.ellipsis,
-                              fontWeight: FontWeight.bold,
+              if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                snapshot.fetchMore();
+              }
+
+              final notification = snapshot.docs[index].data();
+              final id = notification.data?.id;
+              return GestureDetector(
+                onTap: () {
+                  final type = notification.data?.type;
+                  NotificationsRouteHandler.toggle(context, id: id, type: type);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 70,
+                          height: 70,
+                          margin: const EdgeInsetsDirectional.only(end: 10),
+                          decoration: BoxDecoration(
+                            color: context.colorPalette.blackD1D,
+                            borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                            image: const DecorationImage(
+                              image: AssetImage(MyImages.logo),
                             ),
-                            CustomText(
-                              "استنوا عروض يوم نشمي الجمعة الجاية، لا تنسوا ! يوم الجمعة الجاية في عروض نااااااااار.",
-                              fontSize: 12,
-                              maxLines: 2,
-                              overFlow: TextOverflow.ellipsis,
-                              color: context.colorPalette.grey5F5,
-                            ),
-                          ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                notification.notification!.title!,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                notification.notification!.body!,
+                                style: TextStyle(
+                                  color: context.colorPalette.grey5F5,
+                                  fontSize: 12,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (notification.createdAt != null)
+                      Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: CustomText(
+                          intl.DateFormat.yMd().add_jm().format(notification.createdAt!),
+                          fontSize: 12,
                         ),
                       ),
-                    ],
-                  ),
-                  const Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: CustomText(
-                      "15.10.2024",
-                      fontSize: 12,
-                    ),
-                  ),
-                  Divider(color: context.colorPalette.greyF7E),
-                ],
+                  ],
+                ),
               );
             },
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

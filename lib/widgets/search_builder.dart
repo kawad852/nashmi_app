@@ -98,7 +98,10 @@ class _SearchBuilderState extends State<SearchBuilder> {
               return ListTile(
                 onTap: () {
                   context.navigate((context) {
-                    return ProviderScreen(provider: element);
+                    return ProviderScreen(
+                      provider: element,
+                      id: null,
+                    );
                   });
                 },
                 leading: CustomNetworkImage(

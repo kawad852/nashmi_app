@@ -15,4 +15,5 @@ class MyFields {
   static const String totalViews = 'totalViews';
   static const String purchasesCount = 'purchasesCount';
   static const String lastPurchaseAt = 'lastPurchaseAt';
+  static const String topic = 'topic';
 }
