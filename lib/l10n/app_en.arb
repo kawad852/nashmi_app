@@ -134,5 +134,6 @@
   "offerEndedLabel": "You can't scan QR Code, Offer ended.",
   "successScanMsg": "Scanned Successfully",
   "outOfStockText": "Out of stock",
-  "purchasedText": "Purchased"
+  "purchasedText": "Purchased",
+  "logout": "Logout"
 }

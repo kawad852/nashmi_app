@@ -90,7 +90,18 @@ class _AppNavBarState extends State<AppNavBar> {
               final index = screens.indexOf(element);
               return NavBarItem(
                 onTap: () {
-                  _onSelect(index);
+                  if (index == 1) {
+                    context.guestHandler(
+                      callBack: () => _onSelect(index),
+                      routesCallBack: () {
+                        if (index == 1) {
+                          context.navigate((context) => const FavoriteScreen());
+                        }
+                      },
+                    );
+                  } else {
+                    _onSelect(index);
+                  }
                 },
                 isSelected: _currentIndex == index,
                 icon: _currentIndex == index ? itemsSelected[index] : items[index],

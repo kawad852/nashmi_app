@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +9,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/controllers/phone_controller.dart';
+import 'package:nashmi_app/models/user/user_model.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
+import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/registration/create_account_screen.dart';
-import 'package:nashmi_app/screens/registration/forgot_password_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/editors/password_editor.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
@@ -32,9 +31,11 @@ import 'widgets/guest_button.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String? guestRoute;
+  final bool showGuestButton;
   const RegistrationScreen({
     super.key,
     this.guestRoute,
+    this.showGuestButton = true,
   });
 
   @override
@@ -43,6 +44,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late PhoneController phoneController;
+  final _formKey = GlobalKey<FormState>();
 
   FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
   UserProvider get _userProvider => context.userProvider;
@@ -55,10 +57,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       callBack: () async {
         await _firebaseAuth.signInAnonymously();
         if (context.mounted) {
-          // DiscoverRoute(updateDeviceToken: false).go(context);
+          context.pushAndRemoveUntil((context) {
+            return const AppNavBar();
+          });
         }
       },
     );
+  }
+
+  void _signInWithPhoneNum(BuildContext context) {
+    final user = UserModel();
+    if (_formKey.currentState!.validate()) {
+      user.phoneCountryCode = phoneController.countryCode;
+      user.phone = phoneController.phoneNum!;
+      context.userProvider.sendPinCode(
+        context,
+        user: user,
+      );
+    }
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
@@ -182,175 +198,159 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return NashmiScaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            final uid = context.getToken("JO", "791595029");
-            var callable = FirebaseFunctions.instanceFor(region: "europe-west3").httpsCallable('generateCustomToken');
-            final results = await callable.call(<String, dynamic>{
-              'uid': uid,
-            });
-          } catch (e) {
-            print("e:: $e");
-          }
-        },
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            collapsedHeight: 230,
-            backgroundColor: Colors.transparent,
-            actions: [
-              GuestButton(onTap: () {}),
-            ],
-            flexibleSpace: Container(
-              width: double.infinity,
-              height: 261,
-              alignment: Alignment.bottomCenter,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF1D1D1D),
-                    Color(0x001D1D1D),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+      body: Form(
+        key: _formKey,
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              collapsedHeight: 230,
+              backgroundColor: Colors.transparent,
+              actions: widget.showGuestButton
+                  ? [
+                      GuestButton(
+                        onTap: () {
+                          _signInAnonymously(context);
+                        },
+                      ),
+                    ]
+                  : null,
+              flexibleSpace: Container(
+                width: double.infinity,
+                height: 261,
+                alignment: Alignment.bottomCenter,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF1D1D1D),
+                      Color(0x001D1D1D),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: CustomSvg(MyIcons.logo),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: CustomSvg(MyIcons.logo),
-              ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    context.appLocalization.helloAndWelcome,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    child: CustomText(
-                      context.appLocalization.joinUsButTellUsWhoYou,
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      context.appLocalization.helloAndWelcome,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  TitledTextField(
-                    title: context.appLocalization.yourPhoneNumber,
-                    child: PhoneField(
-                      controller: phoneController,
-                    ),
-                  ),
-                  TitledTextField(
-                    title: context.appLocalization.yourPassword,
-                    child: PasswordEditor(
-                      initialValue: null,
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: TextButton(
-                      onPressed: () {
-                        context.push(const ForgotPasswordScreen());
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
                       child: CustomText(
-                        context.appLocalization.forgotYourPassword,
-                        color: context.colorPalette.red018,
+                        context.appLocalization.joinUsButTellUsWhoYou,
                       ),
                     ),
-                  ),
-                  StretchedButton(
-                    onPressed: () {},
-                    child: CustomText(
-                      context.appLocalization.welcome,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: context.colorPalette.white,
+                    TitledTextField(
+                      title: context.appLocalization.yourPhoneNumber,
+                      child: PhoneField(
+                        controller: phoneController,
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
+                    StretchedButton(
+                      onPressed: () {
+                        _signInWithPhoneNum(context);
+                      },
+                      margin: const EdgeInsets.only(top: 30),
+                      child: Text(
+                        context.appLocalization.welcome,
                         style: TextStyle(
-                          fontFamily: GoogleFonts.cairo().fontFamily!,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: context.colorPalette.white,
                         ),
-                        children: [
-                          TextSpan(
-                            text: context.appLocalization.dontHaveAccount,
-                            style: TextStyle(
-                              color: context.colorPalette.black,
-                              fontSize: 16,
-                            ),
+                      ),
+                    ),
+                    Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontFamily: GoogleFonts.cairo().fontFamily!,
                           ),
-                          WidgetSpan(
-                            alignment: PlaceholderAlignment.middle,
-                            child: TextButton(
-                              onPressed: () {
-                                context.navigate((context) => const CreateAccountScreen());
-                              },
-                              child: CustomText(
-                                context.appLocalization.createAccount,
+                          children: [
+                            TextSpan(
+                              text: context.appLocalization.dontHaveAccount,
+                              style: TextStyle(
+                                color: context.colorPalette.black,
                                 fontSize: 16,
-                                color: context.colorPalette.red018,
                               ),
                             ),
-                          ),
-                        ],
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: TextButton(
+                                onPressed: () {
+                                  context.navigate((context) => const CreateAccountScreen());
+                                },
+                                child: Text(
+                                  context.appLocalization.createAccount,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: context.colorPalette.red018,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            sliver: SliverFillRemaining(
-              hasScrollBody: false,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Center(
-                    child: CustomText(
-                      context.appLocalization.orPleaseLogThrough,
-                      fontSize: 16,
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              sliver: SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Center(
+                      child: CustomText(
+                        context.appLocalization.orPleaseLogThrough,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          _signInWithApple(context);
-                        },
-                        icon: const CustomSvg(MyIcons.apple),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          _signInWithGoogle(context);
-                        },
-                        icon: const CustomSvg(MyIcons.google),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const CustomSvg(MyIcons.facebook),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            _signInWithApple(context);
+                          },
+                          icon: const CustomSvg(MyIcons.apple),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            _signInWithGoogle(context);
+                          },
+                          icon: const CustomSvg(MyIcons.google),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const CustomSvg(MyIcons.facebook),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

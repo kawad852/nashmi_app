@@ -28,7 +28,7 @@ class UserProvider extends ChangeNotifier {
 
   User? get user => _firebaseAuth.currentUser;
   String? get userUid => user?.uid;
-  bool get isAuthenticated => user != null && !user!.isAnonymous && user!.emailVerified;
+  bool get isAuthenticated => user != null && !user!.isAnonymous;
   UserModel get userModel => MySharedPreferences.user!;
 
   FirebaseFirestore get _firebaseFirestore => FirebaseFirestore.instance;
@@ -55,6 +55,8 @@ class UserProvider extends ChangeNotifier {
     required String? guestRoute,
     String? phoneCountryCode,
     String? displayName,
+    String? gender,
+    String? phoneNum,
   }) async {
     await ApiService.fetch(
       context,
@@ -62,9 +64,10 @@ class UserProvider extends ChangeNotifier {
         final user = UserModel();
         user.provider = provider;
         user.id = auth.user?.uid;
+        user.gender = gender;
         user.email = auth.user?.email;
         user.phoneCountryCode = phoneCountryCode;
-        user.phone = auth.user?.phoneNumber;
+        user.phone = phoneNum ?? auth.user?.phoneNumber;
         user.displayName = displayName ?? auth.user?.displayName;
         // user.deviceToken = await _getDeviceToken();
         user.languageCode = MySharedPreferences.language;
@@ -166,21 +169,20 @@ class UserProvider extends ChangeNotifier {
     ApiService.fetch(
       context,
       callBack: () async {
-        // final response = await http.post(
-        //   Uri.parse('https://api.doverifyit.com/api/otp-send/9698951871'),
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     "Authorization": "553|qsZhFQf91vSH5eMnmvQCI1oNwrmT01O7PQEgn4gjJSv6d10xSvMVIIeoX2L1",
-        //   },
-        //   body: jsonEncode({
-        //     "contact": "${context.getDialCode(user.phoneCountryCode!)}${user.phone}",
-        //   }),
-        // );
-        //
-        // final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-        await Future.delayed(const Duration(seconds: 1));
-        var response = http.Response(jsonEncode(OtpModel().toJson()), 200);
+        final response = await http.post(
+          Uri.parse('https://api.doverifyit.com/api/otp-send/9698951871'),
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "553|qsZhFQf91vSH5eMnmvQCI1oNwrmT01O7PQEgn4gjJSv6d10xSvMVIIeoX2L1",
+          },
+          body: jsonEncode({
+            "contact": "${context.getDialCode(user.phoneCountryCode!)}${user.phone}",
+          }),
+        );
         final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+        // await Future.delayed(const Duration(seconds: 1));
+        // var response = http.Response(jsonEncode(OtpModel().toJson()), 200);
+        // final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         if (response.statusCode == 200 && context.mounted) {
           context.navigate((context) {
             return VerifyCodeScreen(

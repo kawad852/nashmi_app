@@ -134,5 +134,6 @@
   "offerEndedLabel": "ما رح تقدر تمسح الـ QR Code ، العرض خلص",
   "successScanMsg": "تم المسح بنجاح",
   "outOfStockText": "راحت عليك ، خلصت الكمية",
-  "purchasedText": "تم شراء العرض"
+  "purchasedText": "تم شراء العرض",
+  "logout": "تسجيل الخروج"
 }

@@ -57,26 +57,29 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         //     "otp": "$_otp",
         //   }),
         // );
-
         // final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         await Future.delayed(const Duration(seconds: 1));
         var response = http.Response(jsonEncode(OtpModel().toJson()), 200);
         final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         if (response.statusCode == 200 && context.mounted) {
           final uid = context.getToken(user.phoneCountryCode!, user.phone!);
-          var callable = FirebaseFunctions.instanceFor(region: "europe-west3").httpsCallable('createUser');
+          var callable = FirebaseFunctions.instanceFor(region: "europe-west3").httpsCallable('generateCustomToken');
           final results = await callable.call(<String, dynamic>{
             'uid': uid,
           });
-          final data = results.data as Map<String, dynamic>;
-          final customToken = data['token'];
+          final customToken = results.data as String;
+          // final customToken = data['token'];
           final auth = await FirebaseAuth.instance.signInWithCustomToken(customToken);
           if (context.mounted) {
-            context.userProvider.register(
+            await context.userProvider.register(
               context,
               auth,
               provider: AuthProviders.phone,
               guestRoute: null,
+              displayName: user.displayName,
+              gender: user.gender,
+              phoneNum: user.phone,
+              phoneCountryCode: user.phoneCountryCode,
             );
           }
         } else if (context.mounted) {
