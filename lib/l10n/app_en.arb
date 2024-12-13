@@ -141,5 +141,11 @@
   "locationAccess": "Location Access",
   "locationAccessBody": "Allow location access so that we can display the stores closest to you",
   "allow": "Allow",
-  "locationServiceDisabled": "Location services are disabled in your device"
+  "locationServiceDisabled": "Location services are disabled in your device",
+  "states": "States",
+  "cities": "Cities",
+  "city": "City",
+  "state": "State",
+  "save": "Save"
+
 }

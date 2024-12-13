@@ -13,4 +13,6 @@ class MyCollections {
   static const offers = 'offers';
   static const purchases = 'purchases';
   static const notifications = 'notifications';
+  static const states = 'states';
+  static const cities = 'cities';
 }

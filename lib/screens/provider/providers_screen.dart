@@ -15,15 +15,17 @@ import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
+import 'package:nashmi_app/widgets/area_button.dart';
 import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
-import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/base_editor.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/header_tile.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/city/city_model.dart';
+import '../../models/state/state_model.dart';
 import '../../widgets/grant_location_card.dart';
 
 class ProvidersScreen extends StatefulWidget {
@@ -39,6 +41,8 @@ class ProvidersScreen extends StatefulWidget {
 }
 
 class _ProvidersScreenState extends State<ProvidersScreen> {
+  StateModel? _selectedState;
+  CityModel? _selectedCity;
   var filterEnum = FilterEnum.topRated;
   Future<List<ProviderModel>> _nearestFuture = Future.value([]);
 
@@ -70,7 +74,6 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
         setState(() {
           filterEnum = value;
           if (filterEnum != FilterEnum.nearest) {
-            print("alksfjalksfjalksf");
             _nearestFuture = Future.value([]);
           } else {
             getNearestProviders(lat!, lng!, categoryIds: _getAllIds);
@@ -81,7 +84,10 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
   }
 
   Query<ProviderModel> _getQuery() {
-    final query = FirebaseFirestore.instance.providers.where(MyFields.categoryIds, arrayContainsAny: _getAllIds);
+    final query = FirebaseFirestore.instance.providers
+        .where(MyFields.categoryIds, arrayContainsAny: _getAllIds)
+        .where("state.id", isEqualTo: _selectedState?.id)
+        .where("city.id", isEqualTo: _selectedCity?.id);
     switch (filterEnum) {
       case FilterEnum.mostLikes:
         return query.orderBy(MyFields.likesCount, descending: true);
@@ -111,8 +117,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
         return value.map((e) => e.data()!).toList();
       });
     } catch (e) {
-      print("eeee::: $e");
-      // AppOverlayLoader.hide();
+      _nearestFuture = Future.value([]);
     }
   }
 
@@ -132,28 +137,15 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
                 pinned: true,
                 centerTitle: true,
                 collapsedHeight: 100,
-                title: InkWell(
-                  onTap: () async {
-                    try {
-                      final d = await FirebaseFirestore.instance.providers.where(MyFields.categoryIds, arrayContains: _getAllIds).get();
-                    } catch (e) {
-                      print("eeee::: $e");
-                    }
+                title: AreaButton(
+                  state: _selectedState,
+                  city: _selectedCity,
+                  onSelect: (state, city) {
+                    setState(() {
+                      _selectedState = state;
+                      _selectedCity = city;
+                    });
                   },
-                  child: const Row(
-                    children: [
-                      Flexible(
-                        child: CustomText(
-                          "📍️عمان ، خلدا",
-                          fontSize: 16,
-                          overFlow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      CustomSvg(MyIcons.arrowDown),
-                    ],
-                  ),
                 ),
                 flexibleSpace: Align(
                   alignment: AlignmentDirectional.bottomEnd,
@@ -234,7 +226,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
                 ),
               if (filterEnum != FilterEnum.nearest)
                 FirePaginator(
-                  key: ValueKey(filterEnum.value),
+                  key: ValueKey("${filterEnum.value}${_selectedState?.id}${_selectedCity?.id}"),
                   query: _getQuery(),
                   isSliver: true,
                   builder: (context, snapshot) {
