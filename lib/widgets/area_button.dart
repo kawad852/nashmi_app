@@ -11,15 +11,8 @@ import '../utils/my_icons.dart';
 import 'custom_svg.dart';
 
 class AreaButton extends StatefulWidget {
-  final StateModel? state;
-  final CityModel? city;
-  final Function(StateModel?, CityModel?) onSelect;
-
   const AreaButton({
     super.key,
-    required this.state,
-    required this.city,
-    required this.onSelect,
   });
 
   @override
@@ -27,35 +20,18 @@ class AreaButton extends StatefulWidget {
 }
 
 class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMixin {
-  late StateModel? _state;
-  late CityModel? _city;
-
-  void _openSheet(BuildContext context) {
+  void _openSheet(
+    BuildContext context, {
+    required StateModel? selectedState,
+    required CityModel? selectedCity,
+  }) {
     context.showBottomSheet<(StateModel?, CityModel?)?>(
       context,
       maxHeight: 300,
       builder: (BuildContext context) {
-        return AreaSheet(
-          state: _state,
-          city: _city,
-        );
+        return const AreaSheet();
       },
-    ).then((value) {
-      if (value != null) {
-        setState(() {
-          _state = value.$1;
-          _city = value.$2;
-        });
-        widget.onSelect(_state, _city);
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _state = widget.state;
-    _city = widget.city;
+    );
   }
 
   @override
@@ -63,12 +39,23 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
     super.build(context);
     return Consumer<LocationProvider>(
       builder: (context, locationProvider, child) {
-        final state = locationProvider.state;
-        final city = locationProvider.city;
+        if (!locationProvider.showAreaButton) {
+          return const SizedBox.shrink();
+        }
+
+        final selectedState = locationProvider.selectedState;
+        final selectedCity = locationProvider.selectedCity;
+
+        final stateName = locationProvider.state;
+        final cityName = locationProvider.city;
 
         return InkWell(
           onTap: () {
-            _openSheet(context);
+            _openSheet(
+              context,
+              selectedState: selectedState,
+              selectedCity: selectedCity,
+            );
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -80,14 +67,14 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
                 ),
                 TextSpan(
                   children: [
-                    if (_state != null || state != null)
+                    if (selectedState != null || stateName != null)
                       TextSpan(
-                        text: _state != null ? context.translate(textEN: _state!.nameEn, textAR: _state!.nameAr) : state,
+                        text: selectedState != null ? context.translate(textEN: selectedState.nameEn, textAR: selectedState.nameAr) : stateName,
                       ),
-                    if (_city != null || city != null) ...[
+                    if (selectedCity != null || (cityName != null && selectedState == null)) ...[
                       const TextSpan(text: ", "),
                       TextSpan(
-                        text: _city != null ? context.translate(textEN: _city!.nameEn, textAR: _city!.nameAr) : city,
+                        text: selectedCity != null ? context.translate(textEN: selectedCity.nameEn, textAR: selectedCity.nameAr) : cityName,
                       ),
                     ],
                   ],

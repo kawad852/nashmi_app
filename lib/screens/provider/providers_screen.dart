@@ -24,8 +24,6 @@ import 'package:nashmi_app/widgets/header_tile.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/city/city_model.dart';
-import '../../models/state/state_model.dart';
 import '../../widgets/grant_location_card.dart';
 
 class ProvidersScreen extends StatefulWidget {
@@ -41,8 +39,6 @@ class ProvidersScreen extends StatefulWidget {
 }
 
 class _ProvidersScreenState extends State<ProvidersScreen> {
-  StateModel? _selectedState;
-  CityModel? _selectedCity;
   var filterEnum = FilterEnum.topRated;
   Future<List<ProviderModel>> _nearestFuture = Future.value([]);
 
@@ -83,11 +79,14 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
     });
   }
 
-  Query<ProviderModel> _getQuery() {
+  Query<ProviderModel> _getQuery({
+    required String? stateId,
+    required String? cityId,
+  }) {
     final query = FirebaseFirestore.instance.providers
         .where(MyFields.categoryIds, arrayContainsAny: _getAllIds)
-        .where("state.id", isEqualTo: _selectedState?.id)
-        .where("city.id", isEqualTo: _selectedCity?.id);
+        .where("state.id", isEqualTo: stateId)
+        .where("city.id", isEqualTo: cityId);
     switch (filterEnum) {
       case FilterEnum.mostLikes:
         return query.orderBy(MyFields.likesCount, descending: true);
@@ -131,22 +130,15 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
               onPermissionGranted: null,
             );
           }
+          final stateId = locationProvider.selectedState?.id;
+          final cityId = locationProvider.selectedCity?.id;
           return CustomScrollView(
             slivers: [
               SliverAppBar(
                 pinned: true,
                 centerTitle: true,
                 collapsedHeight: 100,
-                title: AreaButton(
-                  state: _selectedState,
-                  city: _selectedCity,
-                  onSelect: (state, city) {
-                    setState(() {
-                      _selectedState = state;
-                      _selectedCity = city;
-                    });
-                  },
-                ),
+                title: const AreaButton(),
                 flexibleSpace: Align(
                   alignment: AlignmentDirectional.bottomEnd,
                   child: Padding(
@@ -226,8 +218,11 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
                 ),
               if (filterEnum != FilterEnum.nearest)
                 FirePaginator(
-                  key: ValueKey("${filterEnum.value}${_selectedState?.id}${_selectedCity?.id}"),
-                  query: _getQuery(),
+                  key: ValueKey("${filterEnum.value}$stateId$cityId"),
+                  query: _getQuery(
+                    stateId: stateId,
+                    cityId: cityId,
+                  ),
                   isSliver: true,
                   builder: (context, snapshot) {
                     return SliverPadding(

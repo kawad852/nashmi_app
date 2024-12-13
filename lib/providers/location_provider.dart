@@ -1,13 +1,18 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:nashmi_app/models/city/city_model.dart';
+import 'package:nashmi_app/models/state/state_model.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/shared_pref.dart';
 
 import '../alerts/feedback/app_feedback.dart';
 import '../alerts/loading/app_over_loader.dart';
+import '../network/api_service.dart';
 import '../utils/base_extensions.dart';
 
 class LocationProvider extends ChangeNotifier {
@@ -17,9 +22,30 @@ class LocationProvider extends ChangeNotifier {
   String? state;
   String? city;
 
+  StateModel? selectedState;
+  CityModel? selectedCity;
+
+  List<StateModel> states = [];
+  List<CityModel> cities = [];
+
   bool isLoading = false;
 
   bool get isLocationGranted => latitude != null && longitude != null;
+
+  bool get showAreaButton => isLocationGranted && cities.isNotEmpty;
+
+  void setValues({
+    required StateModel? s,
+    required CityModel? c,
+  }) {
+    if (s != null) {
+      selectedState = s;
+    }
+    if (c != null) {
+      selectedCity = c;
+    }
+    notifyListeners();
+  }
 
   void _toggleLoading(bool status) {
     isLoading = status;
@@ -114,5 +140,16 @@ class LocationProvider extends ChangeNotifier {
       state = place.administrativeArea;
       city = place.name;
     }
+  }
+
+  void getStateAndCities(BuildContext context) {
+    ApiService.fetch(
+      context,
+      withOverlayLoader: false,
+      callBack: () async {
+        FirebaseFirestore.instance.states.get().then((value) => states = value.docs.map((e) => e.data()).toList());
+        FirebaseFirestore.instance.cities.get().then((value) => cities = value.docs.map((e) => e.data()).toList());
+      },
+    );
   }
 }
