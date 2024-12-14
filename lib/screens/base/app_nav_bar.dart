@@ -10,6 +10,8 @@ import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
+import '../../notifications/cloud_messaging_service.dart';
+
 class AppNavBar extends StatefulWidget {
   const AppNavBar({
     super.key,
@@ -22,6 +24,7 @@ class AppNavBar extends StatefulWidget {
 class _AppNavBarState extends State<AppNavBar> {
   int _currentIndex = 0;
   late PageController _pageController;
+  final cloudMessagingService = CloudMessagingService();
 
   final items = [
     MyIcons.home,
@@ -60,6 +63,9 @@ class _AppNavBarState extends State<AppNavBar> {
     _pageController = PageController();
     context.locationProvider.getStateAndCities(context);
     context.locationProvider.determinePosition(context);
+    cloudMessagingService.requestPermission();
+    cloudMessagingService.init(context);
+    context.userProvider.updateDeviceToken(context);
   }
 
   @override

@@ -69,7 +69,7 @@ class UserProvider extends ChangeNotifier {
         user.phoneCountryCode = phoneCountryCode;
         user.phone = phoneNum ?? auth.user?.phoneNumber;
         user.displayName = displayName ?? auth.user?.displayName;
-        // user.deviceToken = await _getDeviceToken();
+        user.deviceToken = await _getDeviceToken();
         user.languageCode = MySharedPreferences.language;
         final userDocument = await _firebaseFirestore.users.doc(user.id).get();
         if (!userDocument.exists) {

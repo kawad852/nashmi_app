@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Allow access to photo library to update profile picture</string>
-<key>NSCameraUsageDescription</key>
-<string>This app needs camera access to scan QR codes</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -37,28 +33,25 @@
 			</array>
 		</dict>
 	</array>
-    <key>branch_key</key>
-    <dict>
-        <key>live</key>
-        <string>key_live_jsg2BJbaNh5utc479YfL9eefEEoVJlRv</string>
-        <key>test</key>
-        <string>key_live_jsg2BJbaNh5utc479YfL9eefEEoVJlRv</string>
-    </dict>
-    <key>branch_universal_link_domains</key>
-    <array>
-        <string>r0aur.app.link</string>
-        <string>r0aur-alternate.app.link</string>
-    </array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GIDClientID</key>
 	<string>188928498573-1e4fr2u0s765cllmkih47jhnf4t4a0pg.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to scan QR codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to photo library to update profile picture</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -75,6 +68,18 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_jsg2BJbaNh5utc479YfL9eefEEoVJlRv</string>
+		<key>test</key>
+		<string>key_live_jsg2BJbaNh5utc479YfL9eefEEoVJlRv</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>r0aur.app.link</string>
+		<string>r0aur-alternate.app.link</string>
 	</array>
 </dict>
 </plist>
