@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/helper/separator.dart';
+import 'package:nashmi_app/utils/base_extensions.dart';
 
 import '../helper/ui_helper.dart';
 import '../screens/offers/widgets/time_bubble.dart';
@@ -9,11 +10,13 @@ import '../screens/offers/widgets/time_bubble.dart';
 class TimeWidget extends StatefulWidget {
   final DateTime startTime;
   final Function() onEnd;
+  final Widget Function(String part)? builder;
 
   const TimeWidget({
     super.key,
     required this.startTime,
     required this.onEnd,
+    this.builder,
   });
 
   @override
@@ -47,6 +50,7 @@ class _TimeWidgetState extends State<TimeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final onSurface = context.colorPalette.white;
     final parts = UiHelper.formatDuration(context, widget.startTime);
     return Row(
       textDirection: TextDirection.ltr,
@@ -55,9 +59,20 @@ class _TimeWidgetState extends State<TimeWidget> {
         parts.length,
         (index) {
           final part = parts[index];
-          return TimeBubble(time: part);
+          return widget.builder != null ? widget.builder!(part) : TimeBubble(time: part);
         },
-      ).separator(const SizedBox(width: 10)).toList(),
+      )
+          .separator(widget.builder != null
+              ? Text(
+                  " : ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: onSurface,
+                  ),
+                  textDirection: TextDirection.ltr,
+                )
+              : const SizedBox(width: 10))
+          .toList(),
     );
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nashmi_app/screens/offers/offer_settings_selector.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/time_widget.dart';
 
 class PurchasesBar extends StatelessWidget {
   final int count;
@@ -144,20 +147,25 @@ class PurchasesBar extends StatelessWidget {
                   ),
                 ),
                 if (!outOfStock && !purchased)
-                  TweenAnimationBuilder<Duration>(
-                    duration: const Duration(hours: 15, minutes: 15, seconds: 15),
-                    tween: Tween(
-                      begin: const Duration(hours: 15, minutes: 15, seconds: 15),
-                      end: Duration.zero,
-                    ),
-                    builder: (BuildContext context, Duration value, Widget? child) {
-                      final hours = value.inHours;
-                      final minutes = value.inMinutes.remainder(60);
-                      final seconds = value.inSeconds.remainder(60);
-                      return CustomText(
-                        "$seconds : $minutes : $hours",
-                        fontWeight: FontWeight.bold,
-                        color: context.colorPalette.white,
+                  OfferSettingsSelector(
+                    builder: (context, offer, _) {
+                      if (offer == null) {
+                        return const SizedBox.shrink();
+                      }
+                      return TimeWidget(
+                        startTime: offer.endTime!,
+                        onEnd: () {
+                          Fluttertoast.showToast(msg: context.appLocalization.offerEndedMsg);
+                          Navigator.pop(context);
+                        },
+                        builder: (part) {
+                          return CustomText(
+                            part,
+                            fontWeight: FontWeight.bold,
+                            color: context.colorPalette.white,
+                            textDirection: TextDirection.ltr,
+                          );
+                        },
                       );
                     },
                   ),
