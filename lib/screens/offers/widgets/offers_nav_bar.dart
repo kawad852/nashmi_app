@@ -6,10 +6,12 @@ import 'package:nashmi_app/widgets/time_widget.dart';
 
 class OffersNavBar extends StatelessWidget {
   final DateTime time;
+  final VoidCallback onEnd;
 
   const OffersNavBar({
     super.key,
     required this.time,
+    required this.onEnd,
   });
 
   @override
@@ -34,7 +36,7 @@ class OffersNavBar extends StatelessWidget {
           ),
           TimeWidget(
             startTime: time,
-            onEnd: () {},
+            onEnd: onEnd,
           ),
         ],
       ),

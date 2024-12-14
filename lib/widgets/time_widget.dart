@@ -30,6 +30,7 @@ class _TimeWidgetState extends State<TimeWidget> {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (DateTime.now().isAfter(widget.startTime)) {
+          _timer?.cancel();
           widget.onEnd();
         }
       });

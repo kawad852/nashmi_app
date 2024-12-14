@@ -73,6 +73,9 @@ class _OffersScreenState extends State<OffersScreen> {
         return NashmiScaffold(
           bottomNavigationBar: OffersNavBar(
             time: offer.endTime!,
+            onEnd: () {
+              setState(() {});
+            },
           ),
           body: CustomScrollView(
             slivers: [
