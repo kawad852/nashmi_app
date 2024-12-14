@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/screens/offers/widgets/time_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/time_widget.dart';
 
 class OffersNavBar extends StatelessWidget {
-  const OffersNavBar({super.key});
+  final DateTime time;
+
+  const OffersNavBar({
+    super.key,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,33 +32,9 @@ class OffersNavBar extends StatelessWidget {
             context.appLocalization.remainingTimeOffers,
             fontWeight: FontWeight.bold,
           ),
-          TweenAnimationBuilder<Duration>(
-            duration: const Duration(hours: 15, minutes: 15, seconds: 15),
-            tween: Tween(
-              begin: const Duration(hours: 15, minutes: 15, seconds: 15),
-              end: Duration.zero,
-            ),
-            builder: (BuildContext context, Duration value, Widget? child) {
-              final hours = value.inHours;
-              final minutes = value.inMinutes.remainder(60);
-              final seconds = value.inSeconds.remainder(60);
-              return Row(
-                children: [
-                  TimeBubble(
-                    time: "$seconds",
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: TimeBubble(
-                      time: "$minutes",
-                    ),
-                  ),
-                  TimeBubble(
-                    time: "$hours",
-                  ),
-                ],
-              );
-            },
+          TimeWidget(
+            startTime: time,
+            onEnd: () {},
           ),
         ],
       ),

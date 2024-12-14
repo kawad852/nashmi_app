@@ -12,7 +12,7 @@ class UiHelper {
 
   static List<String> formatDuration(BuildContext context, DateTime timestamp) {
     final now = Timestamp.now().toDate();
-    final difference = now.difference(timestamp);
+    final difference = timestamp.difference(now);
 
     final days = difference.inDays;
     final hours = difference.inHours % 24;
@@ -20,10 +20,14 @@ class UiHelper {
     final seconds = difference.inSeconds % 60;
 
     List<String> parts = [];
-    if (days > 0) parts.add('$days');
-    if (hours > 0) parts.add('$hours');
-    if (minutes > 0) parts.add('$minutes');
-    if (seconds > 0) parts.add('$seconds');
+    // if (days > 0) parts.add('$days');
+    // if (hours > 0) parts.add('$hours');
+    // if (minutes > 0) parts.add('$minutes');
+    // if (seconds > 0) parts.add('$seconds');
+    parts.add('$days');
+    parts.add('$hours');
+    parts.add('$minutes');
+    parts.add('$seconds');
 
     return parts;
   }

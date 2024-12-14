@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                           style: style,
                                         ),
                                         Text(
-                                          UiHelper.formatDuration(context, offer.lunchAt!).join(':'),
+                                          UiHelper.formatDuration(context, offer.startTime!).join(':'),
                                           style: style,
                                         ),
                                       ],

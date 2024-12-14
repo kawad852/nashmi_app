@@ -1,20 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/helper/separator.dart';
 import 'package:nashmi_app/models/offer/offer_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/screens/offers/widgets/more_offer_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offer_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offers_nav_bar.dart';
-import 'package:nashmi_app/screens/offers/widgets/time_bubble.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
+import 'package:nashmi_app/widgets/time_widget.dart';
 
-import '../../helper/ui_helper.dart';
 import 'offer_settings_selector.dart';
 
 class OffersScreen extends StatefulWidget {
@@ -47,8 +45,7 @@ class _OffersScreenState extends State<OffersScreen> {
       builder: (context, offer, child) {
         if (offer == null) {
           return const SizedBox.shrink();
-        } else if (offer.lunchAt!.isAfter(DateTime.now())) {
-          final parts = UiHelper.formatDuration(context, offer.lunchAt!);
+        } else if (offer.startTime!.isAfter(DateTime.now())) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,22 +58,22 @@ class _OffersScreenState extends State<OffersScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    parts.length,
-                    (index) {
-                      final part = parts[index];
-                      return TimeBubble(time: part);
-                    },
-                  ).separator(const SizedBox(width: 10)).toList(),
+                TimeWidget(
+                  startTime: offer.startTime!,
+                  onEnd: () {
+                    setState(() {});
+                  },
                 ),
               ],
             ),
           );
+        } else if (offer.endTime!.isBefore(DateTime.now())) {
+          return const SizedBox.shrink();
         }
         return NashmiScaffold(
-          bottomNavigationBar: const OffersNavBar(),
+          bottomNavigationBar: OffersNavBar(
+            time: offer.endTime!,
+          ),
           body: CustomScrollView(
             slivers: [
               SliverAppBar(

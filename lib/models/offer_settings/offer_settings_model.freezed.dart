@@ -21,19 +21,17 @@ OfferSettingsModel _$OfferSettingsModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OfferSettingsModel {
   @TimestampSerializer()
-  DateTime? get lunchAt => throw _privateConstructorUsedError;
+  DateTime? get startTime => throw _privateConstructorUsedError;
   @TimestampSerializer()
-  set lunchAt(DateTime? value) => throw _privateConstructorUsedError;
+  set startTime(DateTime? value) => throw _privateConstructorUsedError;
+  @TimestampSerializer()
+  DateTime? get endTime => throw _privateConstructorUsedError;
+  @TimestampSerializer()
+  set endTime(DateTime? value) => throw _privateConstructorUsedError;
   String? get contentEn => throw _privateConstructorUsedError;
   set contentEn(String? value) => throw _privateConstructorUsedError;
   String? get contentAr => throw _privateConstructorUsedError;
   set contentAr(String? value) => throw _privateConstructorUsedError;
-  String? get time => throw _privateConstructorUsedError;
-  set time(String? value) => throw _privateConstructorUsedError;
-  @TimestampSerializer()
-  DateTime? get date => throw _privateConstructorUsedError;
-  @TimestampSerializer()
-  set date(DateTime? value) => throw _privateConstructorUsedError;
 
   /// Serializes this OfferSettingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,11 +50,10 @@ abstract class $OfferSettingsModelCopyWith<$Res> {
       _$OfferSettingsModelCopyWithImpl<$Res, OfferSettingsModel>;
   @useResult
   $Res call(
-      {@TimestampSerializer() DateTime? lunchAt,
+      {@TimestampSerializer() DateTime? startTime,
+      @TimestampSerializer() DateTime? endTime,
       String? contentEn,
-      String? contentAr,
-      String? time,
-      @TimestampSerializer() DateTime? date});
+      String? contentAr});
 }
 
 /// @nodoc
@@ -74,16 +71,19 @@ class _$OfferSettingsModelCopyWithImpl<$Res, $Val extends OfferSettingsModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lunchAt = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? contentEn = freezed,
     Object? contentAr = freezed,
-    Object? time = freezed,
-    Object? date = freezed,
   }) {
     return _then(_value.copyWith(
-      lunchAt: freezed == lunchAt
-          ? _value.lunchAt
-          : lunchAt // ignore: cast_nullable_to_non_nullable
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       contentEn: freezed == contentEn
           ? _value.contentEn
@@ -93,14 +93,6 @@ class _$OfferSettingsModelCopyWithImpl<$Res, $Val extends OfferSettingsModel>
           ? _value.contentAr
           : contentAr // ignore: cast_nullable_to_non_nullable
               as String?,
-      time: freezed == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String?,
-      date: freezed == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ) as $Val);
   }
 }
@@ -114,11 +106,10 @@ abstract class _$$OfferSettingsModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@TimestampSerializer() DateTime? lunchAt,
+      {@TimestampSerializer() DateTime? startTime,
+      @TimestampSerializer() DateTime? endTime,
       String? contentEn,
-      String? contentAr,
-      String? time,
-      @TimestampSerializer() DateTime? date});
+      String? contentAr});
 }
 
 /// @nodoc
@@ -134,16 +125,19 @@ class __$$OfferSettingsModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lunchAt = freezed,
+    Object? startTime = freezed,
+    Object? endTime = freezed,
     Object? contentEn = freezed,
     Object? contentAr = freezed,
-    Object? time = freezed,
-    Object? date = freezed,
   }) {
     return _then(_$OfferSettingsModelImpl(
-      lunchAt: freezed == lunchAt
-          ? _value.lunchAt
-          : lunchAt // ignore: cast_nullable_to_non_nullable
+      startTime: freezed == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endTime: freezed == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       contentEn: freezed == contentEn
           ? _value.contentEn
@@ -153,14 +147,6 @@ class __$$OfferSettingsModelImplCopyWithImpl<$Res>
           ? _value.contentAr
           : contentAr // ignore: cast_nullable_to_non_nullable
               as String?,
-      time: freezed == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as String?,
-      date: freezed == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ));
   }
 }
@@ -169,31 +155,28 @@ class __$$OfferSettingsModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OfferSettingsModelImpl implements _OfferSettingsModel {
   _$OfferSettingsModelImpl(
-      {@TimestampSerializer() this.lunchAt,
+      {@TimestampSerializer() this.startTime,
+      @TimestampSerializer() this.endTime,
       this.contentEn,
-      this.contentAr,
-      this.time,
-      @TimestampSerializer() this.date});
+      this.contentAr});
 
   factory _$OfferSettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$OfferSettingsModelImplFromJson(json);
 
   @override
   @TimestampSerializer()
-  DateTime? lunchAt;
+  DateTime? startTime;
+  @override
+  @TimestampSerializer()
+  DateTime? endTime;
   @override
   String? contentEn;
   @override
   String? contentAr;
-  @override
-  String? time;
-  @override
-  @TimestampSerializer()
-  DateTime? date;
 
   @override
   String toString() {
-    return 'OfferSettingsModel(lunchAt: $lunchAt, contentEn: $contentEn, contentAr: $contentAr, time: $time, date: $date)';
+    return 'OfferSettingsModel(startTime: $startTime, endTime: $endTime, contentEn: $contentEn, contentAr: $contentAr)';
   }
 
   /// Create a copy of OfferSettingsModel
@@ -215,34 +198,30 @@ class _$OfferSettingsModelImpl implements _OfferSettingsModel {
 
 abstract class _OfferSettingsModel implements OfferSettingsModel {
   factory _OfferSettingsModel(
-      {@TimestampSerializer() DateTime? lunchAt,
+      {@TimestampSerializer() DateTime? startTime,
+      @TimestampSerializer() DateTime? endTime,
       String? contentEn,
-      String? contentAr,
-      String? time,
-      @TimestampSerializer() DateTime? date}) = _$OfferSettingsModelImpl;
+      String? contentAr}) = _$OfferSettingsModelImpl;
 
   factory _OfferSettingsModel.fromJson(Map<String, dynamic> json) =
       _$OfferSettingsModelImpl.fromJson;
 
   @override
   @TimestampSerializer()
-  DateTime? get lunchAt;
+  DateTime? get startTime;
   @TimestampSerializer()
-  set lunchAt(DateTime? value);
+  set startTime(DateTime? value);
+  @override
+  @TimestampSerializer()
+  DateTime? get endTime;
+  @TimestampSerializer()
+  set endTime(DateTime? value);
   @override
   String? get contentEn;
   set contentEn(String? value);
   @override
   String? get contentAr;
   set contentAr(String? value);
-  @override
-  String? get time;
-  set time(String? value);
-  @override
-  @TimestampSerializer()
-  DateTime? get date;
-  @TimestampSerializer()
-  set date(DateTime? value);
 
   /// Create a copy of OfferSettingsModel
   /// with the given fields replaced by the non-null parameter values.
