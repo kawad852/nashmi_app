@@ -1,6 +1,9 @@
+import 'dart:io' show Platform;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/controllers/map_controller.dart';
+import 'package:nashmi_app/helper/launcher_service.dart';
 import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/models/tag/tag_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
@@ -28,6 +31,7 @@ import 'package:nashmi_app/widgets/stretch_button.dart';
 
 import '../../alerts/errors/app_error_widget.dart';
 import '../../models/category/category_model.dart';
+import '../../utils/enums.dart';
 
 class ProviderScreen extends StatefulWidget {
   final ProviderModel? provider;
@@ -94,6 +98,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
         final provider = snapshot.data![0] as ProviderModel;
         final categories = snapshot.data![1] as List<CategoryModel>;
         final tags = snapshot.data![2] as List<TagModel>;
+        print("id:: ${provider.id}");
         return NashmiScaffold(
           appBar: AppBar(
             forceMaterialTransparency: true,
@@ -112,18 +117,23 @@ class _ProviderScreenState extends State<ProviderScreen> {
               children: [
                 Expanded(
                   child: StretchedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print("urL::: ${context.getDialCode(provider.providerPhoneCountryCode)}${provider.providerPhoneNum}");
+                      LauncherService.lunch(context, 'tel://${context.getDialCode(provider.providerPhoneCountryCode)}${provider.providerPhoneNum}');
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const CustomSvg(MyIcons.calling),
                         const SizedBox(width: 3),
                         Expanded(
-                          child: CustomText(
+                          child: Text(
                             context.appLocalization.callDirectly,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: context.colorPalette.white,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: context.colorPalette.white,
+                            ),
                           ),
                         ),
                       ],
@@ -132,18 +142,39 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 ),
                 Row(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const CustomSvg(MyIcons.whatsUp),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const CustomSvg(MyIcons.facebookCard),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Image.asset(MyImages.instagram),
-                    ),
+                    if (provider.whatsAppNumber != null)
+                      IconButton(
+                        onPressed: () {
+                          final number = "${context.getDialCode(provider.whatsAppNumberCountryCode)}${provider.whatsAppNumber}";
+                          LauncherService.lunch(context, Platform.isAndroid ? "https://wa.me/$number/" : "https://api.whatsapp.com/send?phone=$number");
+                        },
+                        icon: const CustomSvg(MyIcons.whatsUp),
+                      ),
+                    if (provider.facebookURL != null)
+                      IconButton(
+                        onPressed: () {
+                          final url = provider.facebookURL!;
+                          LauncherService.lunchSocialMedia(
+                            context,
+                            nativeUrl: url,
+                            webUrl: url,
+                            type: SocialPlatformEnum.facebook,
+                          );
+                        },
+                        icon: const CustomSvg(MyIcons.facebookCard),
+                      ),
+                    if (provider.instagramUsername != null)
+                      IconButton(
+                        onPressed: () {
+                          LauncherService.lunchSocialMedia(
+                            context,
+                            nativeUrl: "instagram://user?username=${provider.instagramUsername}",
+                            webUrl: "https://www.instagram.com/${provider.instagramUsername}/",
+                            type: SocialPlatformEnum.instagram,
+                          );
+                        },
+                        icon: Image.asset(MyImages.instagram),
+                      ),
                   ],
                 ),
               ],

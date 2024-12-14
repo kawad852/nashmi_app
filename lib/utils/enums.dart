@@ -8,6 +8,8 @@ class ThemeEnum {
   static const String dark = 'dark';
 }
 
+enum SocialPlatformEnum { facebook, instagram }
+
 enum PolicyType { knowUs, termsAndConditions, privacyPolicy }
 
 enum ContactType { ads, complaints }
