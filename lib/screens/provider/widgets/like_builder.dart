@@ -103,7 +103,12 @@ class _LikeBuilderState extends State<LikeBuilder> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _toggleLike(isLike);
+                    context.userProvider.handleGuest(
+                      context,
+                      action: () {
+                        _toggleLike(isLike);
+                      },
+                    );
                   },
                   child: CustomSvg(isLike ? MyIcons.like : MyIcons.emptyLike),
                 ),

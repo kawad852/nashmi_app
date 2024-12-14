@@ -68,13 +68,18 @@ class _ReviewBuilderState extends State<ReviewBuilder> {
         return FadeIn(
           child: GestureDetector(
             onTap: () {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: context.colorScheme.surface,
-                constraints: const BoxConstraints(maxHeight: 250),
-                builder: (context) {
-                  return ReviewSheet(
-                    id: _providerId,
+              context.userProvider.handleGuest(
+                context,
+                action: () {
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: context.colorScheme.surface,
+                    constraints: const BoxConstraints(maxHeight: 250),
+                    builder: (context) {
+                      return ReviewSheet(
+                        id: _providerId,
+                      );
+                    },
                   );
                 },
               );

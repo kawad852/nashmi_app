@@ -38,6 +38,7 @@ class _AreaSheetState extends State<AreaSheet> {
                 onChanged: (value) {
                   setState(() {
                     _selectedState = provider.states.firstWhere((e) => e.id == value);
+                    _selectedCity = null;
                   });
                 },
                 title: context.appLocalization.state,

@@ -33,9 +33,11 @@ class _MapBubbleState extends State<MapBubble> {
 
   void _toggleLoading() {
     Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
     });
   }
 

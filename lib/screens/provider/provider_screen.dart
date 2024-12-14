@@ -28,6 +28,7 @@ import 'package:nashmi_app/widgets/map_bubble.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/rating_stars.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
+import 'package:nashmi_app/widgets/user_selector.dart';
 
 import '../../alerts/errors/app_error_widget.dart';
 import '../../models/category/category_model.dart';
@@ -98,298 +99,301 @@ class _ProviderScreenState extends State<ProviderScreen> {
         final provider = snapshot.data![0] as ProviderModel;
         final categories = snapshot.data![1] as List<CategoryModel>;
         final tags = snapshot.data![2] as List<TagModel>;
-        print("id:: ${provider.id}");
-        return NashmiScaffold(
-          appBar: AppBar(
-            forceMaterialTransparency: true,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: FavoriteButton(
-                  id: provider.id!,
-                ),
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
-            child: Row(
-              children: [
-                Expanded(
-                  child: StretchedButton(
-                    onPressed: () {
-                      print("urL::: ${context.getDialCode(provider.providerPhoneCountryCode)}${provider.providerPhoneNum}");
-                      LauncherService.lunch(context, 'tel://${context.getDialCode(provider.providerPhoneCountryCode)}${provider.providerPhoneNum}');
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const CustomSvg(MyIcons.calling),
-                        const SizedBox(width: 3),
-                        Expanded(
-                          child: Text(
-                            context.appLocalization.callDirectly,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: context.colorPalette.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+        return UserSelector(builder: (context, user) {
+          final isAuthenticated = user != null;
+          return NashmiScaffold(
+            appBar: AppBar(
+              forceMaterialTransparency: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 7),
+                  child: FavoriteButton(
+                    id: provider.id!,
                   ),
-                ),
-                Row(
-                  children: [
-                    if (provider.whatsAppNumber != null)
-                      IconButton(
-                        onPressed: () {
-                          final number = "${context.getDialCode(provider.whatsAppNumberCountryCode)}${provider.whatsAppNumber}";
-                          LauncherService.lunch(context, Platform.isAndroid ? "https://wa.me/$number/" : "https://api.whatsapp.com/send?phone=$number");
-                        },
-                        icon: const CustomSvg(MyIcons.whatsUp),
-                      ),
-                    if (provider.facebookURL != null)
-                      IconButton(
-                        onPressed: () {
-                          final url = provider.facebookURL!;
-                          LauncherService.lunchSocialMedia(
-                            context,
-                            nativeUrl: url,
-                            webUrl: url,
-                            type: SocialPlatformEnum.facebook,
-                          );
-                        },
-                        icon: const CustomSvg(MyIcons.facebookCard),
-                      ),
-                    if (provider.instagramUsername != null)
-                      IconButton(
-                        onPressed: () {
-                          LauncherService.lunchSocialMedia(
-                            context,
-                            nativeUrl: "instagram://user?username=${provider.instagramUsername}",
-                            webUrl: "https://www.instagram.com/${provider.instagramUsername}/",
-                            type: SocialPlatformEnum.instagram,
-                          );
-                        },
-                        icon: Image.asset(MyImages.instagram),
-                      ),
-                  ],
                 ),
               ],
             ),
-          ),
-          body: ListView(
-            padding: const EdgeInsets.symmetric(vertical: kScreenMargin),
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        CustomNetworkImage(
-                          provider.thumbnail!,
-                          width: 86,
-                          height: 86,
-                          radius: MyTheme.radiusSecondary,
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      context.translate(
-                                        textEN: provider.nameEn,
-                                        textAR: provider.nameAr,
-                                      ),
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  if (provider.isVerified)
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 5),
-                                      child: CustomSvg(MyIcons.check),
-                                    ),
-                                  // const CustomSvg(MyIcons.redStar),
-                                ],
-                              ),
-                              Text(
-                                categories.map((e) => context.translate(textEN: e.nameEn, textAR: e.nameAr)).join(", "),
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: context.colorPalette.grey8F8,
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  LikeBuilder(
-                                    count: provider.likesCount,
-                                    id: provider.id!,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  ReviewBuilder(id: provider.id!),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (provider.ratingsCount > 0)
-                      Row(
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: StretchedButton(
+                      onPressed: () {
+                        LauncherService.lunch(context, 'tel://${context.getDialCode(provider.providerPhoneCountryCode)}${provider.providerPhoneNum}');
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          RatingStars(
-                            rate: provider.avgRating,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            "(${provider.ratingsCount})",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: context.colorPalette.grey8F8,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              context.navigate((context) {
-                                return ReviewsScreen(id: provider.id!);
-                              });
-                            },
-                            child: CustomText(
-                              context.appLocalization.viewRatings,
-                              fontSize: 12,
-                              decoration: TextDecoration.underline,
+                          const CustomSvg(MyIcons.calling),
+                          const SizedBox(width: 3),
+                          Expanded(
+                            child: Text(
+                              context.appLocalization.callDirectly,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: context.colorPalette.white,
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    Text(
-                      context.translate(
-                        textEN: provider.descriptionEn,
-                        textAR: provider.descriptionAr,
-                      ),
                     ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      direction: Axis.horizontal,
-                      children: tags.map((element) {
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              height: 34,
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
-                              decoration: BoxDecoration(
-                                color: context.colorPalette.greyF2F,
-                                borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                              ),
-                              child: Text(
-                                context.translate(textEN: element.nameEn, textAR: element.nameAr),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    children: [
+                      if (provider.whatsAppNumber != null)
+                        IconButton(
+                          onPressed: () {
+                            final number = "${context.getDialCode(provider.whatsAppNumberCountryCode)}${provider.whatsAppNumber}";
+                            LauncherService.lunch(context, Platform.isAndroid ? "https://wa.me/$number/" : "https://api.whatsapp.com/send?phone=$number");
+                          },
+                          icon: const CustomSvg(MyIcons.whatsUp),
+                        ),
+                      if (provider.facebookURL != null)
+                        IconButton(
+                          onPressed: () {
+                            final url = provider.facebookURL!;
+                            LauncherService.lunchSocialMedia(
+                              context,
+                              nativeUrl: url,
+                              webUrl: url,
+                              type: SocialPlatformEnum.facebook,
+                            );
+                          },
+                          icon: const CustomSvg(MyIcons.facebookCard),
+                        ),
+                      if (provider.instagramUsername != null)
+                        IconButton(
+                          onPressed: () {
+                            LauncherService.lunchSocialMedia(
+                              context,
+                              nativeUrl: "instagram://user?username=${provider.instagramUsername}",
+                              webUrl: "https://www.instagram.com/${provider.instagramUsername}/",
+                              type: SocialPlatformEnum.instagram,
+                            );
+                          },
+                          icon: Image.asset(MyImages.instagram),
+                        ),
+                    ],
+                  ),
+                ],
               ),
-              if (provider.images!.isNotEmpty)
+            ),
+            body: ListView(
+              padding: const EdgeInsets.symmetric(vertical: kScreenMargin),
+              children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          context.appLocalization.images,
-                          style: TextStyle(
-                            color: context.colorPalette.red8B0,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          CustomNetworkImage(
+                            provider.thumbnail!,
+                            width: 86,
+                            height: 86,
+                            radius: MyTheme.radiusSecondary,
                           ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        context.translate(
+                                          textEN: provider.nameEn,
+                                          textAR: provider.nameAr,
+                                        ),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    if (provider.isVerified)
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 5),
+                                        child: CustomSvg(MyIcons.check),
+                                      ),
+                                    // const CustomSvg(MyIcons.redStar),
+                                  ],
+                                ),
+                                Text(
+                                  categories.map((e) => context.translate(textEN: e.nameEn, textAR: e.nameAr)).join(", "),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: context.colorPalette.grey8F8,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    LikeBuilder(
+                                      count: provider.likesCount,
+                                      id: provider.id!,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    ReviewBuilder(id: provider.id!),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (provider.ratingsCount > 0)
+                        Row(
+                          children: [
+                            RatingStars(
+                              rate: provider.avgRating,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              "(${provider.ratingsCount})",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: context.colorPalette.grey8F8,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                context.navigate((context) {
+                                  return ReviewsScreen(id: provider.id!);
+                                });
+                              },
+                              child: CustomText(
+                                context.appLocalization.viewRatings,
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      Text(
+                        context.translate(
+                          textEN: provider.descriptionEn,
+                          textAR: provider.descriptionAr,
                         ),
                       ),
-                      SizedBox(
-                        height: 200,
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) => const SizedBox(width: 10),
-                          itemCount: provider.images!.length,
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final image = provider.images![index];
-                            return CustomNetworkImage(
-                              image,
-                              width: 200,
-                              height: 200,
-                              radius: MyTheme.radiusSecondary,
-                            );
-                          },
-                        ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        direction: Axis.horizontal,
+                        children: tags.map((element) {
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                height: 34,
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: context.colorPalette.greyF2F,
+                                  borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                                ),
+                                child: Text(
+                                  context.translate(textEN: element.nameEn, textAR: element.nameAr),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
                       ),
                     ],
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      context.appLocalization.addressAndLocation,
-                      style: TextStyle(
-                        color: context.colorPalette.red8B0,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      "${context.translate(textEN: provider.state?.nameEn, textAR: provider.state?.nameAr)}, ${context.translate(textEN: provider.city?.nameEn, textAR: provider.city?.nameAr)}, ${context.translate(textEN: provider.addressEn, textAR: provider.addressAr)}",
-                    ),
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                        child: SizedBox(
-                          height: 90,
-                          child: MapBubble(
-                            controller: MapController(
-                              context,
-                              lat: provider.geo!.geoPoint!.latitude,
-                              lng: provider.geo!.geoPoint!.longitude,
+                if (provider.images!.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Text(
+                            context.appLocalization.images,
+                            style: TextStyle(
+                              color: context.colorPalette.red8B0,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 200,
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) => const SizedBox(width: 10),
+                            itemCount: provider.images!.length,
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final image = provider.images![index];
+                              return CustomNetworkImage(
+                                image,
+                                width: 200,
+                                height: 200,
+                                radius: MyTheme.radiusSecondary,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.appLocalization.addressAndLocation,
+                        style: TextStyle(
+                          color: context.colorPalette.red8B0,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        "${context.translate(textEN: provider.state?.nameEn, textAR: provider.state?.nameAr)}, ${context.translate(textEN: provider.city?.nameEn, textAR: provider.city?.nameAr)}, ${context.translate(textEN: provider.addressEn, textAR: provider.addressAr)}",
+                      ),
+                      if (isAuthenticated) ...[
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                            child: SizedBox(
+                              height: 90,
+                              child: MapBubble(
+                                controller: MapController(
+                                  context,
+                                  lat: provider.geo!.geoPoint!.latitude,
+                                  lng: provider.geo!.geoPoint!.longitude,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
+              ],
+            ),
+          );
+        });
       },
       onError: (error) {
         return AppErrorWidget(

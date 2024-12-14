@@ -2,6 +2,7 @@ import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
+import 'package:nashmi_app/helper/launcher_service.dart';
 import 'package:nashmi_app/models/offer/offer_model.dart';
 import 'package:nashmi_app/models/purchase/purchase_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
@@ -17,7 +18,6 @@ import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_stream_builder.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
-import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 
 import '../../helper/deep_linking_service.dart';
@@ -151,18 +151,34 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
                         children: [
                           Expanded(
                             child: StretchedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.userProvider.handleGuest(
+                                  context,
+                                  action: () {
+                                    ApiService.fetch(
+                                      context,
+                                      callBack: () async {
+                                        final provider = await FirebaseFirestore.instance.providers.doc(offer.provider!.id).get().then((value) => value.data()!);
+                                        final geoPoint = provider.geo!.geoPoint!;
+                                        await LauncherService.openMap(geoPoint.latitude, geoPoint.longitude);
+                                      },
+                                    );
+                                  },
+                                );
+                              },
                               child: Row(
                                 children: [
                                   const CustomSvg(MyIcons.locationOffer),
                                   const SizedBox(width: 5),
                                   Expanded(
-                                    child: CustomText(
+                                    child: Text(
                                       context.appLocalization.catchOffer,
-                                      fontSize: 16,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: context.colorPalette.white,
+                                      ),
                                       textAlign: TextAlign.center,
-                                      fontWeight: FontWeight.bold,
-                                      color: context.colorPalette.white,
                                     ),
                                   ),
                                 ],
@@ -178,12 +194,14 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
                                   const CustomSvg(MyIcons.share),
                                   const SizedBox(width: 5),
                                   Expanded(
-                                    child: CustomText(
+                                    child: Text(
                                       context.appLocalization.share,
                                       textAlign: TextAlign.center,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: context.colorPalette.white,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: context.colorPalette.white,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -278,19 +296,24 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
                               onPressed: outOfStock
                                   ? null
                                   : () {
-                                      context.navigate((context) {
-                                        return QrCodeScanner(id: offer.id!);
-                                      }).then((value) {
-                                        if (value != null && context.mounted) {
-                                          _purchase(
-                                            context,
-                                            offerId: offer.id!,
-                                            offerTime: offer.createdAt!,
-                                            alreadyPurchased: alreadyPurchased,
-                                            total: purchase.data()?.total,
-                                          );
-                                        }
-                                      });
+                                      context.userProvider.handleGuest(
+                                        context,
+                                        action: () {
+                                          context.navigate((context) {
+                                            return QrCodeScanner(id: offer.id!);
+                                          }).then((value) {
+                                            if (value != null && context.mounted) {
+                                              _purchase(
+                                                context,
+                                                offerId: offer.id!,
+                                                offerTime: offer.createdAt!,
+                                                alreadyPurchased: alreadyPurchased,
+                                                total: purchase.data()?.total,
+                                              );
+                                            }
+                                          });
+                                        },
+                                      );
                                     },
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               child: Row(

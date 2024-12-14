@@ -243,7 +243,10 @@ class UserProvider extends ChangeNotifier {
     } else {
       context.navigate(
         (context) {
-          return const RegistrationScreen(guestRoute: kLoginRouteName);
+          return const RegistrationScreen(
+            guestRoute: kLoginRouteName,
+            showGuestButton: false,
+          );
         },
         name: kLoginRouteName,
         fullscreenDialog: true,

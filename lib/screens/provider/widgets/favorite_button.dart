@@ -63,7 +63,12 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         return ZoomIn(
           child: IconButton(
             onPressed: () {
-              _toggleFavorite(inFav);
+              context.userProvider.handleGuest(
+                context,
+                action: () {
+                  _toggleFavorite(inFav);
+                },
+              );
             },
             icon: CustomSvg(
               inFav ? MyIcons.favSelect : MyIcons.favorite,

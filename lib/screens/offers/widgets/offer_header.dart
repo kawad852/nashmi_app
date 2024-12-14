@@ -8,6 +8,7 @@ import 'package:nashmi_app/models/offer/offer_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
+import 'package:nashmi_app/screens/provider/provider_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
@@ -96,71 +97,81 @@ class _OfferHeaderState extends State<OfferHeader> {
                           count: offer.images!.length,
                           index: _currentSliderIndex,
                         ),
-                      Container(
-                        width: double.infinity,
-                        height: 80,
-                        margin: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 10),
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: context.colorPalette.greyF2F,
-                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                        ),
-                        child: Row(
-                          children: [
-                            CustomNetworkImage(
-                              provider.thumbnail!,
-                              width: 60,
-                              height: 60,
-                              radius: MyTheme.radiusSecondary,
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          context.translate(textEN: provider.nameEn, textAR: provider.nameAr),
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 4),
-                                      const CustomSvg(MyIcons.check),
-                                    ],
-                                  ),
-                                  CustomFutureBuilder(
-                                    future: _categoriesFuture,
-                                    onLoading: () => const Text(""),
-                                    onComplete: (context, snapshot) {
-                                      final categories =
-                                          snapshot.data!.docs.map((e) => context.translate(textEN: e.data().nameEn, textAR: e.data().nameAr)).toList().join(", ");
-                                      return FadeIn(
-                                        child: Text(
-                                          categories,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: context.colorPalette.grey8F8,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    onError: (error) => const SizedBox.shrink(),
-                                  ),
-                                ],
+                      GestureDetector(
+                        onTap: () {
+                          context.navigate((context) {
+                            return ProviderScreen(
+                              provider: null,
+                              id: provider.id,
+                            );
+                          });
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 80,
+                          margin: const EdgeInsets.symmetric(horizontal: 20).copyWith(top: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: context.colorPalette.greyF2F,
+                            borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                          ),
+                          child: Row(
+                            children: [
+                              CustomNetworkImage(
+                                provider.thumbnail!,
+                                width: 60,
+                                height: 60,
+                                radius: MyTheme.radiusSecondary,
                               ),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 20,
-                            ),
-                          ],
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            context.translate(textEN: provider.nameEn, textAR: provider.nameAr),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        const CustomSvg(MyIcons.check),
+                                      ],
+                                    ),
+                                    CustomFutureBuilder(
+                                      future: _categoriesFuture,
+                                      onLoading: () => const Text(""),
+                                      onComplete: (context, snapshot) {
+                                        final categories =
+                                            snapshot.data!.docs.map((e) => context.translate(textEN: e.data().nameEn, textAR: e.data().nameAr)).toList().join(", ");
+                                        return FadeIn(
+                                          child: Text(
+                                            categories,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: context.colorPalette.grey8F8,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      onError: (error) => const SizedBox.shrink(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 20,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
