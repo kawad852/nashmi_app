@@ -147,6 +147,7 @@
   "city": "City",
   "state": "State",
   "save": "Save",
-  "offerEndedMsg": "Offer Ended"
+  "offerEndedMsg": "Offer Ended",
+  "sentSuccessfully": "Sent Successfully"
 
 }

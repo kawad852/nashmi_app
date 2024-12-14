@@ -12,7 +12,7 @@ enum SocialPlatformEnum { facebook, instagram }
 
 enum PolicyType { knowUs, termsAndConditions, privacyPolicy }
 
-enum ContactType { ads, complaints }
+enum ContactType { ad, complaints }
 
 class SearchType {
   static const String cities = 'cities';

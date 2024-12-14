@@ -147,6 +147,8 @@
   "city": "المدينة",
   "state": "المحافظة",
   "save": "حفظ",
-  "offerEndedMsg": "انتهى العرض"
+  "offerEndedMsg": "انتهى العرض",
+  "sentSuccessfully": "تم الإرسال بنجاح"
+
 
 }

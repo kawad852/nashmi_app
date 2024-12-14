@@ -23,3 +23,10 @@ class PolicyDocuments {
   static const String termsOfUse = '9heum2QGHq0mNBnhbRs2';
   static const String aboutUs = 'qq28whc9BmBCHpeiWE3O';
 }
+
+class EmailJsEnum {
+  static const link = 'https://api.emailjs.com/api/v1.0/email/send';
+  static const serviceId = "service_85zuv8l"; // service_dga8ga8
+  static const templateId = "template_4w6bflf"; //template_kibj8m3
+  static const userId = "QIWycTMidTmWWH1ro"; //kdJ4pcQ38XFqx54Lk
+}

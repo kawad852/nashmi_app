@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
               icon: MyIcons.sms,
               title: context.appLocalization.advertiseWithUs,
               onTap: () {
-                context.push(const ContactScreen(contactType: ContactType.ads));
+                context.push(const ContactScreen(contactType: ContactType.ad));
               },
             ),
             ProfileBubble(
