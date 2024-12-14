@@ -24,11 +24,13 @@ import '../../models/otp_model.dart';
 class VerifyCodeScreen extends StatefulWidget {
   final UserModel user;
   final bool isLogin;
+  final String? guestRoute;
 
   const VerifyCodeScreen({
     super.key,
     required this.user,
     required this.isLogin,
+    required this.guestRoute,
   });
 
   @override
@@ -75,7 +77,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               context,
               auth,
               provider: AuthProviders.phone,
-              guestRoute: null,
+              guestRoute: widget.guestRoute,
               displayName: user.displayName,
               gender: user.gender,
               phoneNum: user.phone,

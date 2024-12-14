@@ -94,12 +94,10 @@ class _AppNavBarState extends State<AppNavBar> {
               return NavBarItem(
                 onTap: () {
                   if (index == 1) {
-                    context.guestHandler(
-                      callBack: () => _onSelect(index),
-                      routesCallBack: () {
-                        if (index == 1) {
-                          context.navigate((context) => const FavoriteScreen());
-                        }
+                    context.userProvider.handleGuest(
+                      context,
+                      action: () {
+                        _onSelect(index);
                       },
                     );
                   } else {

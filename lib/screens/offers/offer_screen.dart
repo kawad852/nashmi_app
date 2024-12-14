@@ -20,6 +20,8 @@ import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 
+import '../../helper/deep_linking_service.dart';
+
 class OfferScreen extends StatefulWidget {
   final String id;
 
@@ -48,6 +50,17 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
     FirebaseFirestore.instance.offers.doc(widget.id).update({
       MyFields.currentViews: FieldValue.increment(value),
     });
+  }
+
+  void _share(BuildContext context, OfferModel offer) {
+    DeepLinkingService.share(
+      context,
+      id: offer.id!,
+      type: "Offer",
+      title: context.translate(textEN: offer.nameEn, textAR: offer.nameAr),
+      description: context.translate(textEN: offer.descriptionEn, textAR: offer.descriptionAr),
+      imageURL: '',
+    );
   }
 
   Future<void> _purchase(

@@ -19,7 +19,12 @@ import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/titled_textfield.dart';
 
 class CreateAccountScreen extends StatefulWidget {
-  const CreateAccountScreen({super.key});
+  final String? guestRoute;
+
+  const CreateAccountScreen({
+    super.key,
+    required this.guestRoute,
+  });
 
   @override
   State<CreateAccountScreen> createState() => _CreateAccountScreenState();
@@ -44,6 +49,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         context.userProvider.sendPinCode(
           context,
           user: user,
+          guestRoute: widget.guestRoute,
         );
       }
     }

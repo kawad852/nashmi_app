@@ -32,6 +32,7 @@ import 'widgets/guest_button.dart';
 class RegistrationScreen extends StatefulWidget {
   final String? guestRoute;
   final bool showGuestButton;
+
   const RegistrationScreen({
     super.key,
     this.guestRoute,
@@ -73,6 +74,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       context.userProvider.sendPinCode(
         context,
         user: user,
+        guestRoute: _guestRoute,
       );
     }
   }
@@ -291,7 +293,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               alignment: PlaceholderAlignment.middle,
                               child: TextButton(
                                 onPressed: () {
-                                  context.navigate((context) => const CreateAccountScreen());
+                                  context.navigate((context) => CreateAccountScreen(
+                                        guestRoute: _guestRoute,
+                                      ));
                                 },
                                 child: Text(
                                   context.appLocalization.createAccount,

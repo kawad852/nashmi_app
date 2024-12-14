@@ -93,8 +93,21 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
 
         if (context.mounted) {
-          updateDeviceToken(context);
-          handleUserNavigation(context);
+          if (guestRoute == null) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return const AppNavBar();
+              }),
+              (route) => false,
+            );
+          } else {
+            Navigator.popUntil(
+              context,
+              (route) => route.settings.name == kLoginRouteName,
+            );
+            Navigator.pop(context);
+          }
         }
       },
     );
@@ -102,16 +115,6 @@ class UserProvider extends ChangeNotifier {
 
   Future<String?> _getDeviceToken() async {
     return await FirebaseMessaging.instance.getToken();
-  }
-
-  void handleUserNavigation(BuildContext context) {
-    if (onGuestRegistration != null) {
-      onGuestRegistration!();
-      onGuestRegistration = null;
-    } else {
-      context.pushAndRemoveUntil((context) => const AppNavBar());
-      // DiscoverRoute().go(context);
-    }
   }
 
   void onGuestRoute(Function() callBack) {
@@ -165,6 +168,7 @@ class UserProvider extends ChangeNotifier {
     BuildContext context, {
     required UserModel user,
     bool isLogin = true,
+    required String? guestRoute,
   }) async {
     ApiService.fetch(
       context,
@@ -188,6 +192,7 @@ class UserProvider extends ChangeNotifier {
             return VerifyCodeScreen(
               user: user,
               isLogin: isLogin,
+              guestRoute: guestRoute,
             );
           });
         } else if (context.mounted) {
@@ -227,5 +232,26 @@ class UserProvider extends ChangeNotifier {
         }
       },
     );
+  }
+
+  void handleGuest(
+    BuildContext context, {
+    required VoidCallback action,
+  }) {
+    if (isAuthenticated) {
+      action();
+    } else {
+      context.navigate(
+        (context) {
+          return const RegistrationScreen(guestRoute: kLoginRouteName);
+        },
+        name: kLoginRouteName,
+        fullscreenDialog: true,
+      ).then((value) {
+        if (isAuthenticated) {
+          action();
+        }
+      });
+    }
   }
 }

@@ -34,7 +34,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                 if (authenticated) {
                   context.userProvider.logout(context);
                 } else {
-                  context.navigate((context) => const RegistrationScreen());
+                  context.navigate((context) => const RegistrationScreen(
+                        showGuestButton: false,
+                      ));
                 }
               },
             );

@@ -13,6 +13,7 @@ import 'package:nashmi_app/providers/providers_search_screen.dart';
 import 'package:nashmi_app/screens/category/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/ads_carousel.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
+import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
@@ -274,6 +275,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                   ],
                 ),
               ),
+            const SliverPadding(
+              padding: EdgeInsets.only(bottom: kScreenMargin),
+            ),
           ],
         );
       },

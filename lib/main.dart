@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -49,6 +50,7 @@ Future<void> main() async {
   // MySharedPreferences.clearStorage();
   // await FirebaseAuth.instance.signOut();
   // MySharedPreferences.isPassedIntro = false;
+  await FlutterBranchSdk.init(enableLogging: false, disableTracking: false);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   FirebaseMessaging.onBackgroundMessage(onBackgroundMessage);
   runApp(

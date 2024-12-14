@@ -3,13 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:nashmi_app/alerts/loading/app_loading_indicators.dart';
 import 'package:nashmi_app/models/countries_model.dart';
 import 'package:nashmi_app/providers/app_provider.dart';
-import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/app_routes.dart';
 import 'package:nashmi_app/utils/color_palette.dart';
 import 'package:nashmi_app/utils/countries.dart';
 import 'package:nashmi_app/utils/enums.dart';
-import 'package:nashmi_app/utils/providers_extension.dart';
 
 extension LanguageExtension on BuildContext {
   AppLocalizations get appLocalization => AppLocalizations.of(this)!;
@@ -52,10 +50,17 @@ extension CommonExtensions on BuildContext {
   Future<T?> navigate<T>(
     Widget Function(BuildContext context) builder, {
     bool fullscreenDialog = false,
+    String? name,
   }) {
     return Navigator.push<T?>(
       this,
-      MaterialPageRoute(builder: builder, fullscreenDialog: fullscreenDialog),
+      MaterialPageRoute(
+        builder: builder,
+        fullscreenDialog: fullscreenDialog,
+        settings: RouteSettings(
+          name: name,
+        ),
+      ),
     ).then((value) => value);
   }
 }
@@ -107,19 +112,4 @@ extension NavigatorExtension on BuildContext {
   }
 
   void pop([value]) => Navigator.pop(this, value);
-
-  void guestHandler({
-    required Function() routesCallBack,
-    required Function() callBack,
-  }) {
-    if (userProvider.isAuthenticated) {
-      callBack();
-      return;
-    }
-    userProvider.onGuestRoute(() {
-      routesCallBack();
-      callBack();
-    });
-    navigate((context) => const RegistrationScreen(showGuestButton: false));
-  }
 }
