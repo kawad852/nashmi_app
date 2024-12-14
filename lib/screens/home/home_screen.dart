@@ -14,14 +14,13 @@ import 'package:nashmi_app/screens/offers/offer_settings_selector.dart';
 import 'package:nashmi_app/screens/offers/offers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
-import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
+import 'package:nashmi_app/widgets/area_button.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
 import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
-import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/time_widget.dart';
 import 'package:nashmi_app/widgets/user_selector.dart';
@@ -99,21 +98,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                         },
                       ),
                     ),
-                    InkWell(
-                      onTap: () async {},
-                      child: const Row(
-                        children: [
-                          CustomText(
-                            "📍️عمان ، خلدا",
-                            fontSize: 16,
-                            overFlow: TextOverflow.ellipsis,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          SizedBox(width: 5),
-                          CustomSvg(MyIcons.arrowDown),
-                        ],
-                      ),
-                    ),
+                    const AreaButton(),
                   ],
                 ),
               ),

@@ -4,16 +4,15 @@ import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
-import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
-import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/fire_builder.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
 import '../../network/my_fields.dart';
 import '../../utils/my_theme.dart';
+import '../../widgets/area_button.dart';
 import '../provider/providers_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -35,24 +34,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       appBar: AppBar(
         centerTitle: true,
         forceMaterialTransparency: true,
-        title: InkWell(
-          onTap: () {},
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "📍️عمان ، خلدا",
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(width: 5),
-              CustomSvg(MyIcons.arrowDown),
-            ],
-          ),
-        ),
+        title: const AreaButton(),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(30),
           child: Align(
