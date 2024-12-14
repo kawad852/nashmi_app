@@ -127,6 +127,7 @@
   "genderMsg": "اختر الجنس",
   "enterOtp": "ادخل الرمز",
   "startAfter": "يبدأ بعد",
+  "endAfter": "ينتهي بعد",
   "offerPriceLabel": "فقط ب {offerPrice} {currency}",
   "purchaseLimitLabel": "لأول {limit} مشتري فقط",
   "onlyWith": "فقط ب",

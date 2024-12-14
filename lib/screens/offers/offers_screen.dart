@@ -22,7 +22,7 @@ class OffersScreen extends StatefulWidget {
   State<OffersScreen> createState() => _OffersScreenState();
 }
 
-class _OffersScreenState extends State<OffersScreen> {
+class _OffersScreenState extends State<OffersScreen> with AutomaticKeepAliveClientMixin {
   late Future<List<dynamic>> _futures;
   late Query<OfferModel> _pinnedQuery;
   late Query<OfferModel> _offersQuery;
@@ -41,30 +41,36 @@ class _OffersScreenState extends State<OffersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return OfferSettingsSelector(
       builder: (context, offer, child) {
         if (offer == null) {
           return const SizedBox.shrink();
         } else if (offer.startTime!.isAfter(DateTime.now())) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  context.translate(textEN: offer.contentEn, textAR: offer.contentAr),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+          return NashmiScaffold(
+            appBar: AppBar(
+              forceMaterialTransparency: true,
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    context.translate(textEN: offer.contentEn, textAR: offer.contentAr),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                TimeWidget(
-                  startTime: offer.startTime!,
-                  onEnd: () {
-                    setState(() {});
-                  },
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  TimeWidget(
+                    startTime: offer.startTime!,
+                    onEnd: () {
+                      setState(() {});
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         } else if (offer.endTime!.isBefore(DateTime.now())) {
@@ -206,4 +212,7 @@ class _OffersScreenState extends State<OffersScreen> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

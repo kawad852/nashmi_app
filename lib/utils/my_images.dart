@@ -9,4 +9,6 @@ class MyImages {
   static const String intro2 = '${_path}intro2.png';
   static const String nashmi = '${_path}nashmi.png';
   static const String logo = '${_path}logo.png';
+  static const String joinNashmi = '${_path}join_nashmi.png';
+  static const String nashmiDay = '${_path}nashmi_day.png';
 }

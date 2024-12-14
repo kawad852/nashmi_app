@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
-import 'package:nashmi_app/helper/ui_helper.dart';
 import 'package:nashmi_app/models/ad/ad_model.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
-import 'package:nashmi_app/models/offer_settings/offer_settings_model.dart';
 import 'package:nashmi_app/models/sponsor/sponsor_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
@@ -12,6 +10,8 @@ import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/providers/providers_search_screen.dart';
 import 'package:nashmi_app/screens/category/categories_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/ads_carousel.dart';
+import 'package:nashmi_app/screens/offers/offer_settings_selector.dart';
+import 'package:nashmi_app/screens/offers/offers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
@@ -23,8 +23,8 @@ import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_network_image.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/time_widget.dart';
 import 'package:nashmi_app/widgets/user_selector.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -141,37 +141,77 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     Row(
                       children: [
                         Expanded(
-                          child: Selector<OfferSettingsModel?, OfferSettingsModel?>(
-                            selector: (context, provider) => provider,
+                          child: OfferSettingsSelector(
                             builder: (context, offer, child) {
                               final style = TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: context.colorPalette.white,
                               );
-                              return Stack(
-                                alignment: AlignmentDirectional.bottomEnd,
-                                children: [
-                                  Image.asset(
-                                    MyImages.instagram,
-                                    height: 100,
-                                  ),
-                                  if (offer != null)
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          context.appLocalization.startAfter,
-                                          style: style,
-                                        ),
-                                        Text(
-                                          UiHelper.formatDuration(context, offer.startTime!).join(':'),
-                                          style: style,
-                                        ),
-                                      ],
+                              return GestureDetector(
+                                onTap: () {
+                                  context.navigate((context) {
+                                    return const OffersScreen();
+                                  });
+                                },
+                                child: Stack(
+                                  alignment: AlignmentDirectional.bottomEnd,
+                                  children: [
+                                    Image.asset(
+                                      MyImages.nashmiDay,
+                                      height: 100,
                                     ),
-                                ],
+                                    if (offer != null)
+                                      Builder(
+                                        builder: (context) {
+                                          String? title;
+                                          DateTime? time;
+                                          if (offer.startTime!.isAfter(DateTime.now())) {
+                                            title = context.appLocalization.startAfter;
+                                            time = offer.startTime!;
+                                          } else if (offer.endTime!.isAfter(DateTime.now())) {
+                                            title = context.appLocalization.endAfter;
+                                            time = offer.endTime!;
+                                          }
+                                          return Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: ConstrainedBox(
+                                              constraints: const BoxConstraints(maxWidth: 90),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  if (title != null)
+                                                    Text(
+                                                      title,
+                                                      style: style,
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  if (time != null)
+                                                    TimeWidget(
+                                                      startTime: time,
+                                                      onEnd: () {
+                                                        setState(() {});
+                                                      },
+                                                      builder: (part) {
+                                                        return Text(
+                                                          part,
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: context.colorPalette.white,
+                                                          ),
+                                                          textDirection: TextDirection.ltr,
+                                                        );
+                                                      },
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                  ],
+                                ),
                               );
                             },
                           ),
@@ -179,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                         const SizedBox(width: 10),
                         Expanded(
                           child: Image.asset(
-                            MyImages.instagram,
+                            MyImages.joinNashmi,
                             height: 100,
                           ),
                         ),

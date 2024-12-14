@@ -127,6 +127,7 @@
   "genderMsg": "Select your gender",
   "enterOtp": "Enter pin code",
   "startAfter": "Start After",
+  "endAfter": "End After",
   "offerPriceLabel": "Only {offerPrice} {currency}",
   "purchaseLimitLabel": "For the first {limit} buyers only",
   "onlyWith": "only",
