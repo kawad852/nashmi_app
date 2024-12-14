@@ -18,12 +18,10 @@ import '../provider/providers_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   final CategoryModel? mainCategory;
-  final String? id;
 
   const CategoriesScreen({
     super.key,
     this.mainCategory,
-    this.id,
   });
 
   @override
@@ -31,16 +29,6 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  // late Future<CategoryModel> _categoryFuture;
-  //
-  // void _initialize() {
-  //   if(widget.mainCategory != null) {
-  //     _categoryFuture = Future.value(widget.mainCategory);
-  //   } else {
-  //     _categoryFuture =
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return NashmiScaffold(

@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/models/ad/ad_model.dart';
+import 'package:nashmi_app/network/api_service.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/screens/category/categories_screen.dart';
 import 'package:nashmi_app/screens/offers/offer_screen.dart';
 import 'package:nashmi_app/screens/provider/provider_screen.dart';
@@ -40,12 +43,24 @@ class _AdsCarouselState extends State<AdsCarousel> {
         (context) => OfferScreen(id: id),
       );
     } else if (type == AdEnum.category.value) {
-      context.navigate(
-        (context) => CategoriesScreen(
-          id: id,
-        ),
-      );
+      _fetchCategory(context, id);
     }
+  }
+
+  Future<void> _fetchCategory(BuildContext context, String id) async {
+    ApiService.fetch(
+      context,
+      callBack: () async {
+        final category = await FirebaseFirestore.instance.categories.doc(id).get().then((value) => value.data()!);
+        if (context.mounted) {
+          context.navigate(
+            (context) => CategoriesScreen(
+              mainCategory: category,
+            ),
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -69,7 +84,7 @@ class _AdsCarouselState extends State<AdsCarousel> {
             return CustomNetworkImage(
               ad.imageURL!,
               onTap: () {
-                _onTap(context, type: ad.type!, id: ad.id!);
+                _onTap(context, type: ad.type!, id: ad.destinationId!);
               },
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: 3),
