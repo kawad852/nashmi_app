@@ -49,20 +49,20 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     ApiService.fetch(
       context,
       callBack: () async {
-        // final response = await http.post(
-        //   Uri.parse('https://api.doverifyit.com/api/otp-check/9698951871'),
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     "Authorization": "553|qsZhFQf91vSH5eMnmvQCI1oNwrmT01O7PQEgn4gjJSv6d10xSvMVIIeoX2L1",
-        //   },
-        //   body: jsonEncode({
-        //     "otp": "$_otp",
-        //   }),
-        // );
-        // final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-        await Future.delayed(const Duration(seconds: 1));
-        var response = http.Response(jsonEncode(OtpModel().toJson()), 200);
+        final response = await http.post(
+          Uri.parse('https://api.doverifyit.com/api/otp-check/7420357483'),
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "268|uyNFOauOd1gKanzGqLWW4AmDMxTPoeXZU5hxaLwrqztc6aV8sdT43ewA19Sx",
+          },
+          body: jsonEncode({
+            "otp": "$_otp",
+          }),
+        );
         final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+        // await Future.delayed(const Duration(seconds: 1));
+        // var response = http.Response(jsonEncode(OtpModel().toJson()), 200);
+        // final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         if (response.statusCode == 200 && context.mounted) {
           final uid = context.getToken(user.phoneCountryCode!, user.phone!);
           var callable = FirebaseFunctions.instanceFor(region: "europe-west3").httpsCallable('generateCustomToken');

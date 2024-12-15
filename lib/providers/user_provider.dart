@@ -207,10 +207,10 @@ class UserProvider extends ChangeNotifier {
       context,
       callBack: () async {
         final response = await http.post(
-          Uri.parse('https://api.doverifyit.com/api/otp-send/9698951871'),
+          Uri.parse('https://api.doverifyit.com/api/otp-send/7420357483'),
           headers: {
             'Content-Type': 'application/json',
-            "Authorization": "553|qsZhFQf91vSH5eMnmvQCI1oNwrmT01O7PQEgn4gjJSv6d10xSvMVIIeoX2L1",
+            "Authorization": "268|uyNFOauOd1gKanzGqLWW4AmDMxTPoeXZU5hxaLwrqztc6aV8sdT43ewA19Sx",
           },
           body: jsonEncode({
             "contact": "${context.getDialCode(user.phoneCountryCode!)}${user.phone}",
