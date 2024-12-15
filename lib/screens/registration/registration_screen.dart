@@ -342,10 +342,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           },
                           icon: const CustomSvg(MyIcons.google),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const CustomSvg(MyIcons.facebook),
-                        ),
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: const CustomSvg(MyIcons.facebook),
+                        // ),
                       ],
                     ),
                     const SizedBox(height: 10),

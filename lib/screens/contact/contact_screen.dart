@@ -14,9 +14,6 @@ import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
-import 'package:nashmi_app/utils/my_icons.dart';
-import 'package:nashmi_app/utils/my_theme.dart';
-import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/text_editor.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
@@ -263,27 +260,27 @@ class _ContactScreenState extends State<ContactScreen> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => {},
-                      child: Container(
-                        width: 48,
-                        height: 48,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: context.colorPalette.greyF2F,
-                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                        ),
-                        child: const CustomSvg(MyIcons.attach),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    CustomText(
-                      context.appLocalization.attachPicturesOrFiles,
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     GestureDetector(
+                //       onTap: () => {},
+                //       child: Container(
+                //         width: 48,
+                //         height: 48,
+                //         alignment: Alignment.center,
+                //         decoration: BoxDecoration(
+                //           color: context.colorPalette.greyF2F,
+                //           borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                //         ),
+                //         child: const CustomSvg(MyIcons.attach),
+                //       ),
+                //     ),
+                //     const SizedBox(width: 15),
+                //     CustomText(
+                //       context.appLocalization.attachPicturesOrFiles,
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),
