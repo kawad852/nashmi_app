@@ -51,6 +51,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  fontFamily: MyTheme.fontFamily,
                 ),
               ),
             ),

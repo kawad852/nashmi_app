@@ -127,7 +127,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                         children: [
                           const CustomSvg(MyIcons.calling),
                           const SizedBox(width: 3),
-                          Expanded(
+                          Flexible(
                             child: Text(
                               context.appLocalization.callDirectly,
                               style: TextStyle(

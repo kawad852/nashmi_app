@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 
 const kEditorBottomPadding = 16.0;
@@ -12,7 +11,7 @@ class MyTheme {
   static const Color secondaryLightColor = Color(0xFFFFCA28);
   static const Color tertiaryLightColor = Color(0xFF1B3A57);
 
-  static final String fontFamily = GoogleFonts.cairo().fontFamily!;
+  static const String fontFamily = "AvenirArabic";
 
   static const double radiusPrimary = 5;
   static const double radiusSecondary = 10;

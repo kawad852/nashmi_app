@@ -124,7 +124,7 @@ flutter_native_splash:
   ios: true
   android_12:
     image: assets/android_12_splash.png
-    color: "#FFFFFF"
+    color: "#1D1D1D"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -156,10 +156,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: AvenirArabic
+      fonts:
+        - asset: assets/AvenirArabic-Medium.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

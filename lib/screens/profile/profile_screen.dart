@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/screens/contact/contact_screen.dart';
 import 'package:nashmi_app/screens/policy/policy_screen.dart';
 import 'package:nashmi_app/screens/profile/widgets/profile_bubble.dart';
@@ -24,6 +26,12 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final a = await FirebaseFirestore.instance.providers.where("geo", isNull: true).count().get();
+          print("aaa ${a.count}");
+        },
+      ),
       bottomNavigationBar: BottomAppBar(
         child: UserSelector(
           builder: (context, user) {
