@@ -111,10 +111,10 @@ class _SearchBuilderState extends State<SearchBuilder> {
                   radius: MyTheme.radiusPrimary,
                 ),
                 title: Text(
-                  context.translate(textEN: element.nameEn!, textAR: element.nameAr!),
+                  context.translate(textEN: element.nameEn, textAR: element.nameAr),
                 ),
                 subtitle: Text(
-                  context.translate(textEN: element.descriptionEn!, textAR: element.descriptionAr!),
+                  context.translate(textEN: element.descriptionEn, textAR: element.descriptionAr),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
