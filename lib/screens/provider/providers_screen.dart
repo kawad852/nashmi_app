@@ -18,12 +18,12 @@ import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/widgets/area_button.dart';
 import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
-import 'package:nashmi_app/widgets/editors/base_editor.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/header_tile.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/providers_search_screen.dart';
 import '../../widgets/grant_location_card.dart';
 
 class ProvidersScreen extends StatefulWidget {
@@ -145,19 +145,8 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Row(
                       children: [
-                        Expanded(
-                          child: BaseEditor(
-                            hintText: context.appLocalization.whatAreYouLooking,
-                            hintStyle: TextStyle(
-                              color: context.colorPalette.blackD1D,
-                              fontSize: 14,
-                            ),
-                            prefixIcon: const IconButton(
-                              onPressed: null,
-                              icon: CustomSvg(MyIcons.search),
-                            ),
-                            onChanged: (value) {},
-                          ),
+                        const Expanded(
+                          child: ProvidersSearchScreen(),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
