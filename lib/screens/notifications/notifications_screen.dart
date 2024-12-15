@@ -97,7 +97,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> with Automati
                             color: context.colorPalette.blackD1D,
                             borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                             image: const DecorationImage(
-                              image: AssetImage(MyImages.logo),
+                              image: AssetImage(MyImages.logoWhite),
                             ),
                           ),
                         ),

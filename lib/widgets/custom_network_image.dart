@@ -72,7 +72,7 @@ class CustomNetworkImage extends StatelessWidget {
     );
   }
 
-  ImageProvider get _imagePlaceHolder => const AssetImage(MyImages.logo);
+  ImageProvider get _imagePlaceHolder => const AssetImage(MyImages.logoBlack);
 
   @override
   Widget build(BuildContext context) {
