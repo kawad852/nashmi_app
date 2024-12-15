@@ -82,6 +82,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               gender: user.gender,
               phoneNum: user.phone,
               phoneCountryCode: user.phoneCountryCode,
+              isLogin: isLogin,
             );
           }
         } else if (context.mounted) {

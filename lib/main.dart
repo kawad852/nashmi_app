@@ -18,6 +18,7 @@ import 'package:nashmi_app/providers/location_provider.dart';
 import 'package:nashmi_app/providers/user_provider.dart';
 import 'package:nashmi_app/screens/base/app_nav_bar.dart';
 import 'package:nashmi_app/screens/intro/intro_screen.dart';
+import 'package:nashmi_app/screens/registration/create_account_screen.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -78,6 +79,12 @@ class _MyAppState extends State<MyApp> {
 
   Widget _toggleRoute(BuildContext context) {
     if (_userProvider.isAuthenticated) {
+      if (MySharedPreferences.user?.gender == null) {
+        return CreateAccountScreen(
+          guestRoute: null,
+          user: MySharedPreferences.user,
+        );
+      }
       return const AppNavBar();
     } else if (MySharedPreferences.passedIntro) {
       return const RegistrationScreen();

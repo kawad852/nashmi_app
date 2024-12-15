@@ -75,6 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         context,
         user: user,
         guestRoute: _guestRoute,
+        isLogin: true,
       );
     }
   }

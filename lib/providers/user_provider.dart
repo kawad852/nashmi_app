@@ -11,6 +11,7 @@ import 'package:nashmi_app/models/like/like_model.dart';
 import 'package:nashmi_app/models/purchase/purchase_model.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/screens/base/app_nav_bar.dart';
+import 'package:nashmi_app/screens/registration/create_account_screen.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
 import 'package:nashmi_app/screens/registration/verify_code_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
@@ -57,6 +58,7 @@ class UserProvider extends ChangeNotifier {
     String? displayName,
     String? gender,
     String? phoneNum,
+    bool isLogin = false,
   }) async {
     await ApiService.fetch(
       context,
@@ -82,6 +84,15 @@ class UserProvider extends ChangeNotifier {
             },
           };
           await FirebaseFirestore.instance.collection(MyCollections.users).doc(user.id).set(json);
+          if (isLogin && context.mounted) {
+            context.navigate((context) {
+              return CreateAccountScreen(
+                guestRoute: guestRoute,
+                user: user,
+              );
+            });
+            return;
+          }
         } else {
           MySharedPreferences.user = userDocument.data()!;
           if (context.mounted && userDocument.data()!.blocked) {
@@ -93,21 +104,43 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
 
         if (context.mounted) {
-          if (guestRoute == null) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) {
-                return const AppNavBar();
-              }),
-              (route) => false,
-            );
-          } else {
-            Navigator.popUntil(
-              context,
-              (route) => route.settings.name == kLoginRouteName,
-            );
-            Navigator.pop(context);
-          }
+          _handleRoute(context, guestRoute);
+        }
+      },
+    );
+  }
+
+  void _handleRoute(BuildContext context, String? guestRoute) {
+    if (guestRoute == null) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return const AppNavBar();
+        }),
+        (route) => false,
+      );
+    } else {
+      Navigator.popUntil(
+        context,
+        (route) => route.settings.name == kLoginRouteName,
+      );
+      Navigator.pop(context);
+    }
+  }
+
+  void registerUncompletedUser(
+    BuildContext context, {
+    required UserModel user,
+    required String? guestRoute,
+  }) async {
+    ApiService.fetch(
+      context,
+      callBack: () async {
+        await FirebaseFirestore.instance.collection(MyCollections.users).doc(user.id).update(user.toJson());
+        MySharedPreferences.user = user;
+        notifyListeners();
+        if (context.mounted) {
+          _handleRoute(context, guestRoute);
         }
       },
     );
@@ -167,7 +200,7 @@ class UserProvider extends ChangeNotifier {
   Future<void> sendPinCode(
     BuildContext context, {
     required UserModel user,
-    bool isLogin = true,
+    required bool isLogin,
     required String? guestRoute,
   }) async {
     ApiService.fetch(

@@ -20,10 +20,12 @@ import 'package:nashmi_app/widgets/titled_textfield.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   final String? guestRoute;
+  final UserModel? user;
 
   const CreateAccountScreen({
     super.key,
     required this.guestRoute,
+    this.user,
   });
 
   @override
@@ -44,13 +46,22 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       context.showSnackBar(context.appLocalization.genderMsg);
     } else {
       if (_formKey.currentState!.validate()) {
-        user.phoneCountryCode = phoneController.countryCode;
-        user.phone = phoneController.phoneNum!;
-        context.userProvider.sendPinCode(
-          context,
-          user: user,
-          guestRoute: widget.guestRoute,
-        );
+        if (widget.user != null) {
+          context.userProvider.registerUncompletedUser(
+            context,
+            user: user,
+            guestRoute: widget.guestRoute,
+          );
+        } else {
+          user.phoneCountryCode = phoneController.countryCode;
+          user.phone = phoneController.phoneNum!;
+          context.userProvider.sendPinCode(
+            context,
+            user: user,
+            guestRoute: widget.guestRoute,
+            isLogin: false,
+          );
+        }
       }
     }
   }
@@ -58,7 +69,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   void initState() {
     super.initState();
-    user = UserModel();
+    user = widget.user ?? UserModel();
     phoneController = PhoneController(context);
   }
 
@@ -149,15 +160,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     onChanged: (value) => user.displayName = value,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: TitledTextField(
-                    title: context.appLocalization.yourPhoneNumber,
-                    child: PhoneField(
-                      controller: phoneController,
+                if (widget.user == null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: TitledTextField(
+                      title: context.appLocalization.yourPhoneNumber,
+                      child: PhoneField(
+                        controller: phoneController,
+                      ),
                     ),
                   ),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: CustomText(
