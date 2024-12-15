@@ -77,6 +77,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  void _showDeleteAccountDialog(BuildContext context) {
+    context
+        .showDialog(
+      titleText: context.appLocalization.deleteAccountTitle,
+      bodyText: context.appLocalization.deleteAccountBody,
+      warning: true,
+    )
+        .then((value) {
+      if (value != null && context.mounted) {
+        context.userProvider.deleteAccount(context);
+      }
+    });
+  }
+
   @override
   void dispose() {
     phoneController?.dispose();
@@ -233,6 +247,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {
+                      _showDeleteAccountDialog(context);
+                    },
+                    child: Text(context.appLocalization.deleteAccount),
                   ),
                 ],
               ),

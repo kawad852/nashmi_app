@@ -153,6 +153,8 @@
   "state": "State",
   "save": "Save",
   "offerEndedMsg": "Offer Ended",
-  "sentSuccessfully": "Sent Successfully"
-
+  "sentSuccessfully": "Sent Successfully",
+  "deleteAccount": "Delete Account",
+  "deleteAccountTitle": "Delete Account",
+  "deleteAccountBody": "Are you sure you want to delete your account ?\nAll of your data will be erased."
 }
