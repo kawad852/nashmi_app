@@ -26,7 +26,7 @@
     </queries>
 
     <application
-        android:label="nashmi_app"
+        android:label="سوق نشمي"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -125,109 +125,121 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           ads: ads,
                         ),
                       ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OfferSettingsSelector(
-                            builder: (context, offer, child) {
-                              final style = TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: context.colorPalette.white,
-                              );
-                              return GestureDetector(
-                                onTap: () {
-                                  context.userProvider.handleGuest(
-                                    context,
-                                    action: () {
-                                      context.navigate((context) {
-                                        return const OffersScreen();
-                                      });
-                                    },
-                                  );
-                                },
-                                child: Stack(
-                                  alignment: AlignmentDirectional.bottomEnd,
-                                  children: [
-                                    Image.asset(
-                                      MyImages.nashmiDay,
-                                      height: 100,
-                                    ),
-                                    if (offer != null && offer.startTime != null && offer.endTime != null)
-                                      Builder(
-                                        builder: (context) {
-                                          String? title;
-                                          DateTime? time;
-                                          if (offer.startTime!.isAfter(DateTime.now())) {
-                                            title = context.appLocalization.startAfter;
-                                            time = offer.startTime!;
-                                          } else if (offer.endTime!.isAfter(DateTime.now())) {
-                                            title = context.appLocalization.endAfter;
-                                            time = offer.endTime!;
-                                          }
-                                          return Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: ConstrainedBox(
-                                              constraints: const BoxConstraints(maxWidth: 90),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  if (title != null)
-                                                    Text(
-                                                      title,
-                                                      style: style,
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  if (time != null)
-                                                    TimeWidget(
-                                                      startTime: time,
-                                                      onEnd: () {
-                                                        setState(() {});
-                                                      },
-                                                      builder: (part) {
-                                                        return Text(
-                                                          part,
-                                                          style: TextStyle(
-                                                            fontWeight: FontWeight.bold,
-                                                            color: context.colorPalette.white,
-                                                          ),
-                                                          textDirection: TextDirection.ltr,
-                                                        );
-                                                      },
-                                                    ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: OfferSettingsSelector(
+                              builder: (context, offer, child) {
+                                final style = TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: context.colorPalette.white,
+                                );
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.userProvider.handleGuest(
+                                      context,
+                                      action: () {
+                                        context.navigate((context) {
+                                          return const OffersScreen();
+                                        });
+                                      },
+                                    );
+                                  },
+                                  child: Stack(
+                                    alignment: AlignmentDirectional.bottomEnd,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(
+                                          MyImages.nashmiDay,
+                                          height: 100,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              context.userProvider.handleGuest(
-                                context,
-                                action: () {
-                                  context.navigate((context) {
-                                    return const ContactScreen(contactType: ContactType.join);
-                                  });
-                                },
-                              );
-                            },
-                            child: Image.asset(
-                              MyImages.joinNashmi,
-                              height: 100,
+                                      if (offer != null && offer.startTime != null && offer.endTime != null)
+                                        Builder(
+                                          builder: (context) {
+                                            String? title;
+                                            DateTime? time;
+                                            if (offer.startTime!.isAfter(DateTime.now())) {
+                                              title = context.appLocalization.startAfter;
+                                              time = offer.startTime!;
+                                            } else if (offer.endTime!.isAfter(DateTime.now())) {
+                                              title = context.appLocalization.endAfter;
+                                              time = offer.endTime!;
+                                            }
+                                            return Padding(
+                                              padding: const EdgeInsets.all(5),
+                                              child: ConstrainedBox(
+                                                constraints: const BoxConstraints(maxWidth: 90),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    if (title != null)
+                                                      Text(
+                                                        title,
+                                                        style: style,
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                    if (time != null)
+                                                      TimeWidget(
+                                                        startTime: time,
+                                                        onEnd: () {
+                                                          setState(() {});
+                                                        },
+                                                        builder: (part) {
+                                                          return Text(
+                                                            part,
+                                                            style: TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              color: context.colorPalette.white,
+                                                            ),
+                                                            textDirection: TextDirection.ltr,
+                                                          );
+                                                        },
+                                                      ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                context.userProvider.handleGuest(
+                                  context,
+                                  action: () {
+                                    context.navigate((context) {
+                                      return const ContactScreen(contactType: ContactType.join);
+                                    });
+                                  },
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  MyImages.joinNashmi,
+                                  height: 100,
+                                  width: double.infinity,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -266,22 +278,19 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 ),
               ),
             ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  childAspectRatio: 0.8,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  childCount: categories.length,
-                  (context, index) {
-                    final category = categories[index];
-                    return CategoryBubble(
-                      category: category,
-                    );
-                  },
-                ),
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                childAspectRatio: 0.8,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                childCount: categories.length,
+                (context, index) {
+                  final category = categories[index];
+                  return CategoryBubble(
+                    category: category,
+                  );
+                },
               ),
             ),
             if (sponsors.isNotEmpty)

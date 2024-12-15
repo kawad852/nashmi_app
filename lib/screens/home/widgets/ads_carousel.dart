@@ -71,7 +71,7 @@ class _AdsCarouselState extends State<AdsCarousel> {
           itemCount: widget.ads.length,
           options: CarouselOptions(
             viewportFraction: 1,
-            enableInfiniteScroll: false,
+            enableInfiniteScroll: widget.ads.length > 1,
             height: 140,
             onPageChanged: (index, reason) {
               setState(() {
@@ -97,7 +97,7 @@ class _AdsCarouselState extends State<AdsCarousel> {
             padding: const EdgeInsets.only(top: 10),
             child: Center(
               child: CustomSmoothIndicator(
-                count: 5,
+                count: widget.ads.length,
                 index: currentIndex,
               ),
             ),
