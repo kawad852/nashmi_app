@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                       MyImages.nashmiDay,
                                       height: 100,
                                     ),
-                                    if (offer != null)
+                                    if (offer != null && offer.startTime != null && offer.endTime != null)
                                       Builder(
                                         builder: (context) {
                                           String? title;
