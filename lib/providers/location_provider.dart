@@ -95,7 +95,7 @@ class LocationProvider extends ChangeNotifier {
       final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
       latitude = position.latitude;
       longitude = position.longitude;
-      getAddress(latitude!, longitude!);
+      await getAddress(latitude!, longitude!);
       notifyListeners();
       debugPrint("Position:: Latitude:: $latitude Longitude:: $longitude");
       if (onPermissionGranted != null) {

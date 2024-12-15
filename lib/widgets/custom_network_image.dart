@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 
 class CustomNetworkImage extends StatelessWidget {
@@ -71,7 +72,7 @@ class CustomNetworkImage extends StatelessWidget {
     );
   }
 
-  ImageProvider get _imagePlaceHolder => const AssetImage('assets/splash.png');
+  ImageProvider get _imagePlaceHolder => const AssetImage(MyImages.logo);
 
   @override
   Widget build(BuildContext context) {
