@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/controllers/phone_controller.dart';
+import 'package:nashmi_app/helper/my_factory.dart';
 import 'package:nashmi_app/helper/storage_service.dart';
 import 'package:nashmi_app/models/contact/contact_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
+import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -49,12 +52,28 @@ class _ContactScreenState extends State<ContactScreen> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       context.unFocusKeyboard();
+
       switch (_contactType) {
         case ContactType.ad:
         case ContactType.complaints:
           _sendEmail(context);
+        case ContactType.join:
+          _sendRequest(context);
       }
     }
+  }
+
+  void _sendRequest(BuildContext context) {
+    _contact.phoneCountryCode = _phoneController.countryCode;
+    _contact.phoneNum = _phoneController.phoneNum;
+    ApiService.fetch(
+      context,
+      callBack: () async {
+        _contact.id = MyFactory.generateId;
+        await FirebaseFirestore.instance.providerRequests.doc(_contact.id).set(_contact);
+        _leave();
+      },
+    );
   }
 
   void _sendEmail(BuildContext context) {
@@ -93,8 +112,7 @@ class _ContactScreenState extends State<ContactScreen> {
           AppOverlayLoader.hide();
           if (response.statusCode == 200) {
             if (context.mounted) {
-              context.showSnackBar(context.appLocalization.sentSuccessfully);
-              Navigator.pop(context);
+              _leave();
             }
           } else {
             if (context.mounted) {
@@ -112,6 +130,44 @@ class _ContactScreenState extends State<ContactScreen> {
     );
   }
 
+  void _leave() {
+    context.showSnackBar(context.appLocalization.sentSuccessfully);
+    Navigator.pop(context);
+  }
+
+  String getHeader() {
+    switch (_contactType) {
+      case ContactType.ad:
+        return context.appLocalization.advertiseWithUs;
+      case ContactType.complaints:
+        return context.appLocalization.complaintsAndSuggestions;
+      case ContactType.join:
+        return context.appLocalization.joinNashmi(context.appLocalization.appName);
+    }
+  }
+
+  String getTitle() {
+    switch (_contactType) {
+      case ContactType.ad:
+        return context.appLocalization.toContactNashmiMarket;
+      case ContactType.complaints:
+        return context.appLocalization.forComplaints;
+      case ContactType.join:
+        return context.appLocalization.joinNashmiTitle;
+    }
+  }
+
+  String getDescription() {
+    switch (_contactType) {
+      case ContactType.ad:
+        return context.appLocalization.fillInfoToContactYou;
+      case ContactType.complaints:
+        return context.appLocalization.fillComplaintToContactYou;
+      case ContactType.join:
+        return context.appLocalization.joinNashmiBody;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -125,24 +181,6 @@ class _ContactScreenState extends State<ContactScreen> {
     super.dispose();
   }
 
-  String getTitle() {
-    switch (_contactType) {
-      case ContactType.ad:
-        return context.appLocalization.toContactNashmiMarket;
-      case ContactType.complaints:
-        return context.appLocalization.forComplaints;
-    }
-  }
-
-  String getDescription() {
-    switch (_contactType) {
-      case ContactType.ad:
-        return context.appLocalization.fillInfoToContactYou;
-      case ContactType.complaints:
-        return context.appLocalization.fillComplaintToContactYou;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return UserSelector(builder: (context, user) {
@@ -153,7 +191,7 @@ class _ContactScreenState extends State<ContactScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: CustomText(
-            _contactType == ContactType.ad ? context.appLocalization.advertiseWithUs : context.appLocalization.complaintsAndSuggestions,
+            getHeader(),
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

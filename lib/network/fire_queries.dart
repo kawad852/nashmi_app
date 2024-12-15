@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nashmi_app/models/contact/contact_model.dart';
 import 'package:nashmi_app/models/offer/offer_model.dart';
 import 'package:nashmi_app/models/provider/provider_model.dart';
 import 'package:nashmi_app/models/tag/tag_model.dart';
@@ -60,6 +61,11 @@ extension FireQueries on FirebaseFirestore {
 
   CollectionReference<CityModel> get cities => collection(MyCollections.cities).withConverter<CityModel>(
         fromFirestore: (snapshot, _) => CityModel.fromJson(snapshot.data()!),
+        toFirestore: (snapshot, _) => snapshot.toJson(),
+      );
+
+  CollectionReference<ContactModel> get providerRequests => collection(MyCollections.providerRequests).withConverter<ContactModel>(
+        fromFirestore: (snapshot, _) => ContactModel.fromJson(snapshot.data()!),
         toFirestore: (snapshot, _) => snapshot.toJson(),
       );
 }

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 
 class CustomNetworkImage extends StatelessWidget {
@@ -81,8 +80,8 @@ class CustomNetworkImage extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: url,
         imageBuilder: (context, imageProvider) => _buildContainer(color: backgroundColor, imageProvider: imageProvider),
-        placeholder: (context, url) => _buildContainer(color: context.colorScheme.surfaceContainerHighest, imageProvider: ignorePlaceHolder ? null : _imagePlaceHolder),
-        errorWidget: (context, url, error) => _buildContainer(color: context.colorScheme.surfaceContainerHighest, imageProvider: _imagePlaceHolder),
+        placeholder: (context, url) => _buildContainer(color: Colors.transparent, imageProvider: ignorePlaceHolder ? null : _imagePlaceHolder),
+        errorWidget: (context, url, error) => _buildContainer(color: Colors.transparent, imageProvider: _imagePlaceHolder),
       ),
     );
   }

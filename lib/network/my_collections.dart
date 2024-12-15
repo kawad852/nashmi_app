@@ -15,4 +15,5 @@ class MyCollections {
   static const notifications = 'notifications';
   static const states = 'states';
   static const cities = 'cities';
+  static const providerRequests = 'providerRequests';
 }

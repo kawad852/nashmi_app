@@ -9,11 +9,13 @@ import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/network/my_fields.dart';
 import 'package:nashmi_app/providers/providers_search_screen.dart';
 import 'package:nashmi_app/screens/category/categories_screen.dart';
+import 'package:nashmi_app/screens/contact/contact_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/ads_carousel.dart';
 import 'package:nashmi_app/screens/offers/offer_settings_selector.dart';
 import 'package:nashmi_app/screens/offers/offers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
+import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
@@ -135,9 +137,14 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                               );
                               return GestureDetector(
                                 onTap: () {
-                                  context.navigate((context) {
-                                    return const OffersScreen();
-                                  });
+                                  context.userProvider.handleGuest(
+                                    context,
+                                    action: () {
+                                      context.navigate((context) {
+                                        return const OffersScreen();
+                                      });
+                                    },
+                                  );
                                 },
                                 child: Stack(
                                   alignment: AlignmentDirectional.bottomEnd,
@@ -203,9 +210,21 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                         ),
                         const SizedBox(width: 10),
                         Expanded(
-                          child: Image.asset(
-                            MyImages.joinNashmi,
-                            height: 100,
+                          child: GestureDetector(
+                            onTap: () {
+                              context.userProvider.handleGuest(
+                                context,
+                                action: () {
+                                  context.navigate((context) {
+                                    return const ContactScreen(contactType: ContactType.join);
+                                  });
+                                },
+                              );
+                            },
+                            child: Image.asset(
+                              MyImages.joinNashmi,
+                              height: 100,
+                            ),
                           ),
                         ),
                       ],
