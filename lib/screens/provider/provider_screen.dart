@@ -120,7 +120,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                   Expanded(
                     child: StretchedButton(
                       onPressed: () {
-                        LauncherService.lunch(context, 'tel://${context.getDialCode(provider.providerPhoneCountryCode)}${provider.providerPhoneNum}');
+                        LauncherService.lunch(context, 'tel://${context.getDialCode(provider.personalPhoneCountryCode)}${provider.personalPhoneNum}');
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -277,13 +277,15 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             ),
                           ],
                         ),
-                      Text(
-                        context.translate(
-                          textEN: provider.descriptionEn,
-                          textAR: provider.descriptionAr,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 8),
+                        child: Text(
+                          context.translate(
+                            textEN: provider.descriptionEn,
+                            textAR: provider.descriptionAr,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 8),
                       Wrap(
                         direction: Axis.horizontal,
                         children: tags.map((element) {

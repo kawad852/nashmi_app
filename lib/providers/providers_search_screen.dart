@@ -115,8 +115,8 @@ class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
             }
             return SingleChildScrollView(
               child: SearchBuilder(
-                tagIds: tags.map((e) => e.id!).toList(),
                 providers: providers,
+                tagIds: tags.map((e) => e.id!).toList(),
               ),
             );
           },

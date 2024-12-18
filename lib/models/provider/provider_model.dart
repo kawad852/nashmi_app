@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nashmi_app/helper/geo_point_serializer.dart';
 
 import '../../helper/time_stamp_serializer.dart';
 import '../../utils/app_constants.dart';

@@ -99,8 +99,8 @@ class _SearchBuilderState extends State<SearchBuilder> {
                 onTap: () {
                   context.navigate((context) {
                     return ProviderScreen(
-                      provider: element,
-                      id: null,
+                      provider: null,
+                      id: element.id,
                     );
                   });
                 },
