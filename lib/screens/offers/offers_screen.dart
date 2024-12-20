@@ -74,7 +74,12 @@ class _OffersScreenState extends State<OffersScreen> with AutomaticKeepAliveClie
             ),
           );
         } else if (offer.endTime!.isBefore(DateTime.now())) {
-          return const SizedBox.shrink();
+          return NashmiScaffold(
+            appBar: AppBar(
+              forceMaterialTransparency: true,
+            ),
+            body: const SizedBox.shrink(),
+          );
         }
         return NashmiScaffold(
           bottomNavigationBar: OffersNavBar(

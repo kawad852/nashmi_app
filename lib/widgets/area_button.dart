@@ -49,40 +49,47 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
         final stateName = locationProvider.state;
         final cityName = locationProvider.city;
 
-        return InkWell(
-          onTap: () {
-            _openSheet(
-              context,
-              selectedState: selectedState,
-              selectedCity: selectedCity,
-            );
-          },
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text.rich(
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+        return ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 250),
+          child: InkWell(
+            onTap: () {
+              _openSheet(
+                context,
+                selectedState: selectedState,
+                selectedCity: selectedCity,
+              );
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text.rich(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    TextSpan(
+                      children: [
+                        if (selectedState != null || stateName != null)
+                          TextSpan(
+                            text: selectedState != null ? context.translate(textEN: selectedState.nameEn, textAR: selectedState.nameAr) : stateName,
+                          ),
+                        if (selectedCity != null || (cityName != null && selectedState == null)) ...[
+                          const TextSpan(text: ", "),
+                          TextSpan(
+                            text: selectedCity != null ? context.translate(textEN: selectedCity.nameEn, textAR: selectedCity.nameAr) : cityName,
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 ),
-                TextSpan(
-                  children: [
-                    if (selectedState != null || stateName != null)
-                      TextSpan(
-                        text: selectedState != null ? context.translate(textEN: selectedState.nameEn, textAR: selectedState.nameAr) : stateName,
-                      ),
-                    if (selectedCity != null || (cityName != null && selectedState == null)) ...[
-                      const TextSpan(text: ", "),
-                      TextSpan(
-                        text: selectedCity != null ? context.translate(textEN: selectedCity.nameEn, textAR: selectedCity.nameAr) : cityName,
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              const SizedBox(width: 5),
-              const CustomSvg(MyIcons.arrowDown),
-            ],
+                const SizedBox(width: 5),
+                const CustomSvg(MyIcons.arrowDown),
+              ],
+            ),
           ),
         );
       },

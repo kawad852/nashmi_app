@@ -281,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.9,
               ),
               delegate: SliverChildBuilderDelegate(
                 childCount: categories.length,
@@ -307,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                       ),
                     ),
                     SizedBox(
-                      height: 90,
+                      height: 80,
                       child: ListView.separated(
                         separatorBuilder: (context, index) => const SizedBox(width: 10),
                         itemCount: sponsors.length,
@@ -319,7 +319,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                           return CustomNetworkImage(
                             sponsor.logo!,
                             width: 80,
-                            height: 80,
                             radius: MyTheme.radiusSecondary,
                           );
                         },

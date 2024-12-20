@@ -90,6 +90,7 @@ class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
           hintStyle: TextStyle(
             color: context.colorPalette.blackD1D,
             fontSize: 14,
+            fontWeight: FontWeight.w500,
           ),
           prefixIcon: const IconButton(
             onPressed: null,
