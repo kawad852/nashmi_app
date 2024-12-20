@@ -39,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
         child: UserSelector(
           builder: (context, user) {
             final authenticated = user != null;
+            print("user::: ${user?.toJson()} -- $authenticated");
             return StretchedButton(
               child: Text(authenticated ? context.appLocalization.logout : context.appLocalization.login),
               onPressed: () {

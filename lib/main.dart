@@ -114,7 +114,6 @@ class _MyAppState extends State<MyApp> {
               key: ValueKey(_userProvider.isAuthenticated),
               value: _userProvider.isAuthenticated ? _userProvider.userDocRef.snapshots().map((event) => event.data()) : null,
               initialData: MySharedPreferences.user,
-              lazy: false,
               updateShouldNotify: (initialValue, value) {
                 MySharedPreferences.user = value;
                 Future.microtask(() {
