@@ -100,8 +100,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppProvider>(
-      builder: (context, appProvider, child) {
+    return Consumer2<AppProvider, UserProvider>(
+      builder: (context, appProvider, userProvider, child) {
         final isLight = appProvider.appTheme == ThemeEnum.light;
         var seedColorScheme = ColorScheme.fromSeed(
           seedColor: const Color(0xFFB31018),
@@ -111,17 +111,17 @@ class _MyAppState extends State<MyApp> {
         return MultiProvider(
           providers: [
             StreamProvider<UserModel?>.value(
-              key: ValueKey(_userProvider.isAuthenticated),
-              value: _userProvider.isAuthenticated ? _userProvider.userDocRef.snapshots().map((event) => event.data()) : null,
+              key: ValueKey(userProvider.isAuthenticated),
+              value: userProvider.isAuthenticated ? userProvider.userDocRef.snapshots().map((event) => event.data()) : null,
               initialData: MySharedPreferences.user,
+              lazy: false,
               updateShouldNotify: (initialValue, value) {
                 MySharedPreferences.user = value;
-                print("user:::: $value");
                 Future.microtask(() {
                   if (value == null || value.blocked) {
                     Fluttertoast.showToast(msg: "Authorization Failed");
                     // ignore: use_build_context_synchronously
-                    _userProvider.logout(rootNavigatorKey.currentContext!);
+                    userProvider.logout(rootNavigatorKey.currentContext!);
                   }
                 });
                 return true;

@@ -84,15 +84,6 @@ class UserProvider extends ChangeNotifier {
             },
           };
           await FirebaseFirestore.instance.collection(MyCollections.users).doc(user.id).set(json);
-          if (isLogin && context.mounted) {
-            context.navigate((context) {
-              return CreateAccountScreen(
-                guestRoute: guestRoute,
-                user: user,
-              );
-            });
-            return;
-          }
         } else {
           MySharedPreferences.user = userDocument.data()!;
           if (context.mounted && userDocument.data()!.blocked) {
@@ -102,6 +93,20 @@ class UserProvider extends ChangeNotifier {
         }
 
         notifyListeners();
+
+        if (MySharedPreferences.user?.gender == null && context.mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return CreateAccountScreen(
+                guestRoute: guestRoute,
+                user: user,
+              );
+            }),
+            (route) => false,
+          );
+          return;
+        }
 
         if (context.mounted) {
           _handleRoute(context, guestRoute);
@@ -137,8 +142,11 @@ class UserProvider extends ChangeNotifier {
       context,
       callBack: () async {
         await FirebaseFirestore.instance.collection(MyCollections.users).doc(user.id).update(user.toJson());
-        MySharedPreferences.user = user;
-        notifyListeners();
+        // MySharedPreferences.user = user;
+        // notifyListeners();
+        //
+        // print("values::::: ${MySharedPreferences.user?.toJson()}");
+        // print("isAuthenticated::::: ${isAuthenticated}");
         if (context.mounted) {
           _handleRoute(context, guestRoute);
         }

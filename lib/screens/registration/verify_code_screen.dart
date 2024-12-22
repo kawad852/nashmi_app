@@ -43,10 +43,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
   UserModel get user => widget.user;
 
-  Future<void> _verify(
-    BuildContext context, {
-    bool isLogin = true,
-  }) async {
+  Future<void> _verify(BuildContext context) async {
     ApiService.fetch(
       context,
       callBack: () async {
@@ -85,7 +82,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               gender: user.gender,
               phoneNum: user.phone,
               phoneCountryCode: user.phoneCountryCode,
-              isLogin: isLogin,
+              isLogin: widget.isLogin,
             );
           }
         } else if (context.mounted) {
