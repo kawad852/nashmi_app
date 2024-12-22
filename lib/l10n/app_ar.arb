@@ -47,7 +47,7 @@
   "back":"ارجع ورا",
   "receivedCodeOnYourPhone":"وصلك كود على تلفونك اعطينياه ولا تهون",
   "codeHintText":"اكتب الكود هان",
-  "didntReceiveCode":"له له ما وصلك الكود ؟ ولا يهمك ارجع ابعثه مره ثانيه بعد",
+  "didntReceiveCode":"له له ما وصلك الكود ؟ ولا يهمك ارجع ابعثه مره ثانية",
   "enterTheCode":"تفضل الكود",
   "welcomeNashmi":"والنّعم ، يا هلا",
   "helloHello":"هلا يا هلا",
@@ -156,5 +156,9 @@
   "sentSuccessfully": "تم الإرسال بنجاح",
   "deleteAccount": "حذف الحساب",
   "deleteAccountTitle": "حذف الحساب",
-  "deleteAccountBody": "هل أنت متأكد أنك تريد حذف حسابك ؟\nسيتم حذف جميع بياناتك."
+  "deleteAccountBody": "هل أنت متأكد أنك تريد حذف حسابك ؟\nسيتم حذف جميع بياناتك.",
+  "belNashmi": "بالنشمي/ة",
+  "resend": "إعادة ارسال",
+  "after": "بعد",
+  "otpResendMsg": "تم إعادة إرسال الرمز"
 }

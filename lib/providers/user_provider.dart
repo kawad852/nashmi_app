@@ -201,6 +201,7 @@ class UserProvider extends ChangeNotifier {
     BuildContext context, {
     required UserModel user,
     required bool isLogin,
+    bool isResend = false,
     required String? guestRoute,
   }) async {
     ApiService.fetch(
@@ -221,6 +222,10 @@ class UserProvider extends ChangeNotifier {
         // var response = http.Response(jsonEncode(OtpModel().toJson()), 200);
         // final body = OtpModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
         if (response.statusCode == 200 && context.mounted) {
+          if (isResend) {
+            context.showSnackBar(context.appLocalization.otpResendMsg);
+            return;
+          }
           context.navigate((context) {
             return VerifyCodeScreen(
               user: user,

@@ -47,7 +47,7 @@
   "back":"Back",
   "receivedCodeOnYourPhone":"You have received the code on your phone, please fill it in the following field",
   "codeHintText":"Enter your code here",
-  "didntReceiveCode":"Didn't receive the code? Send it again after",
+  "didntReceiveCode":"Didn't receive the code? Send it again",
   "enterTheCode":"Enter the code",
   "welcomeNashmi":"Welcome",
   "helloHello":"Hello, welcome",
@@ -156,5 +156,9 @@
   "sentSuccessfully": "Sent Successfully",
   "deleteAccount": "Delete Account",
   "deleteAccountTitle": "Delete Account",
-  "deleteAccountBody": "Are you sure you want to delete your account ?\nAll of your data will be erased."
+  "deleteAccountBody": "Are you sure you want to delete your account ?\nAll of your data will be erased.",
+  "belNashmi": "Nashmi",
+  "resend": "Resend",
+  "after": "after",
+  "otpResendMsg": "OTP code has been resent"
 }

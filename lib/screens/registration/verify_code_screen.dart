@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/models/user/user_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
+import 'package:nashmi_app/screens/registration/widgets/otp_timer.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -140,9 +141,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    //TODO : "نشمي" or "نشمية "  According to the gender of the user
                     TextSpan(
-                      text: " بالنشمي صهيب",
+                      text: " ${context.appLocalization.belNashmi}",
                       style: TextStyle(
                         color: context.colorPalette.red018,
                         fontSize: 22,
@@ -167,29 +167,16 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                   onChanged: (value) => _otp = value,
                 ),
               ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.cairo().fontFamily!,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: context.appLocalization.didntReceiveCode,
-                      style: TextStyle(
-                        color: context.colorPalette.black,
-                        fontSize: 14,
-                      ),
-                    ),
-                    TextSpan(
-                      text: " 01:22",
-                      style: TextStyle(
-                        color: context.colorPalette.red018,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
+              OtpTimer(
+                onResend: () {
+                  context.userProvider.sendPinCode(
+                    context,
+                    user: user,
+                    isLogin: widget.isLogin,
+                    guestRoute: widget.guestRoute,
+                    isResend: true,
+                  );
+                },
               ),
             ],
           ),
