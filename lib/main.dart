@@ -116,6 +116,7 @@ class _MyAppState extends State<MyApp> {
               initialData: MySharedPreferences.user,
               updateShouldNotify: (initialValue, value) {
                 MySharedPreferences.user = value;
+                print("user:::: $value");
                 Future.microtask(() {
                   if (value == null || value.blocked) {
                     Fluttertoast.showToast(msg: "Authorization Failed");
