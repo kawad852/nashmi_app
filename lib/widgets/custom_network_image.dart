@@ -4,7 +4,7 @@ import 'package:nashmi_app/utils/my_images.dart';
 import 'package:nashmi_app/utils/my_theme.dart';
 
 class CustomNetworkImage extends StatelessWidget {
-  final String url;
+  final String? url;
   final double? radius;
   final double? width;
   final double? height;
@@ -78,12 +78,14 @@ class CustomNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: CachedNetworkImage(
-        imageUrl: url,
-        imageBuilder: (context, imageProvider) => _buildContainer(color: backgroundColor, imageProvider: imageProvider),
-        placeholder: (context, url) => _buildContainer(color: Colors.transparent, imageProvider: ignorePlaceHolder ? null : _imagePlaceHolder),
-        errorWidget: (context, url, error) => _buildContainer(color: Colors.transparent, imageProvider: _imagePlaceHolder),
-      ),
+      child: url != null
+          ? CachedNetworkImage(
+              imageUrl: url!,
+              imageBuilder: (context, imageProvider) => _buildContainer(color: backgroundColor, imageProvider: imageProvider),
+              placeholder: (context, url) => _buildContainer(color: Colors.transparent, imageProvider: ignorePlaceHolder ? null : _imagePlaceHolder),
+              errorWidget: (context, url, error) => _buildContainer(color: Colors.transparent, imageProvider: _imagePlaceHolder),
+            )
+          : _buildContainer(color: Colors.transparent, imageProvider: ignorePlaceHolder ? null : _imagePlaceHolder),
     );
   }
 }

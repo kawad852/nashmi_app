@@ -42,7 +42,7 @@ class ProviderCard extends StatelessWidget {
         child: Row(
           children: [
             CustomNetworkImage(
-              provider.thumbnail!,
+              provider.thumbnail,
               width: 60,
               height: 60,
               radius: MyTheme.radiusSecondary,

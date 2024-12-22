@@ -192,7 +192,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                       Row(
                         children: [
                           CustomNetworkImage(
-                            provider.thumbnail!,
+                            provider.thumbnail,
                             width: 86,
                             height: 86,
                             radius: MyTheme.radiusSecondary,
