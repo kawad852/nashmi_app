@@ -7,8 +7,6 @@ import 'package:nashmi_app/screens/offers/widgets/more_offer_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offer_card.dart';
 import 'package:nashmi_app/screens/offers/widgets/offers_nav_bar.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
-import 'package:nashmi_app/utils/my_icons.dart';
-import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/time_widget.dart';
@@ -93,10 +91,6 @@ class _OffersScreenState extends State<OffersScreen> with AutomaticKeepAliveClie
               SliverAppBar(
                 pinned: true,
                 centerTitle: true,
-                leading: IconButton(
-                  onPressed: () {},
-                  icon: const CustomSvg(MyIcons.menu),
-                ),
                 title: Text(
                   context.appLocalization.nashmiDay,
                   style: const TextStyle(
@@ -104,12 +98,6 @@ class _OffersScreenState extends State<OffersScreen> with AutomaticKeepAliveClie
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const CustomSvg(MyIcons.notification),
-                  ),
-                ],
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
