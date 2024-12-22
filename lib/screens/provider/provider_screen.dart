@@ -378,19 +378,17 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
                             child: SizedBox(
                               height: 90,
-                              child: GestureDetector(
-                                onTap: () {
+                              child: MapBubble(
+                                onTap: (position) {
                                   LauncherService.openMap(
                                     provider.geo!.geoPoint!.latitude,
                                     provider.geo!.geoPoint!.longitude,
                                   );
                                 },
-                                child: MapBubble(
-                                  controller: MapController(
-                                    context,
-                                    lat: provider.geo!.geoPoint!.latitude,
-                                    lng: provider.geo!.geoPoint!.longitude,
-                                  ),
+                                controller: MapController(
+                                  context,
+                                  lat: provider.geo!.geoPoint!.latitude,
+                                  lng: provider.geo!.geoPoint!.longitude,
                                 ),
                               ),
                             ),
