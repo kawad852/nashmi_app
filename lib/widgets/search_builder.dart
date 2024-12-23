@@ -105,7 +105,7 @@ class _SearchBuilderState extends State<SearchBuilder> {
                   });
                 },
                 leading: CustomNetworkImage(
-                  element.thumbnail!,
+                  element.thumbnail,
                   height: 45,
                   width: 45,
                   radius: MyTheme.radiusPrimary,
