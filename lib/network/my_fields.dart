@@ -17,4 +17,5 @@ class MyFields {
   static const String lastPurchaseAt = 'lastPurchaseAt';
   static const String topic = 'topic';
   static const String geo = 'geo';
+  static const String status = 'status';
 }

@@ -85,6 +85,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
   }) {
     final query = FirebaseFirestore.instance.providers
         .where(MyFields.categoryIds, arrayContainsAny: _getAllIds)
+        .where(MyFields.status, isEqualTo: ProviderStatusEnum.active.value)
         .where("state.id", isEqualTo: stateId)
         .where("city.id", isEqualTo: cityId);
     switch (filterEnum) {
@@ -109,7 +110,7 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
             radiusInKm: 10,
             field: MyFields.geo,
             geopointFrom: (provider) => provider.geo!.geoPoint!,
-            queryBuilder: (provider) => provider.where(MyFields.categoryIds, arrayContainsAny: categoryIds),
+            queryBuilder: (provider) => provider.where(MyFields.categoryIds, arrayContainsAny: categoryIds).where(MyFields.status, isEqualTo: ProviderStatusEnum.active.value),
           )
           .first
           .then((value) {

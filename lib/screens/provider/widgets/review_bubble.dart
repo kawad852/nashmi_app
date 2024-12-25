@@ -45,10 +45,12 @@ class ReviewBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: Text(
-                review.comment!,
-                style: context.textTheme.bodyLarge,
-              ),
+              child: review.comment != null
+                  ? Text(
+                      review.comment ?? "-",
+                      style: context.textTheme.bodyLarge,
+                    )
+                  : const SizedBox.shrink(),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 4),

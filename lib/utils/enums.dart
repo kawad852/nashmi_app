@@ -112,3 +112,11 @@ enum AdEnum {
   const AdEnum(this.value);
   final String value;
 }
+
+enum ProviderStatusEnum {
+  active('ACTIVE'),
+  pending('PENDING');
+
+  const ProviderStatusEnum(this.value);
+  final String value;
+}
