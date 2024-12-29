@@ -190,6 +190,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomNetworkImage(
                             provider.thumbnail,
@@ -228,6 +229,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 Text(
                                   categories.map((e) => context.translate(textEN: e.nameEn, textAR: e.nameAr)).join(", "),
                                   overflow: TextOverflow.ellipsis,
+                                  maxLines: 4,
                                   style: TextStyle(
                                     color: context.colorPalette.grey8F8,
                                   ),
@@ -241,7 +243,11 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       id: provider.id!,
                                     ),
                                     const SizedBox(width: 10),
-                                    ReviewBuilder(id: provider.id!),
+                                    ReviewBuilder(
+                                      id: provider.id!,
+                                      providerNameEn: provider.nameEn ?? "",
+                                      providerNameAr: provider.nameAr ?? "",
+                                    ),
                                   ],
                                 ),
                               ],

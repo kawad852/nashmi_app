@@ -11,6 +11,8 @@ class ReviewModel with _$ReviewModel {
     @TimestampSerializer() DateTime? createdAt,
     String? id,
     String? comment,
+    String? providerNameEn,
+    String? providerNameAr,
     @Default(5) double rating,
     String? userId,
     String? displayName,

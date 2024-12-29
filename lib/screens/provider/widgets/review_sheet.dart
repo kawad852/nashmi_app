@@ -17,10 +17,14 @@ import '../../../widgets/stretch_button.dart';
 
 class ReviewSheet extends StatefulWidget {
   final String id;
+  final String providerNameEn;
+  final String providerNameAr;
 
   const ReviewSheet({
     super.key,
     required this.id,
+    required this.providerNameEn,
+    required this.providerNameAr,
   });
 
   @override
@@ -44,6 +48,8 @@ class _ReviewSheetState extends State<ReviewSheet> {
           displayName: user.displayName,
           userId: user.id,
           photoURL: user.photoURL,
+          providerNameEn: widget.providerNameEn,
+          providerNameAr: widget.providerNameAr,
         );
         final document = _firebaseFirestore.providers.doc(_providerId).collection(MyCollections.reviews).doc(user.id);
         batch.set(

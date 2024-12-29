@@ -16,10 +16,14 @@ import '../../../widgets/shimmer/shimmer_loading.dart';
 
 class ReviewBuilder extends StatefulWidget {
   final String id;
+  final String providerNameEn;
+  final String providerNameAr;
 
   const ReviewBuilder({
     super.key,
     required this.id,
+    required this.providerNameEn,
+    required this.providerNameAr,
   });
 
   @override
@@ -78,6 +82,8 @@ class _ReviewBuilderState extends State<ReviewBuilder> {
                     builder: (context) {
                       return ReviewSheet(
                         id: _providerId,
+                        providerNameEn: widget.providerNameEn,
+                        providerNameAr: widget.providerNameAr,
                       );
                     },
                   );

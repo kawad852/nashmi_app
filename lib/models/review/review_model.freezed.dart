@@ -28,6 +28,10 @@ mixin _$ReviewModel {
   set id(String? value) => throw _privateConstructorUsedError;
   String? get comment => throw _privateConstructorUsedError;
   set comment(String? value) => throw _privateConstructorUsedError;
+  String? get providerNameEn => throw _privateConstructorUsedError;
+  set providerNameEn(String? value) => throw _privateConstructorUsedError;
+  String? get providerNameAr => throw _privateConstructorUsedError;
+  set providerNameAr(String? value) => throw _privateConstructorUsedError;
   double get rating => throw _privateConstructorUsedError;
   set rating(double value) => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
@@ -59,6 +63,8 @@ abstract class $ReviewModelCopyWith<$Res> {
       {@TimestampSerializer() DateTime? createdAt,
       String? id,
       String? comment,
+      String? providerNameEn,
+      String? providerNameAr,
       double rating,
       String? userId,
       String? displayName,
@@ -84,6 +90,8 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
     Object? createdAt = freezed,
     Object? id = freezed,
     Object? comment = freezed,
+    Object? providerNameEn = freezed,
+    Object? providerNameAr = freezed,
     Object? rating = null,
     Object? userId = freezed,
     Object? displayName = freezed,
@@ -102,6 +110,14 @@ class _$ReviewModelCopyWithImpl<$Res, $Val extends ReviewModel>
       comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      providerNameEn: freezed == providerNameEn
+          ? _value.providerNameEn
+          : providerNameEn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      providerNameAr: freezed == providerNameAr
+          ? _value.providerNameAr
+          : providerNameAr // ignore: cast_nullable_to_non_nullable
               as String?,
       rating: null == rating
           ? _value.rating
@@ -139,6 +155,8 @@ abstract class _$$ReviewModelImplCopyWith<$Res>
       {@TimestampSerializer() DateTime? createdAt,
       String? id,
       String? comment,
+      String? providerNameEn,
+      String? providerNameAr,
       double rating,
       String? userId,
       String? displayName,
@@ -162,6 +180,8 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? id = freezed,
     Object? comment = freezed,
+    Object? providerNameEn = freezed,
+    Object? providerNameAr = freezed,
     Object? rating = null,
     Object? userId = freezed,
     Object? displayName = freezed,
@@ -180,6 +200,14 @@ class __$$ReviewModelImplCopyWithImpl<$Res>
       comment: freezed == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
+              as String?,
+      providerNameEn: freezed == providerNameEn
+          ? _value.providerNameEn
+          : providerNameEn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      providerNameAr: freezed == providerNameAr
+          ? _value.providerNameAr
+          : providerNameAr // ignore: cast_nullable_to_non_nullable
               as String?,
       rating: null == rating
           ? _value.rating
@@ -212,6 +240,8 @@ class _$ReviewModelImpl implements _ReviewModel {
       {@TimestampSerializer() this.createdAt,
       this.id,
       this.comment,
+      this.providerNameEn,
+      this.providerNameAr,
       this.rating = 5,
       this.userId,
       this.displayName,
@@ -229,6 +259,10 @@ class _$ReviewModelImpl implements _ReviewModel {
   @override
   String? comment;
   @override
+  String? providerNameEn;
+  @override
+  String? providerNameAr;
+  @override
   @JsonKey()
   double rating;
   @override
@@ -243,7 +277,7 @@ class _$ReviewModelImpl implements _ReviewModel {
 
   @override
   String toString() {
-    return 'ReviewModel(createdAt: $createdAt, id: $id, comment: $comment, rating: $rating, userId: $userId, displayName: $displayName, photoURL: $photoURL, published: $published)';
+    return 'ReviewModel(createdAt: $createdAt, id: $id, comment: $comment, providerNameEn: $providerNameEn, providerNameAr: $providerNameAr, rating: $rating, userId: $userId, displayName: $displayName, photoURL: $photoURL, published: $published)';
   }
 
   /// Create a copy of ReviewModel
@@ -267,6 +301,8 @@ abstract class _ReviewModel implements ReviewModel {
       {@TimestampSerializer() DateTime? createdAt,
       String? id,
       String? comment,
+      String? providerNameEn,
+      String? providerNameAr,
       double rating,
       String? userId,
       String? displayName,
@@ -287,6 +323,12 @@ abstract class _ReviewModel implements ReviewModel {
   @override
   String? get comment;
   set comment(String? value);
+  @override
+  String? get providerNameEn;
+  set providerNameEn(String? value);
+  @override
+  String? get providerNameAr;
+  set providerNameAr(String? value);
   @override
   double get rating;
   set rating(double value);
