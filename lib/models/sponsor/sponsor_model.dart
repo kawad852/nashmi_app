@@ -11,6 +11,7 @@ class SponsorModel with _$SponsorModel {
     @TimestampSerializer() DateTime? createdAt,
     String? id,
     String? logo,
+    String? url,
   }) = _SponsorModel;
 
   factory SponsorModel.fromJson(Map<String, dynamic> json) => _$SponsorModelFromJson(json);

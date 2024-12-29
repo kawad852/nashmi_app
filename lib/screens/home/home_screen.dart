@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
+import 'package:nashmi_app/helper/launcher_service.dart';
 import 'package:nashmi_app/models/ad/ad_model.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
 import 'package:nashmi_app/models/sponsor/sponsor_model.dart';
@@ -317,6 +318,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                         itemBuilder: (context, index) {
                           final sponsor = sponsors[index];
                           return CustomNetworkImage(
+                            onTap: () {
+                              LauncherService.lunch(context, sponsor.url!);
+                            },
                             sponsor.logo!,
                             width: 80,
                             radius: MyTheme.radiusSecondary,

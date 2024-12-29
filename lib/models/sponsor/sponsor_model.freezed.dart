@@ -28,6 +28,8 @@ mixin _$SponsorModel {
   set id(String? value) => throw _privateConstructorUsedError;
   String? get logo => throw _privateConstructorUsedError;
   set logo(String? value) => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
+  set url(String? value) => throw _privateConstructorUsedError;
 
   /// Serializes this SponsorModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +48,10 @@ abstract class $SponsorModelCopyWith<$Res> {
       _$SponsorModelCopyWithImpl<$Res, SponsorModel>;
   @useResult
   $Res call(
-      {@TimestampSerializer() DateTime? createdAt, String? id, String? logo});
+      {@TimestampSerializer() DateTime? createdAt,
+      String? id,
+      String? logo,
+      String? url});
 }
 
 /// @nodoc
@@ -67,6 +72,7 @@ class _$SponsorModelCopyWithImpl<$Res, $Val extends SponsorModel>
     Object? createdAt = freezed,
     Object? id = freezed,
     Object? logo = freezed,
+    Object? url = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: freezed == createdAt
@@ -81,6 +87,10 @@ class _$SponsorModelCopyWithImpl<$Res, $Val extends SponsorModel>
           ? _value.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -94,7 +104,10 @@ abstract class _$$SponsorModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@TimestampSerializer() DateTime? createdAt, String? id, String? logo});
+      {@TimestampSerializer() DateTime? createdAt,
+      String? id,
+      String? logo,
+      String? url});
 }
 
 /// @nodoc
@@ -113,6 +126,7 @@ class __$$SponsorModelImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? id = freezed,
     Object? logo = freezed,
+    Object? url = freezed,
   }) {
     return _then(_$SponsorModelImpl(
       createdAt: freezed == createdAt
@@ -127,6 +141,10 @@ class __$$SponsorModelImplCopyWithImpl<$Res>
           ? _value.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -135,7 +153,7 @@ class __$$SponsorModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SponsorModelImpl implements _SponsorModel {
   _$SponsorModelImpl(
-      {@TimestampSerializer() this.createdAt, this.id, this.logo});
+      {@TimestampSerializer() this.createdAt, this.id, this.logo, this.url});
 
   factory _$SponsorModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SponsorModelImplFromJson(json);
@@ -147,10 +165,12 @@ class _$SponsorModelImpl implements _SponsorModel {
   String? id;
   @override
   String? logo;
+  @override
+  String? url;
 
   @override
   String toString() {
-    return 'SponsorModel(createdAt: $createdAt, id: $id, logo: $logo)';
+    return 'SponsorModel(createdAt: $createdAt, id: $id, logo: $logo, url: $url)';
   }
 
   /// Create a copy of SponsorModel
@@ -173,7 +193,8 @@ abstract class _SponsorModel implements SponsorModel {
   factory _SponsorModel(
       {@TimestampSerializer() DateTime? createdAt,
       String? id,
-      String? logo}) = _$SponsorModelImpl;
+      String? logo,
+      String? url}) = _$SponsorModelImpl;
 
   factory _SponsorModel.fromJson(Map<String, dynamic> json) =
       _$SponsorModelImpl.fromJson;
@@ -189,6 +210,9 @@ abstract class _SponsorModel implements SponsorModel {
   @override
   String? get logo;
   set logo(String? value);
+  @override
+  String? get url;
+  set url(String? value);
 
   /// Create a copy of SponsorModel
   /// with the given fields replaced by the non-null parameter values.

@@ -26,6 +26,7 @@ import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/map_bubble.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
+import 'package:nashmi_app/widgets/photos_viewer_screen.dart';
 import 'package:nashmi_app/widgets/rating_stars.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/user_selector.dart';
@@ -349,6 +350,14 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             itemBuilder: (context, index) {
                               final image = provider.images![index];
                               return CustomNetworkImage(
+                                onTap: () {
+                                  context.navigate((context) {
+                                    return PhotosViewerScreen(
+                                      photos: provider.images!,
+                                      initialIndex: index,
+                                    );
+                                  });
+                                },
                                 image,
                                 width: 200,
                                 height: 200,
