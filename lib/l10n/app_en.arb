@@ -160,5 +160,7 @@
   "belNashmi": "Nashmi",
   "resend": "Resend",
   "after": "after",
-  "otpResendMsg": "OTP code has been resent"
+  "otpResendMsg": "OTP code has been resent",
+  "selectState": "Select State",
+  "selectCity": "Select City"
 }

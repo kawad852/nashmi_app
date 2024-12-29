@@ -8,6 +8,7 @@ class DropDownEditor<T> extends StatelessWidget {
   final Function(T?) onChanged;
   final String title;
   final List<DropdownMenuItem<T>> items;
+  final bool enabled;
 
   const DropDownEditor({
     super.key,
@@ -15,6 +16,7 @@ class DropDownEditor<T> extends StatelessWidget {
     required this.onChanged,
     required this.title,
     required this.items,
+    this.enabled = true,
   });
 
   @override
@@ -31,6 +33,7 @@ class DropDownEditor<T> extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
               label: Text(title),
+              enabled: enabled,
               // label: EditorLabel(
               //   title: title,
               //   withErrorIndicator: true,

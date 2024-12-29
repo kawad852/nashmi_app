@@ -4,17 +4,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
 import 'package:nashmi_app/alerts/feedback/app_feedback.dart';
 import 'package:nashmi_app/controllers/phone_controller.dart';
 import 'package:nashmi_app/helper/my_factory.dart';
 import 'package:nashmi_app/helper/storage_service.dart';
+import 'package:nashmi_app/models/city/city_model.dart';
 import 'package:nashmi_app/models/contact/contact_model.dart';
+import 'package:nashmi_app/models/state/state_model.dart';
 import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
+import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
+import 'package:nashmi_app/widgets/drop_down_editor.dart';
 import 'package:nashmi_app/widgets/editors/text_editor.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
@@ -45,6 +50,22 @@ class _ContactScreenState extends State<ContactScreen> {
   final storageService = StorageService();
   XFile? _file;
   final _formKey = GlobalKey<FormState>();
+  late Future<List<dynamic>> _futures;
+  StateModel? _selectedState;
+
+  void _initialize() {
+    if (_contactType == ContactType.join) {
+      _futures = ApiService.build(
+        callBack: () async {
+          final statesFuture = FirebaseFirestore.instance.states.get().then((value) => value.docs.map((e) => e.data()).toList());
+          final citiesFuture = FirebaseFirestore.instance.cities.get().then((value) => value.docs.map((e) => e.data()).toList());
+          return Future.wait([statesFuture, citiesFuture]);
+        },
+      );
+    } else {
+      _futures = Future.wait([Future.value(<StateModel>[]), Future.value(<CityModel>[])]);
+    }
+  }
 
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
@@ -170,6 +191,7 @@ class _ContactScreenState extends State<ContactScreen> {
     super.initState();
     _contact = ContactModel();
     _phoneController = PhoneController(context);
+    _initialize();
   }
 
   @override
@@ -184,108 +206,182 @@ class _ContactScreenState extends State<ContactScreen> {
       _contact.displayName ??= user?.displayName;
       _contact.phoneCountryCode ??= user?.phoneCountryCode;
       _contact.phoneNum ??= user?.phone;
-      return NashmiScaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: CustomText(
-            getHeader(),
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          child: StretchedButton(
-            onPressed: () {
-              _onSubmit();
-            },
-            child: CustomText(
-              context.appLocalization.send,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: context.colorPalette.white,
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(kScreenMargin),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 13),
-                CustomText(
-                  getTitle(),
+      return CustomFutureBuilder(
+          future: _futures,
+          withBackgroundColor: true,
+          onComplete: (context, snapshot) {
+            final states = snapshot.data![0] as List<StateModel>;
+            final cities = snapshot.data![1] as List<CityModel>;
+            return NashmiScaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: CustomText(
+                  getHeader(),
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
-                CustomText(
-                  getDescription(),
-                ),
-                const SizedBox(height: 20),
-                TitledTextField(
-                  title: context.appLocalization.whatYourName,
-                  child: TextEditor(
-                    initialValue: _contact.displayName,
-                    hintText: context.appLocalization.nameHintText,
-                    onChanged: (value) => _contact.displayName = value,
+              ),
+              bottomNavigationBar: BottomAppBar(
+                child: StretchedButton(
+                  onPressed: () {
+                    _onSubmit();
+                  },
+                  child: CustomText(
+                    context.appLocalization.send,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: context.colorPalette.white,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: TitledTextField(
-                    title: context.appLocalization.yourPhoneNumber,
-                    child: PhoneField(
-                      controller: _phoneController,
-                    ),
+              ),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(kScreenMargin),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 13),
+                      CustomText(
+                        getTitle(),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      CustomText(
+                        getDescription(),
+                      ),
+                      const SizedBox(height: 20),
+                      TitledTextField(
+                        title: context.appLocalization.whatYourName,
+                        child: TextEditor(
+                          initialValue: _contact.displayName,
+                          hintText: context.appLocalization.nameHintText,
+                          onChanged: (value) => _contact.displayName = value,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: TitledTextField(
+                          title: context.appLocalization.yourPhoneNumber,
+                          child: PhoneField(
+                            controller: _phoneController,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          if (states.isNotEmpty)
+                            Expanded(
+                              child: TitledTextField(
+                                title: context.appLocalization.state,
+                                child: DropDownEditor(
+                                  value: _contact.stateId,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      final state = states.firstWhere((e) => e.id == value);
+                                      _selectedState = state;
+                                      _contact.stateId = state.id;
+                                      _contact.cityId = null;
+                                    });
+                                  },
+                                  title: context.appLocalization.selectState,
+                                  items: states.map((e) {
+                                    return DropdownMenuItem(
+                                      value: e.id,
+                                      child: Text(
+                                        context.translate(textEN: e.nameEn, textAR: e.nameAr),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          const SizedBox(width: 10),
+                          if (cities.isNotEmpty)
+                            Expanded(
+                              child: TitledTextField(
+                                title: context.appLocalization.city,
+                                child: DropDownEditor(
+                                  key: ValueKey(_contact.stateId),
+                                  value: _contact.cityId,
+                                  enabled: _contact.stateId != null,
+                                  onChanged: (value) {
+                                    _contact.cityId = cities.firstWhere((e) => e.id == value).id;
+                                  },
+                                  title: context.appLocalization.selectCity,
+                                  items: _contact.stateId != null
+                                      ? cities.where((e) => _selectedState!.cityIds.contains(e.id)).map((e) {
+                                          return DropdownMenuItem(
+                                            value: e.id,
+                                            child: Text(
+                                              context.translate(textEN: e.nameEn, textAR: e.nameAr),
+                                            ),
+                                          );
+                                        }).toList()
+                                      : [],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+
+                      TitledTextField(
+                        title: context.appLocalization.title,
+                        child: TextEditor(
+                          initialValue: _contact.subject,
+                          hintText: _contactType == ContactType.ad ? context.appLocalization.messageTitle : context.appLocalization.yourComplaintOrSuggestion,
+                          onChanged: (value) => _contact.subject = value,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: TitledTextField(
+                          title: context.appLocalization.yourMessage,
+                          child: TextEditor(
+                            initialValue: _contact.message,
+                            maxLines: 6,
+                            hintText: context.appLocalization.writeYourMessageHere,
+                            onChanged: (value) => _contact.message = value,
+                          ),
+                        ),
+                      ),
+                      // Row(
+                      //   children: [
+                      //     GestureDetector(
+                      //       onTap: () => {},
+                      //       child: Container(
+                      //         width: 48,
+                      //         height: 48,
+                      //         alignment: Alignment.center,
+                      //         decoration: BoxDecoration(
+                      //           color: context.colorPalette.greyF2F,
+                      //           borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                      //         ),
+                      //         child: const CustomSvg(MyIcons.attach),
+                      //       ),
+                      //     ),
+                      //     const SizedBox(width: 15),
+                      //     CustomText(
+                      //       context.appLocalization.attachPicturesOrFiles,
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
                   ),
                 ),
-                TitledTextField(
-                  title: context.appLocalization.title,
-                  child: TextEditor(
-                    initialValue: _contact.subject,
-                    hintText: _contactType == ContactType.ad ? context.appLocalization.messageTitle : context.appLocalization.yourComplaintOrSuggestion,
-                    onChanged: (value) => _contact.subject = value,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: TitledTextField(
-                    title: context.appLocalization.yourMessage,
-                    child: TextEditor(
-                      initialValue: _contact.message,
-                      maxLines: 6,
-                      hintText: context.appLocalization.writeYourMessageHere,
-                      onChanged: (value) => _contact.message = value,
-                    ),
-                  ),
-                ),
-                // Row(
-                //   children: [
-                //     GestureDetector(
-                //       onTap: () => {},
-                //       child: Container(
-                //         width: 48,
-                //         height: 48,
-                //         alignment: Alignment.center,
-                //         decoration: BoxDecoration(
-                //           color: context.colorPalette.greyF2F,
-                //           borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                //         ),
-                //         child: const CustomSvg(MyIcons.attach),
-                //       ),
-                //     ),
-                //     const SizedBox(width: 15),
-                //     CustomText(
-                //       context.appLocalization.attachPicturesOrFiles,
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
-          ),
-        ),
-      );
+              ),
+            );
+          },
+          onError: (error) {
+            return AppErrorWidget(
+              error: error,
+              onRetry: () {
+                setState(() {
+                  _initialize();
+                });
+              },
+            );
+          });
     });
   }
 }

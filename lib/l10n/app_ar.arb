@@ -160,5 +160,7 @@
   "belNashmi": "بالنشمي/ة",
   "resend": "إعادة ارسال",
   "after": "بعد",
-  "otpResendMsg": "تم إعادة إرسال الرمز"
+  "otpResendMsg": "تم إعادة إرسال الرمز",
+  "selectState": "إختر المحافظة",
+  "selectCity": "إختر المدينة"
 }

@@ -16,12 +16,8 @@ _$ContactModelImpl _$$ContactModelImplFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String?,
       subject: json['subject'] as String?,
       imageURL: json['imageURL'] as String?,
-      state: json['state'] == null
-          ? null
-          : StateModel.fromJson(json['state'] as Map<String, dynamic>),
-      city: json['city'] == null
-          ? null
-          : CityModel.fromJson(json['city'] as Map<String, dynamic>),
+      stateId: json['stateId'] as String?,
+      cityId: json['cityId'] as String?,
     );
 
 Map<String, dynamic> _$$ContactModelImplToJson(_$ContactModelImpl instance) =>
@@ -34,6 +30,6 @@ Map<String, dynamic> _$$ContactModelImplToJson(_$ContactModelImpl instance) =>
       'message': instance.message,
       'subject': instance.subject,
       'imageURL': instance.imageURL,
-      'state': instance.state?.toJson(),
-      'city': instance.city?.toJson(),
+      'stateId': instance.stateId,
+      'cityId': instance.cityId,
     };
