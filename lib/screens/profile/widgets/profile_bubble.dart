@@ -8,11 +8,14 @@ class ProfileBubble extends StatelessWidget {
   final String icon;
   final String title;
   final void Function() onTap;
+  final Color? textColor;
+
   const ProfileBubble({
     super.key,
     required this.icon,
     required this.title,
     required this.onTap,
+    this.textColor,
   });
 
   @override
@@ -37,6 +40,7 @@ class ProfileBubble extends StatelessWidget {
                 title,
                 overFlow: TextOverflow.ellipsis,
                 fontWeight: FontWeight.bold,
+                color: textColor,
               ),
             ),
             const Icon(

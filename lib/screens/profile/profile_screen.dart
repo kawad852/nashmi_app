@@ -35,25 +35,25 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
       //     print("aaa ${a.count}");
       //   },
       // ),
-      bottomNavigationBar: BottomAppBar(
-        child: UserSelector(
-          builder: (context, user) {
-            final authenticated = user != null;
-            print("user::: ${user?.toJson()} -- $authenticated");
-            return StretchedButton(
-              child: Text(authenticated ? context.appLocalization.logout : context.appLocalization.login),
-              onPressed: () {
-                if (authenticated) {
-                  context.userProvider.logout(context);
-                } else {
-                  context.navigate((context) => const RegistrationScreen(
-                        showGuestButton: false,
-                      ));
-                }
-              },
-            );
-          },
-        ),
+      bottomNavigationBar: UserSelector(
+        builder: (context, user) {
+          final authenticated = user != null;
+          return Offstage(
+            offstage: authenticated,
+            child: BottomAppBar(
+              child: StretchedButton(
+                child: Text(context.appLocalization.login),
+                onPressed: () {
+                  context.navigate(
+                    (context) => const RegistrationScreen(
+                      showGuestButton: false,
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
       ),
       body: SafeArea(
         child: ListView(
@@ -123,6 +123,22 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                       return const OffersScreen();
                     });
                   },
+                );
+              },
+            ),
+            UserSelector(
+              builder: (context, user) {
+                final isAuthenticated = user != null;
+                return Visibility(
+                  visible: isAuthenticated,
+                  child: ProfileBubble(
+                    icon: MyIcons.logout,
+                    title: context.appLocalization.logout,
+                    textColor: context.colorPalette.red018,
+                    onTap: () {
+                      context.userProvider.logout(context);
+                    },
+                  ),
                 );
               },
             ),
