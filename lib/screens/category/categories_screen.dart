@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:nashmi_app/alerts/errors/app_error_widget.dart';
 import 'package:nashmi_app/models/category/category_model.dart';
+import 'package:nashmi_app/network/api_service.dart';
 import 'package:nashmi_app/network/fire_queries.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/category_bubble.dart';
-import 'package:nashmi_app/widgets/fire_builder.dart';
+import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 
@@ -28,6 +30,36 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  late Future<List<CategoryModel>> _categoryFuture;
+  late CategoryModel? _mainCategory;
+
+  void _init() {
+    _categoryFuture = ApiService.build(
+      callBack: () async {
+        return FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: _mainCategory!.subCategories).get().then((value) {
+          final categories = value.docs.map((e) => e.data()).toList();
+          categories.insert(
+            0,
+            CategoryModel(
+              id: "0",
+              nameEn: "All",
+              nameAr: "الكل",
+              subCategories: categories.map((e) => e.id!).toList(),
+            ),
+          );
+          return categories;
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _mainCategory = widget.mainCategory;
+    _init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return NashmiScaffold(
@@ -42,10 +74,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             child: Padding(
               padding: const EdgeInsetsDirectional.only(start: kScreenMargin, bottom: 10),
               child: Text(
-                widget.mainCategory != null
+                _mainCategory != null
                     ? context.translate(
-                        textEN: widget.mainCategory!.nameEn!,
-                        textAR: widget.mainCategory!.nameAr!,
+                        textEN: _mainCategory!.nameEn!,
+                        textAR: _mainCategory!.nameAr!,
                       )
                     : context.appLocalization.whatDoWehave,
                 style: const TextStyle(
@@ -60,19 +92,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
       body: Builder(
         builder: (context) {
-          if (widget.mainCategory != null) {
-            return FireBuilder(
-              futures: [
-                FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: widget.mainCategory!.subCategories).get(),
-              ],
+          if (_mainCategory != null) {
+            return CustomFutureBuilder(
+              future: _categoryFuture,
               onComplete: (context, snapshot) {
-                final categorySnapshot = snapshot.data![0] as QuerySnapshot<CategoryModel>;
+                final categorySnapshot = snapshot.data!;
                 return ListView.separated(
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
-                  itemCount: categorySnapshot.docs.length,
+                  itemCount: categorySnapshot.length,
                   padding: const EdgeInsets.symmetric(horizontal: kScreenMargin),
                   itemBuilder: (context, index) {
-                    final category = categorySnapshot.docs[index].data();
+                    final category = categorySnapshot[index];
                     return GestureDetector(
                       onTap: () {
                         context.push(ProvidersScreen(
@@ -110,6 +140,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         ),
                       ),
                     );
+                  },
+                );
+              },
+              onError: (error) {
+                return AppErrorWidget(
+                  error: error,
+                  onRetry: () {
+                    setState(() {
+                      _init();
+                    });
                   },
                 );
               },
