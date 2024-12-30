@@ -72,6 +72,9 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
                     ),
                     TextSpan(
                       children: [
+                        const TextSpan(
+                          text: "📍️",
+                        ),
                         if (selectedState != null || stateName != null)
                           TextSpan(
                             text: selectedState != null ? context.translate(textEN: selectedState.nameEn, textAR: selectedState.nameAr) : stateName,

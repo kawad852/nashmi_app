@@ -4,12 +4,9 @@ import 'package:nashmi_app/controllers/phone_controller.dart';
 import 'package:nashmi_app/models/user/user_model.dart';
 import 'package:nashmi_app/screens/policy/policy_screen.dart';
 import 'package:nashmi_app/screens/registration/registration_screen.dart';
-import 'package:nashmi_app/screens/registration/widgets/gender_card.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
-import 'package:nashmi_app/utils/enums.dart';
-import 'package:nashmi_app/utils/my_icons.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
 import 'package:nashmi_app/widgets/editors/text_editor.dart';
@@ -155,7 +152,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 TitledTextField(
                   title: context.appLocalization.whatYourName,
                   child: TextEditor(
-                    initialValue: null,
+                    initialValue: user.displayName,
                     hintText: context.appLocalization.nameHintText,
                     onChanged: (value) => user.displayName = value,
                   ),
@@ -170,37 +167,37 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: CustomText(
-                    context.appLocalization.maleOrFemale,
-                  ),
-                ),
-                Row(
-                  children: [
-                    GenderCard(
-                      onTap: () {
-                        setState(() {
-                          user.gender = GenderType.male.value;
-                        });
-                      },
-                      icon: MyIcons.male,
-                      title: context.appLocalization.male,
-                      isSelected: user.gender == GenderType.male.value,
-                    ),
-                    const SizedBox(width: 10),
-                    GenderCard(
-                      onTap: () {
-                        setState(() {
-                          user.gender = GenderType.female.value;
-                        });
-                      },
-                      icon: MyIcons.female,
-                      title: context.appLocalization.female,
-                      isSelected: user.gender == GenderType.female.value,
-                    ),
-                  ],
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 10),
+                //   child: CustomText(
+                //     context.appLocalization.maleOrFemale,
+                //   ),
+                // ),
+                // Row(
+                //   children: [
+                //     GenderCard(
+                //       onTap: () {
+                //         setState(() {
+                //           user.gender = GenderType.male.value;
+                //         });
+                //       },
+                //       icon: MyIcons.male,
+                //       title: context.appLocalization.male,
+                //       isSelected: user.gender == GenderType.male.value,
+                //     ),
+                //     const SizedBox(width: 10),
+                //     GenderCard(
+                //       onTap: () {
+                //         setState(() {
+                //           user.gender = GenderType.female.value;
+                //         });
+                //       },
+                //       icon: MyIcons.female,
+                //       title: context.appLocalization.female,
+                //       isSelected: user.gender == GenderType.female.value,
+                //     ),
+                //   ],
+                // ),
                 Row(
                   children: [
                     Checkbox(
