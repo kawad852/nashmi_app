@@ -4,6 +4,7 @@ import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:nashmi_app/utils/my_icons.dart';
+import 'package:nashmi_app/utils/providers_extension.dart';
 
 class FilterSheet extends StatelessWidget {
   final FilterEnum filterEnum;
@@ -46,7 +47,13 @@ class FilterSheet extends StatelessWidget {
               title: context.appLocalization.nearestDistance,
               selected: filterEnum == FilterEnum.nearest,
               onTap: () {
-                Navigator.pop(context, FilterEnum.nearest);
+                context.locationProvider.determinePosition(
+                  context,
+                  withOverLayLoader: true,
+                  onPermissionGranted: () {
+                    Navigator.pop(context, FilterEnum.nearest);
+                  },
+                );
               },
             ),
           ],
