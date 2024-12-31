@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget _toggleRoute(BuildContext context) {
     if (_userProvider.isAuthenticated) {
-      if (MySharedPreferences.user?.gender == null) {
+      if (MySharedPreferences.user?.displayName == null) {
         return CreateAccountScreen(
           guestRoute: null,
           user: MySharedPreferences.user,

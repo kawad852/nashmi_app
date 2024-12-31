@@ -164,5 +164,6 @@
   "selectState": "إختر المحافظة",
   "selectCity": "إختر المدينة",
   "tellUsAboutYou": "سولفنا عنك شوية",
-  "aboutYou": "عرفنا عن حالك"
+  "aboutYou": "عرفنا عن حالك",
+  "determineArea": "اختر المنطقة"
 }

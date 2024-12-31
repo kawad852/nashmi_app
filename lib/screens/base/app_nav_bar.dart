@@ -60,8 +60,6 @@ class _AppNavBarState extends State<AppNavBar> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    context.locationProvider.getStateAndCities(context);
-    context.locationProvider.determinePosition(context);
     cloudMessagingService.requestPermission();
     cloudMessagingService.init(context);
     context.userProvider.updateDeviceToken(context);

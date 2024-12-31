@@ -39,13 +39,24 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
     super.build(context);
     return Consumer<LocationProvider>(
       builder: (context, locationProvider, child) {
-        if (!locationProvider.showAreaButton) {
-          return const SizedBox.shrink();
-        }
-
         final selectedState = locationProvider.selectedState;
         final selectedCity = locationProvider.selectedCity;
 
+        if (selectedState == null) {
+          return TextButton(
+            onPressed: () {
+              _openSheet(
+                context,
+                selectedState: null,
+                selectedCity: null,
+              );
+            },
+            child: Text(context.appLocalization.determineArea),
+          );
+        }
+
+        // final stateName = locationProvider.state;
+        // final cityName = locationProvider.city;
         final stateName = locationProvider.state;
         final cityName = locationProvider.city;
 
