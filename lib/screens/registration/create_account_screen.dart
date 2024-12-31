@@ -9,7 +9,6 @@ import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/providers_extension.dart';
 import 'package:nashmi_app/widgets/custom_text.dart';
-import 'package:nashmi_app/widgets/editors/text_editor.dart';
 import 'package:nashmi_app/widgets/nashmi_scaffold.dart';
 import 'package:nashmi_app/widgets/phone_field.dart';
 import 'package:nashmi_app/widgets/stretch_button.dart';
@@ -149,14 +148,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     context.appLocalization.fillForm,
                   ),
                 ),
-                TitledTextField(
-                  title: context.appLocalization.whatYourName,
-                  child: TextEditor(
-                    initialValue: user.displayName,
-                    hintText: context.appLocalization.nameHintText,
-                    onChanged: (value) => user.displayName = value,
-                  ),
-                ),
+                // TitledTextField(
+                //   title: context.appLocalization.whatYourName,
+                //   child: TextEditor(
+                //     initialValue: user.displayName,
+                //     hintText: context.appLocalization.nameHintText,
+                //     onChanged: (value) => user.displayName = value,
+                //   ),
+                // ),
                 if (widget.user == null)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -210,10 +209,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       },
                     ),
                     CustomText(
-                      "${context.appLocalization.doYouAgree}  ",
+                      context.appLocalization.doYouAgree,
                     ),
                     Flexible(
-                      child: TextButton(
+                      child: MaterialButton(
+                        padding: const EdgeInsetsDirectional.only(start: 4),
                         onPressed: () {
                           context.navigate((context) {
                             return const PolicyScreen(id: PolicyDocuments.termsOfUse);
