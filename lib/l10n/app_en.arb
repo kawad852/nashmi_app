@@ -162,5 +162,7 @@
   "after": "after",
   "otpResendMsg": "OTP code has been resent",
   "selectState": "Select State",
-  "selectCity": "Select City"
+  "selectCity": "Select City",
+  "tellUsAboutYou": "Tell us about yourself",
+  "aboutYou": "About you"
 }

@@ -162,5 +162,7 @@
   "after": "بعد",
   "otpResendMsg": "تم إعادة إرسال الرمز",
   "selectState": "إختر المحافظة",
-  "selectCity": "إختر المدينة"
+  "selectCity": "إختر المدينة",
+  "tellUsAboutYou": "سولفنا عنك شوية",
+  "aboutYou": "عرفنا عن حالك"
 }

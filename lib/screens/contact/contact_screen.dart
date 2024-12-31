@@ -63,7 +63,7 @@ class _ContactScreenState extends State<ContactScreen> {
         },
       );
     } else {
-      _futures = Future.wait([Future.value(<StateModel>[]), Future.value(<CityModel>[])]);
+      _futures = Future.wait([Future.value(<LightStateModel>[]), Future.value(<LightCityModel>[])]);
     }
   }
 
@@ -275,13 +275,17 @@ class _ContactScreenState extends State<ContactScreen> {
                               child: TitledTextField(
                                 title: context.appLocalization.state,
                                 child: DropDownEditor(
-                                  value: _contact.stateId,
+                                  value: _contact.state?.id,
                                   onChanged: (value) {
                                     setState(() {
                                       final state = states.firstWhere((e) => e.id == value);
                                       _selectedState = state;
-                                      _contact.stateId = state.id;
-                                      _contact.cityId = null;
+                                      _contact.state = LightStateModel(
+                                        id: state.id,
+                                        nameEn: state.nameEn,
+                                        nameAr: state.nameAr,
+                                      );
+                                      _contact.city = null;
                                     });
                                   },
                                   title: context.appLocalization.selectState,
@@ -302,14 +306,19 @@ class _ContactScreenState extends State<ContactScreen> {
                               child: TitledTextField(
                                 title: context.appLocalization.city,
                                 child: DropDownEditor(
-                                  key: ValueKey(_contact.stateId),
-                                  value: _contact.cityId,
-                                  enabled: _contact.stateId != null,
+                                  key: ValueKey(_contact.state?.id),
+                                  value: _contact.city?.id,
+                                  enabled: _contact.state?.id != null,
                                   onChanged: (value) {
-                                    _contact.cityId = cities.firstWhere((e) => e.id == value).id;
+                                    final city = cities.firstWhere((e) => e.id == value);
+                                    _contact.city = LightCityModel(
+                                      id: city.id,
+                                      nameEn: city.nameEn,
+                                      nameAr: city.nameAr,
+                                    );
                                   },
                                   title: context.appLocalization.selectCity,
-                                  items: _contact.stateId != null
+                                  items: _contact.state?.id != null
                                       ? cities.where((e) => _selectedState!.cityIds.contains(e.id)).map((e) {
                                           return DropdownMenuItem(
                                             value: e.id,
@@ -324,23 +333,23 @@ class _ContactScreenState extends State<ContactScreen> {
                             ),
                         ],
                       ),
-
-                      TitledTextField(
-                        title: context.appLocalization.title,
-                        child: TextEditor(
-                          initialValue: _contact.subject,
-                          hintText: _contactType == ContactType.ad ? context.appLocalization.messageTitle : context.appLocalization.yourComplaintOrSuggestion,
-                          onChanged: (value) => _contact.subject = value,
+                      if (_contactType != ContactType.join)
+                        TitledTextField(
+                          title: context.appLocalization.title,
+                          child: TextEditor(
+                            initialValue: _contact.subject,
+                            hintText: _contactType == ContactType.ad ? context.appLocalization.messageTitle : context.appLocalization.yourComplaintOrSuggestion,
+                            onChanged: (value) => _contact.subject = value,
+                          ),
                         ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: TitledTextField(
-                          title: context.appLocalization.yourMessage,
+                          title: _contactType != ContactType.join ? context.appLocalization.yourMessage : context.appLocalization.aboutYou,
                           child: TextEditor(
                             initialValue: _contact.message,
                             maxLines: 6,
-                            hintText: context.appLocalization.writeYourMessageHere,
+                            hintText: _contactType != ContactType.join ? context.appLocalization.writeYourMessageHere : context.appLocalization.tellUsAboutYou,
                             onChanged: (value) => _contact.message = value,
                           ),
                         ),

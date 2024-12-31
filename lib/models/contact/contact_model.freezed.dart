@@ -38,10 +38,10 @@ mixin _$ContactModel {
   set subject(String? value) => throw _privateConstructorUsedError;
   String? get imageURL => throw _privateConstructorUsedError;
   set imageURL(String? value) => throw _privateConstructorUsedError;
-  String? get stateId => throw _privateConstructorUsedError;
-  set stateId(String? value) => throw _privateConstructorUsedError;
-  String? get cityId => throw _privateConstructorUsedError;
-  set cityId(String? value) => throw _privateConstructorUsedError;
+  LightStateModel? get state => throw _privateConstructorUsedError;
+  set state(LightStateModel? value) => throw _privateConstructorUsedError;
+  LightCityModel? get city => throw _privateConstructorUsedError;
+  set city(LightCityModel? value) => throw _privateConstructorUsedError;
 
   /// Serializes this ContactModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,8 +68,11 @@ abstract class $ContactModelCopyWith<$Res> {
       String? message,
       String? subject,
       String? imageURL,
-      String? stateId,
-      String? cityId});
+      LightStateModel? state,
+      LightCityModel? city});
+
+  $LightStateModelCopyWith<$Res>? get state;
+  $LightCityModelCopyWith<$Res>? get city;
 }
 
 /// @nodoc
@@ -95,8 +98,8 @@ class _$ContactModelCopyWithImpl<$Res, $Val extends ContactModel>
     Object? message = freezed,
     Object? subject = freezed,
     Object? imageURL = freezed,
-    Object? stateId = freezed,
-    Object? cityId = freezed,
+    Object? state = freezed,
+    Object? city = freezed,
   }) {
     return _then(_value.copyWith(
       createdAt: freezed == createdAt
@@ -131,15 +134,43 @@ class _$ContactModelCopyWithImpl<$Res, $Val extends ContactModel>
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      stateId: freezed == stateId
-          ? _value.stateId
-          : stateId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cityId: freezed == cityId
-          ? _value.cityId
-          : cityId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as LightStateModel?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as LightCityModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of ContactModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LightStateModelCopyWith<$Res>? get state {
+    if (_value.state == null) {
+      return null;
+    }
+
+    return $LightStateModelCopyWith<$Res>(_value.state!, (value) {
+      return _then(_value.copyWith(state: value) as $Val);
+    });
+  }
+
+  /// Create a copy of ContactModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LightCityModelCopyWith<$Res>? get city {
+    if (_value.city == null) {
+      return null;
+    }
+
+    return $LightCityModelCopyWith<$Res>(_value.city!, (value) {
+      return _then(_value.copyWith(city: value) as $Val);
+    });
   }
 }
 
@@ -160,8 +191,13 @@ abstract class _$$ContactModelImplCopyWith<$Res>
       String? message,
       String? subject,
       String? imageURL,
-      String? stateId,
-      String? cityId});
+      LightStateModel? state,
+      LightCityModel? city});
+
+  @override
+  $LightStateModelCopyWith<$Res>? get state;
+  @override
+  $LightCityModelCopyWith<$Res>? get city;
 }
 
 /// @nodoc
@@ -185,8 +221,8 @@ class __$$ContactModelImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? subject = freezed,
     Object? imageURL = freezed,
-    Object? stateId = freezed,
-    Object? cityId = freezed,
+    Object? state = freezed,
+    Object? city = freezed,
   }) {
     return _then(_$ContactModelImpl(
       createdAt: freezed == createdAt
@@ -221,14 +257,14 @@ class __$$ContactModelImplCopyWithImpl<$Res>
           ? _value.imageURL
           : imageURL // ignore: cast_nullable_to_non_nullable
               as String?,
-      stateId: freezed == stateId
-          ? _value.stateId
-          : stateId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      cityId: freezed == cityId
-          ? _value.cityId
-          : cityId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      state: freezed == state
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as LightStateModel?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as LightCityModel?,
     ));
   }
 }
@@ -245,8 +281,8 @@ class _$ContactModelImpl implements _ContactModel {
       this.message,
       this.subject,
       this.imageURL,
-      this.stateId,
-      this.cityId});
+      this.state,
+      this.city});
 
   factory _$ContactModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ContactModelImplFromJson(json);
@@ -269,13 +305,13 @@ class _$ContactModelImpl implements _ContactModel {
   @override
   String? imageURL;
   @override
-  String? stateId;
+  LightStateModel? state;
   @override
-  String? cityId;
+  LightCityModel? city;
 
   @override
   String toString() {
-    return 'ContactModel(createdAt: $createdAt, id: $id, displayName: $displayName, phoneCountryCode: $phoneCountryCode, phoneNum: $phoneNum, message: $message, subject: $subject, imageURL: $imageURL, stateId: $stateId, cityId: $cityId)';
+    return 'ContactModel(createdAt: $createdAt, id: $id, displayName: $displayName, phoneCountryCode: $phoneCountryCode, phoneNum: $phoneNum, message: $message, subject: $subject, imageURL: $imageURL, state: $state, city: $city)';
   }
 
   /// Create a copy of ContactModel
@@ -304,8 +340,8 @@ abstract class _ContactModel implements ContactModel {
       String? message,
       String? subject,
       String? imageURL,
-      String? stateId,
-      String? cityId}) = _$ContactModelImpl;
+      LightStateModel? state,
+      LightCityModel? city}) = _$ContactModelImpl;
 
   factory _ContactModel.fromJson(Map<String, dynamic> json) =
       _$ContactModelImpl.fromJson;
@@ -337,11 +373,11 @@ abstract class _ContactModel implements ContactModel {
   String? get imageURL;
   set imageURL(String? value);
   @override
-  String? get stateId;
-  set stateId(String? value);
+  LightStateModel? get state;
+  set state(LightStateModel? value);
   @override
-  String? get cityId;
-  set cityId(String? value);
+  LightCityModel? get city;
+  set city(LightCityModel? value);
 
   /// Create a copy of ContactModel
   /// with the given fields replaced by the non-null parameter values.

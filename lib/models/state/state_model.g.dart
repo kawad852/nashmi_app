@@ -26,3 +26,19 @@ Map<String, dynamic> _$$StateModelImplToJson(_$StateModelImpl instance) =>
       'nameAr': instance.nameAr,
       'cityIds': instance.cityIds,
     };
+
+_$LightStateModelImpl _$$LightStateModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LightStateModelImpl(
+      id: json['id'] as String?,
+      nameEn: json['nameEn'] as String?,
+      nameAr: json['nameAr'] as String?,
+    );
+
+Map<String, dynamic> _$$LightStateModelImplToJson(
+        _$LightStateModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'nameEn': instance.nameEn,
+      'nameAr': instance.nameAr,
+    };

@@ -17,3 +17,14 @@ class StateModel with _$StateModel {
 
   factory StateModel.fromJson(Map<String, dynamic> json) => _$StateModelFromJson(json);
 }
+
+@unfreezed
+class LightStateModel with _$LightStateModel {
+  factory LightStateModel({
+    String? id,
+    String? nameEn,
+    String? nameAr,
+  }) = _LightStateModel;
+
+  factory LightStateModel.fromJson(Map<String, dynamic> json) => _$LightStateModelFromJson(json);
+}

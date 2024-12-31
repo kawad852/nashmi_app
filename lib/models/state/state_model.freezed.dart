@@ -246,3 +246,178 @@ abstract class _StateModel implements StateModel {
   _$$StateModelImplCopyWith<_$StateModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+LightStateModel _$LightStateModelFromJson(Map<String, dynamic> json) {
+  return _LightStateModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LightStateModel {
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
+  String? get nameEn => throw _privateConstructorUsedError;
+  set nameEn(String? value) => throw _privateConstructorUsedError;
+  String? get nameAr => throw _privateConstructorUsedError;
+  set nameAr(String? value) => throw _privateConstructorUsedError;
+
+  /// Serializes this LightStateModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LightStateModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LightStateModelCopyWith<LightStateModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LightStateModelCopyWith<$Res> {
+  factory $LightStateModelCopyWith(
+          LightStateModel value, $Res Function(LightStateModel) then) =
+      _$LightStateModelCopyWithImpl<$Res, LightStateModel>;
+  @useResult
+  $Res call({String? id, String? nameEn, String? nameAr});
+}
+
+/// @nodoc
+class _$LightStateModelCopyWithImpl<$Res, $Val extends LightStateModel>
+    implements $LightStateModelCopyWith<$Res> {
+  _$LightStateModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LightStateModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? nameEn = freezed,
+    Object? nameAr = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameEn: freezed == nameEn
+          ? _value.nameEn
+          : nameEn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameAr: freezed == nameAr
+          ? _value.nameAr
+          : nameAr // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LightStateModelImplCopyWith<$Res>
+    implements $LightStateModelCopyWith<$Res> {
+  factory _$$LightStateModelImplCopyWith(_$LightStateModelImpl value,
+          $Res Function(_$LightStateModelImpl) then) =
+      __$$LightStateModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? id, String? nameEn, String? nameAr});
+}
+
+/// @nodoc
+class __$$LightStateModelImplCopyWithImpl<$Res>
+    extends _$LightStateModelCopyWithImpl<$Res, _$LightStateModelImpl>
+    implements _$$LightStateModelImplCopyWith<$Res> {
+  __$$LightStateModelImplCopyWithImpl(
+      _$LightStateModelImpl _value, $Res Function(_$LightStateModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LightStateModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? nameEn = freezed,
+    Object? nameAr = freezed,
+  }) {
+    return _then(_$LightStateModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameEn: freezed == nameEn
+          ? _value.nameEn
+          : nameEn // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nameAr: freezed == nameAr
+          ? _value.nameAr
+          : nameAr // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LightStateModelImpl implements _LightStateModel {
+  _$LightStateModelImpl({this.id, this.nameEn, this.nameAr});
+
+  factory _$LightStateModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LightStateModelImplFromJson(json);
+
+  @override
+  String? id;
+  @override
+  String? nameEn;
+  @override
+  String? nameAr;
+
+  @override
+  String toString() {
+    return 'LightStateModel(id: $id, nameEn: $nameEn, nameAr: $nameAr)';
+  }
+
+  /// Create a copy of LightStateModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LightStateModelImplCopyWith<_$LightStateModelImpl> get copyWith =>
+      __$$LightStateModelImplCopyWithImpl<_$LightStateModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LightStateModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LightStateModel implements LightStateModel {
+  factory _LightStateModel({String? id, String? nameEn, String? nameAr}) =
+      _$LightStateModelImpl;
+
+  factory _LightStateModel.fromJson(Map<String, dynamic> json) =
+      _$LightStateModelImpl.fromJson;
+
+  @override
+  String? get id;
+  set id(String? value);
+  @override
+  String? get nameEn;
+  set nameEn(String? value);
+  @override
+  String? get nameAr;
+  set nameAr(String? value);
+
+  /// Create a copy of LightStateModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LightStateModelImplCopyWith<_$LightStateModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

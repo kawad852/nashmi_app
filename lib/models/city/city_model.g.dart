@@ -21,3 +21,18 @@ Map<String, dynamic> _$$CityModelImplToJson(_$CityModelImpl instance) =>
       'nameEn': instance.nameEn,
       'nameAr': instance.nameAr,
     };
+
+_$LightCityModelImpl _$$LightCityModelImplFromJson(Map<String, dynamic> json) =>
+    _$LightCityModelImpl(
+      id: json['id'] as String?,
+      nameEn: json['nameEn'] as String?,
+      nameAr: json['nameAr'] as String?,
+    );
+
+Map<String, dynamic> _$$LightCityModelImplToJson(
+        _$LightCityModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'nameEn': instance.nameEn,
+      'nameAr': instance.nameAr,
+    };

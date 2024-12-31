@@ -18,8 +18,8 @@ class ContactModel with _$ContactModel {
     String? message,
     String? subject,
     String? imageURL,
-    String? stateId,
-    String? cityId,
+    LightStateModel? state,
+    LightCityModel? city,
   }) = _ContactModel;
 
   factory ContactModel.fromJson(Map<String, dynamic> json) => _$ContactModelFromJson(json);
