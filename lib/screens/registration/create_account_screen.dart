@@ -38,9 +38,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     if (!_isAgreeTerms) {
       context.showSnackBar(context.appLocalization.termsMsg);
       return;
-    } else if (user.gender == null) {
-      context.showSnackBar(context.appLocalization.genderMsg);
-    } else {
+    }
+    // else if (user.gender == null) {
+    //   context.showSnackBar(context.appLocalization.genderMsg);
+    // }
+    else {
       if (_formKey.currentState!.validate()) {
         if (widget.user != null) {
           context.userProvider.registerUncompletedUser(
@@ -88,24 +90,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomText(
-                    context.appLocalization.alreadyHaveAccount,
-                    fontSize: 16,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.pushAndRemoveUntil((context) => const RegistrationScreen());
-                    },
-                    child: CustomText(
-                      context.appLocalization.login,
-                      color: context.colorPalette.red018,
+              if (widget.user == null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      context.appLocalization.alreadyHaveAccount,
+                      fontSize: 16,
                     ),
-                  ),
-                ],
-              ),
+                    TextButton(
+                      onPressed: () {
+                        context.pushAndRemoveUntil((context) => const RegistrationScreen());
+                      },
+                      child: CustomText(
+                        context.appLocalization.login,
+                        color: context.colorPalette.red018,
+                      ),
+                    ),
+                  ],
+                ),
               StretchedButton(
                 onPressed: () {
                   _onSubmit(context);
