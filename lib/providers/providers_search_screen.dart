@@ -107,6 +107,7 @@ class _ProvidersSearchScreenState extends State<ProvidersSearchScreen> {
           return const SizedBox.shrink();
         }
         return CustomFutureBuilder(
+          key: ValueKey(query),
           future: _searchFuture,
           onComplete: (context, snapshot) {
             final providers = snapshot.data![0] as List<ProviderModel>;
