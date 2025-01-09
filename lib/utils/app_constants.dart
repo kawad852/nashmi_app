@@ -26,7 +26,7 @@ class PolicyDocuments {
 
 class EmailJsEnum {
   static const link = 'https://api.emailjs.com/api/v1.0/email/send';
-  static const serviceId = "service_85zuv8l"; // service_dga8ga8
-  static const templateId = "template_4w6bflf"; //template_kibj8m3
-  static const userId = "QIWycTMidTmWWH1ro"; //kdJ4pcQ38XFqx54Lk
+  static const serviceId = "service_akludnd"; // service_dga8ga8
+  static const templateId = "template_i8n0rvm"; //template_kibj8m3
+  static const userId = "N2uaDX9S02MX3_2KP"; //kdJ4pcQ38XFqx54Lk
 }
