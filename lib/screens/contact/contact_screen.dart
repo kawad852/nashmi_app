@@ -63,7 +63,7 @@ class _ContactScreenState extends State<ContactScreen> {
         },
       );
     } else {
-      _futures = Future.wait([Future.value(<LightStateModel>[]), Future.value(<LightCityModel>[])]);
+      _futures = Future.wait([Future.value(<StateModel>[]), Future.value(<CityModel>[])]);
     }
   }
 

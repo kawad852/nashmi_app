@@ -64,6 +64,16 @@ extension FireQueries on FirebaseFirestore {
         toFirestore: (snapshot, _) => snapshot.toJson(),
       );
 
+  // CollectionReference<LightStateModel> get lightStates => collection(MyCollections.states).withConverter<LightStateModel>(
+  //       fromFirestore: (snapshot, _) => LightStateModel.fromJson(snapshot.data()!),
+  //       toFirestore: (snapshot, _) => snapshot.toJson(),
+  //     );
+  //
+  // CollectionReference<LightCityModel> get lightCities => collection(MyCollections.cities).withConverter<LightCityModel>(
+  //       fromFirestore: (snapshot, _) => LightCityModel.fromJson(snapshot.data()!),
+  //       toFirestore: (snapshot, _) => snapshot.toJson(),
+  //     );
+
   CollectionReference<ContactModel> get providerRequests => collection(MyCollections.providerRequests).withConverter<ContactModel>(
         fromFirestore: (snapshot, _) => ContactModel.fromJson(snapshot.data()!),
         toFirestore: (snapshot, _) => snapshot.toJson(),
