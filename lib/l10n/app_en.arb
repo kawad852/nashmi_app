@@ -97,7 +97,7 @@
   "yourComplaintOrSuggestion":"Your complaint or suggestion",
   "attachPicturesOrFiles":"Attach pictures or files",
   "send":"Send",
-  "nashmiDay":"Nashmi day",
+  "nashmiDay":"Nashmi Day",
   "luxuriousOffers":"Luxurious offers",
   "remainingTimeOffers":"Remaining time for offers",
   "offerDetails":"Offer details",
@@ -165,5 +165,7 @@
   "selectCity": "Select City",
   "tellUsAboutYou": "Tell us about yourself",
   "aboutYou": "About you",
-  "determineArea": "Determine Area"
+  "determineArea": "Determine Area",
+  "day": "Day",
+  "nashmiAsNashmi": "Nashmi"
 }
