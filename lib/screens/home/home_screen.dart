@@ -14,7 +14,6 @@ import 'package:nashmi_app/screens/contact/contact_screen.dart';
 import 'package:nashmi_app/screens/home/widgets/ads_carousel.dart';
 import 'package:nashmi_app/screens/home/widgets/nashmi_day_text.dart';
 import 'package:nashmi_app/screens/offers/offer_settings_selector.dart';
-import 'package:nashmi_app/screens/offers/offers_screen.dart';
 import 'package:nashmi_app/utils/base_extensions.dart';
 import 'package:nashmi_app/utils/dimensions.dart';
 import 'package:nashmi_app/utils/enums.dart';
@@ -205,81 +204,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                             );
                                           },
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              );
-                              return GestureDetector(
-                                onTap: () {
-                                  context.userProvider.handleGuest(
-                                    context,
-                                    action: () {
-                                      context.navigate((context) {
-                                        return const OffersScreen();
-                                      });
-                                    },
-                                  );
-                                },
-                                child: Stack(
-                                  alignment: AlignmentDirectional.bottomEnd,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.asset(
-                                        MyImages.nashmiDay,
-                                        height: 100,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    if (offer != null && offer.startTime != null && offer.endTime != null)
-                                      Builder(
-                                        builder: (context) {
-                                          String? title;
-                                          DateTime? time;
-                                          if (offer.startTime!.isAfter(DateTime.now())) {
-                                            title = context.appLocalization.startAfter;
-                                            time = offer.startTime!;
-                                          } else if (offer.endTime!.isAfter(DateTime.now())) {
-                                            title = context.appLocalization.endAfter;
-                                            time = offer.endTime!;
-                                          }
-                                          return Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: ConstrainedBox(
-                                              constraints: const BoxConstraints(maxWidth: 90),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  if (title != null)
-                                                    Text(
-                                                      title,
-                                                      style: style,
-                                                      textAlign: TextAlign.center,
-                                                    ),
-                                                  if (time != null)
-                                                    TimeWidget(
-                                                      startTime: time,
-                                                      onEnd: () {
-                                                        setState(() {});
-                                                      },
-                                                      builder: (part) {
-                                                        return Text(
-                                                          part,
-                                                          style: TextStyle(
-                                                            fontWeight: FontWeight.bold,
-                                                            color: context.colorPalette.white,
-                                                          ),
-                                                          textDirection: TextDirection.ltr,
-                                                        );
-                                                      },
-                                                    ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
                                       ),
                                   ],
                                 ),
