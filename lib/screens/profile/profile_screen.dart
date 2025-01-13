@@ -15,7 +15,6 @@ import 'package:nashmi_app/widgets/stretch_button.dart';
 import 'package:nashmi_app/widgets/user_selector.dart';
 
 import '../../helper/launcher_service.dart';
-import '../offers/offers_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -119,9 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                 context.userProvider.handleGuest(
                   context,
                   action: () {
-                    context.navigate((context) {
-                      return const OffersScreen();
-                    });
+                    context.push(const ContactScreen(contactType: ContactType.join));
                   },
                 );
               },
