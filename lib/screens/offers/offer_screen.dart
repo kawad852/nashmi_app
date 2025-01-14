@@ -130,7 +130,8 @@ class _OfferScreenState extends State<OfferScreen> with WidgetsBindingObserver {
             final offer = (snapshot.data![0] as DocumentSnapshot<OfferModel>).data()!;
             final purchase = snapshot.data![1] as DocumentSnapshot<PurchaseModel>;
 
-            final alreadyPurchased = purchase.exists && purchase.data()!.lastPurchaseAt!.isAfter(offerSettings.endTime!);
+            print("bbb:: ${purchase.exists}");
+            final alreadyPurchased = purchase.exists && purchase.data()!.lastPurchaseAt!.isBefore(offerSettings.endTime!);
             final outOfStock = offer.purchasesCount >= offer.purchaseLimit!;
 
             return Scaffold(
