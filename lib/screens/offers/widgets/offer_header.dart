@@ -34,13 +34,16 @@ class _OfferHeaderState extends State<OfferHeader> {
   late Future<QuerySnapshot<CategoryModel>> _categoriesFuture;
   int _currentSliderIndex = 0;
   OfferModel get offer => widget.offer;
+  List<String> get _categoryIds => offer.provider!.categoryIds;
 
   void _initialize() {
-    _categoriesFuture = ApiService.build(
-      callBack: () async {
-        return FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: offer.provider!.categoryIds).get();
-      },
-    );
+    if (_categoryIds.isNotEmpty) {
+      _categoriesFuture = ApiService.build(
+        callBack: () async {
+          return FirebaseFirestore.instance.categories.where(MyFields.id, whereIn: _categoryIds).get();
+        },
+      );
+    }
   }
 
   @override
@@ -145,24 +148,25 @@ class _OfferHeaderState extends State<OfferHeader> {
                                         const CustomSvg(MyIcons.check),
                                       ],
                                     ),
-                                    CustomFutureBuilder(
-                                      future: _categoriesFuture,
-                                      onLoading: () => const Text(""),
-                                      onComplete: (context, snapshot) {
-                                        final categories =
-                                            snapshot.data!.docs.map((e) => context.translate(textEN: e.data().nameEn, textAR: e.data().nameAr)).toList().join(", ");
-                                        return FadeIn(
-                                          child: Text(
-                                            categories,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: context.colorPalette.grey8F8,
+                                    if (_categoryIds.isNotEmpty)
+                                      CustomFutureBuilder(
+                                        future: _categoriesFuture,
+                                        onLoading: () => const Text(""),
+                                        onComplete: (context, snapshot) {
+                                          final categories =
+                                              snapshot.data!.docs.map((e) => context.translate(textEN: e.data().nameEn, textAR: e.data().nameAr)).toList().join(", ");
+                                          return FadeIn(
+                                            child: Text(
+                                              categories,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: context.colorPalette.grey8F8,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      onError: (error) => const SizedBox.shrink(),
-                                    ),
+                                          );
+                                        },
+                                        onError: (error) => const SizedBox.shrink(),
+                                      ),
                                   ],
                                 ),
                               ),

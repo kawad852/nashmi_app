@@ -71,6 +71,8 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               }
 
               final review = snapshot.docs[index].data();
+              print("review:: ${snapshot.docs[index].reference}");
+
               return ReviewBubble(
                 review: review,
               );
