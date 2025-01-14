@@ -44,6 +44,9 @@ class _AreaButtonState extends State<AreaButton> with AutomaticKeepAliveClientMi
 
         if (selectedState == null) {
           return TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: context.colorPalette.blackD1D,
+            ),
             onPressed: () {
               _openSheet(
                 context,

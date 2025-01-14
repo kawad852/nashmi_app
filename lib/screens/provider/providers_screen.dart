@@ -21,6 +21,7 @@ import 'package:nashmi_app/widgets/custom_future_builder.dart';
 import 'package:nashmi_app/widgets/custom_svg.dart';
 import 'package:nashmi_app/widgets/fire_paginator/fire_paginator.dart';
 import 'package:nashmi_app/widgets/header_tile.dart';
+import 'package:provider/provider.dart';
 
 import '../../providers/providers_search_screen.dart';
 
@@ -119,112 +120,115 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final stateId = _locationProvider.selectedState?.id;
-    final cityId = _locationProvider.selectedCity?.id;
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          centerTitle: true,
-          collapsedHeight: 100,
-          title: const AreaButton(),
-          flexibleSpace: Align(
-            alignment: AlignmentDirectional.bottomEnd,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: ProvidersSearchScreen(),
-                  ),
-                  const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {
-                      _openFilterSheet(
-                        context,
-                      );
-                    },
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: context.colorPalette.greyF2F,
-                        borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
-                      ),
-                      child: const CustomSvg(MyIcons.filter),
+    final locationProvider = Provider.of<LocationProvider>(context, listen: true);
+    final stateId = locationProvider.selectedState?.id;
+    final cityId = locationProvider.selectedCity?.id;
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            centerTitle: true,
+            collapsedHeight: 100,
+            title: const AreaButton(),
+            flexibleSpace: Align(
+              alignment: AlignmentDirectional.bottomEnd,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: ProvidersSearchScreen(),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        _openFilterSheet(
+                          context,
+                        );
+                      },
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: context.colorPalette.greyF2F,
+                          borderRadius: BorderRadius.circular(MyTheme.radiusSecondary),
+                        ),
+                        child: const CustomSvg(MyIcons.filter),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: HeaderTile(
-            title: context.translate(
-              textEN: widget.category.nameEn!,
-              textAR: widget.category.nameAr!,
+          SliverToBoxAdapter(
+            child: HeaderTile(
+              title: context.translate(
+                textEN: widget.category.nameEn!,
+                textAR: widget.category.nameAr!,
+              ),
             ),
           ),
-        ),
-        if (filterEnum == FilterEnum.nearest)
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: kScreenMargin),
-            sliver: CustomFutureBuilder(
-              future: _nearestFuture,
+          if (filterEnum == FilterEnum.nearest)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: kScreenMargin),
+              sliver: CustomFutureBuilder(
+                future: _nearestFuture,
+                isSliver: true,
+                onComplete: (context, snapshot) {
+                  if (snapshot.data!.isEmpty) {
+                    return const SliverToBoxAdapter(child: SizedBox.shrink());
+                  }
+                  return SliverList.separated(
+                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final provider = snapshot.data![index];
+                      return ProviderCard(
+                        provider: provider,
+                      );
+                    },
+                  );
+                },
+                onError: (error) => const SizedBox.shrink(),
+              ),
+            ),
+          if (filterEnum != FilterEnum.nearest)
+            FirePaginator(
+              key: ValueKey("${filterEnum.value}$stateId$cityId"),
+              query: _getQuery(
+                stateId: stateId,
+                cityId: cityId,
+              ),
               isSliver: true,
-              onComplete: (context, snapshot) {
-                if (snapshot.data!.isEmpty) {
-                  return const SliverToBoxAdapter(child: SizedBox.shrink());
-                }
-                return SliverList.separated(
-                  separatorBuilder: (context, index) => const SizedBox(height: 10),
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    final provider = snapshot.data![index];
-                    return ProviderCard(
-                      provider: provider,
-                    );
-                  },
+              builder: (context, snapshot) {
+                return SliverPadding(
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: kScreenMargin),
+                  sliver: SliverList.separated(
+                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    itemCount: snapshot.docs.length,
+                    itemBuilder: (context, index) {
+                      if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                        snapshot.fetchMore();
+                      }
+
+                      if (snapshot.isFetchingMore) {
+                        return snapshot.toggleLoader();
+                      }
+
+                      final provider = snapshot.docs[index].data();
+                      return ProviderCard(
+                        provider: provider,
+                      );
+                    },
+                  ),
                 );
               },
-              onError: (error) => const SizedBox.shrink(),
             ),
-          ),
-        if (filterEnum != FilterEnum.nearest)
-          FirePaginator(
-            key: ValueKey("${filterEnum.value}$stateId$cityId"),
-            query: _getQuery(
-              stateId: stateId,
-              cityId: cityId,
-            ),
-            isSliver: true,
-            builder: (context, snapshot) {
-              return SliverPadding(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: kScreenMargin),
-                sliver: SliverList.separated(
-                  separatorBuilder: (context, index) => const SizedBox(height: 10),
-                  itemCount: snapshot.docs.length,
-                  itemBuilder: (context, index) {
-                    if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
-                      snapshot.fetchMore();
-                    }
-
-                    if (snapshot.isFetchingMore) {
-                      return snapshot.toggleLoader();
-                    }
-
-                    final provider = snapshot.docs[index].data();
-                    return ProviderCard(
-                      provider: provider,
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -105,6 +105,23 @@ class _ProviderScreenState extends State<ProviderScreen> {
           return NashmiScaffold(
             appBar: AppBar(
               forceMaterialTransparency: true,
+              centerTitle: true,
+              title: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    MyImages.logoBlack,
+                    width: 40,
+                  ),
+                  Text(
+                    context.appLocalization.appName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
               actions: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 7),
