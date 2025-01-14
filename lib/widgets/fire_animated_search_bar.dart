@@ -32,7 +32,6 @@ class _FireAnimatedSearchBarState extends State<FireAnimatedSearchBar> {
       viewTrailing: const [],
       viewConstraints: const BoxConstraints(maxWidth: 600),
       viewOnChanged: (value) {
-        print("results:::: $value");
         widget.onChanged(value, setState);
       },
       builder: widget.builder,
