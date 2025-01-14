@@ -19,8 +19,8 @@ class LocationProvider extends ChangeNotifier {
   String? state;
   String? city;
 
-  StateModel? selectedState;
-  CityModel? selectedCity;
+  StateModel? selectedState = MySharedPreferences.selectedState;
+  CityModel? selectedCity = MySharedPreferences.selectedCity;
 
   List<StateModel> states = [];
   List<CityModel> cities = [];
@@ -35,12 +35,10 @@ class LocationProvider extends ChangeNotifier {
     required StateModel? s,
     required CityModel? c,
   }) {
-    if (s != null) {
-      selectedState = s;
-    }
-    if (c != null) {
-      selectedCity = c;
-    }
+    selectedState = s;
+    MySharedPreferences.selectedState = s;
+    selectedCity = c;
+    MySharedPreferences.selectedCity = c;
     notifyListeners();
   }
 

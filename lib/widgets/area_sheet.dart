@@ -80,9 +80,33 @@ class _AreaSheetState extends State<AreaSheet> {
               final cities = snapshot.data![1] as List<CityModel>;
 
               return SingleChildScrollView(
-                padding: const EdgeInsets.all(kScreenMargin),
+                padding: const EdgeInsets.all(kScreenMargin).copyWith(top: 0),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          context.appLocalization.selectStateAndCity,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: context.colorScheme.primary,
+                          ),
+                        ),
+                        if (_selectedState != null || _selectedCity != null)
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectedState = null;
+                                _selectedCity = null;
+                              });
+                            },
+                            icon: const Icon(Icons.history),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
                     DropDownEditor(
                       value: _selectedState?.id,
                       onChanged: (value) {
@@ -91,6 +115,7 @@ class _AreaSheetState extends State<AreaSheet> {
                           _selectedState = states.firstWhere((e) => e.id == value);
                         });
                       },
+                      required: false,
                       title: context.appLocalization.state,
                       items: states.map((element) {
                         return DropdownMenuItem(
@@ -103,6 +128,7 @@ class _AreaSheetState extends State<AreaSheet> {
                       DropDownEditor(
                         key: ValueKey(_selectedState?.id),
                         value: _selectedCity?.id,
+                        required: false,
                         onChanged: (value) {
                           setState(() {
                             _selectedCity = cities.firstWhere((e) => e.id == value);

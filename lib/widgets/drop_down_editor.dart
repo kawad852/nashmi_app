@@ -9,6 +9,7 @@ class DropDownEditor<T> extends StatelessWidget {
   final String title;
   final List<DropdownMenuItem<T>> items;
   final bool enabled;
+  final bool required;
 
   const DropDownEditor({
     super.key,
@@ -17,6 +18,7 @@ class DropDownEditor<T> extends StatelessWidget {
     required this.title,
     required this.items,
     this.enabled = true,
+    this.required = true,
   });
 
   @override
@@ -27,7 +29,7 @@ class DropDownEditor<T> extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: kEditorBottomPadding),
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),
-          child: DropdownButtonFormField(
+          child: DropdownButtonFormField<T>(
             onChanged: onChanged,
             value: value,
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -39,12 +41,14 @@ class DropDownEditor<T> extends StatelessWidget {
               //   withErrorIndicator: true,
               // ),
             ),
-            validator: (value) {
-              if (value == null) {
-                return context.appLocalization.requiredField;
-              }
-              return null;
-            },
+            validator: required
+                ? (value) {
+                    if (value == null) {
+                      return context.appLocalization.requiredField;
+                    }
+                    return null;
+                  }
+                : null,
             items: items,
           ),
         ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:nashmi_app/models/city/city_model.dart';
+import 'package:nashmi_app/models/state/state_model.dart';
 import 'package:nashmi_app/utils/app_constants.dart';
 import 'package:nashmi_app/utils/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,6 +32,34 @@ class MySharedPreferences {
   static set user(UserModel? value) {
     value?.createdAt = null;
     _sharedPreferences.setString('user', jsonEncode(value?.toJson()));
+  }
+
+  static StateModel? get selectedState {
+    String? value = _sharedPreferences.getString('selectedState');
+    StateModel? model;
+    if (value != null && value.isNotEmpty && value != 'null') {
+      model = StateModel.fromJson(jsonDecode(value));
+    }
+    return model;
+  }
+
+  static set selectedState(StateModel? value) {
+    value?.createdAt = null;
+    _sharedPreferences.setString('selectedState', jsonEncode(value?.toJson()));
+  }
+
+  static CityModel? get selectedCity {
+    String? value = _sharedPreferences.getString('selectedCity');
+    CityModel? model;
+    if (value != null && value.isNotEmpty && value != 'null') {
+      model = CityModel.fromJson(jsonDecode(value));
+    }
+    return model;
+  }
+
+  static set selectedCity(CityModel? value) {
+    value?.createdAt = null;
+    _sharedPreferences.setString('selectedCity', jsonEncode(value?.toJson()));
   }
 
   static String get language => _sharedPreferences.getString('language') ?? LanguageEnum.arabic;
