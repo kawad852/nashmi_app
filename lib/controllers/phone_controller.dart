@@ -12,6 +12,9 @@ class PhoneController extends ChangeNotifier {
   String get getPhoneNumber => _parseArabic(phoneNum!);
 
   String _parseArabic(String str) {
+    if (str.startsWith('0')) {
+      str.replaceFirst('0', '');
+    }
     var result = str.replaceAllMapped(
       RegExp('[٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹]'),
       (match) {

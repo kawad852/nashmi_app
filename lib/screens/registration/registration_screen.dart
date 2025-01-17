@@ -70,7 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final user = UserModel();
     if (_formKey.currentState!.validate()) {
       user.phoneCountryCode = phoneController.countryCode;
-      user.phone = phoneController.phoneNum!;
+      user.phone = phoneController.getPhoneNumber;
       context.userProvider.sendPinCode(
         context,
         user: user,

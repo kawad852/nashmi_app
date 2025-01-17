@@ -83,7 +83,7 @@ class _ContactScreenState extends State<ContactScreen> {
 
   void _sendRequest(BuildContext context) {
     _contact.phoneCountryCode = _phoneController.countryCode;
-    _contact.phoneNum = _phoneController.phoneNum;
+    _contact.phoneNum = _phoneController.getPhoneNumber;
     ApiService.fetch(
       context,
       callBack: () async {
@@ -96,7 +96,7 @@ class _ContactScreenState extends State<ContactScreen> {
 
   void _sendEmail(BuildContext context) {
     _contact.phoneCountryCode = _phoneController.getDialCode();
-    _contact.phoneNum = _phoneController.phoneNum;
+    _contact.phoneNum = _phoneController.getPhoneNumber;
     ApiService.fetch(
       context,
       callBack: () async {

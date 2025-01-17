@@ -52,7 +52,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           );
         } else {
           user.phoneCountryCode = phoneController.countryCode;
-          user.phone = phoneController.phoneNum!;
+          user.phone = phoneController.getPhoneNumber;
           context.userProvider.sendPinCode(
             context,
             user: user,
